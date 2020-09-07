@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CapstoneVersion2</string>
+    <string name="facebook_app_id">246002819946659</string>
+    <string name="fb_login_protocol_scheme">fb246002819946659</string>
+</resources>
