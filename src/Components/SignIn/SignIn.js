@@ -1,22 +1,32 @@
 import React, { Component } from 'react';
 import { View, SafeAreaView, 
-    StatusBar, KeyboardAvoidingView, 
+    StatusBar, Alert, 
     TouchableWithoutFeedback, TouchableOpacity, Keyboard } from 'react-native';
 
 //file config global
 import { ComponentVersion } from '../../ConfigGlobal';
 // file css
-import styles from './Style';
+import styles from './Styles';
 // thu vien ngoai
 import * as Animatable from 'react-native-animatable';
 import { Form, Item, Label, Input, Icon, Button, Text } from 'native-base';
 
+//file config firebase
+import { getAuthEmailAndPassword,
+        loginFacebook, loginGmail } from '../../Database/Firebase/ConfigGlobalFirebase';
+
 export default class SignIn extends Component {
     constructor(props) {
         super(props);
+        
+        this.state = {
+            email: '',
+            password: ''
+        }
     }
 
     render() {
+        const { email, password } = this.state;
         return(
             <SafeAreaView style={styles.container}>
                 <StatusBar barStyle="light-content"/>
@@ -46,6 +56,8 @@ export default class SignIn extends Component {
                                     <Input 
                                         autoCapitalize="none"
                                         keyboardType="email-address"
+                                        onChangeText={text => this.setState({ email: text })}
+                                        value={email}
                                     />
                                     <Icon
                                         name="mail-outline"
@@ -56,6 +68,8 @@ export default class SignIn extends Component {
                                     <Label>Password</Label>
                                     <Input 
                                         secureTextEntry 
+                                        onChangeText={text => this.setState({ password: text })}
+                                        value={password}
                                     />
                                     <Icon
                                         name="key-outline" 
@@ -77,7 +91,13 @@ export default class SignIn extends Component {
                                 <Button 
                                     block 
                                     style={styles.buttonSignIn}
-                                    onPress={() => {}}
+                                    onPress={() => {
+                                        const data = {
+                                            email: email,
+                                            password: password
+                                        }
+                                        this.props.onSignIn(data);
+                                    }}
                                 >
                                     <Text style={styles.textSignIn}>Sign In</Text>
                                 </Button>
@@ -105,7 +125,13 @@ export default class SignIn extends Component {
                                     style={[styles.buttonSignInSocial, {
                                         backgroundColor: '#4267B2'
                                     }]}
-                                    onPress={() => {}}
+                                    onPress={() => loginFacebook()
+                                        .then(() => console.log('Login Facebook !'))
+                                        .catch(error => {
+                                            console.log(`Sign In Facebook error is ${error}`);
+                                            Alert.alert('Notification', 'Sign In Facebook Fail!');
+                                        })
+                                    }
                                 >
                                     <Icon type="FontAwesome5" name="facebook-square"/>
                                     <Text style={styles.textSignInSocial}>
@@ -119,7 +145,13 @@ export default class SignIn extends Component {
                                     style={[styles.buttonSignInSocial, {
                                         backgroundColor: '#D44638'
                                     }]}
-                                    onPress={() => {}}
+                                    onPress={() => loginGmail()
+                                        .then(() => console.log('Login Gmail !'))
+                                        .catch(error => {
+                                            console.log(`Sign In Gmail error is ${error}`);
+                                            Alert.alert('Notification', 'Sign In Gmail Fail!');
+                                        })
+                                    }
                                 >
                                     <Icon type="FontAwesome5" name="google"/>
                                     <Text style={styles.textSignInSocial}>

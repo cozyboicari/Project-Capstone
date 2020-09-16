@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, SafeAreaView, StatusBar } from 'react-native'; 
+import { View, Text, SafeAreaView, StatusBar } from 'react-native';
 
 //thu vien ben ngoai
 import * as Animatable from 'react-native-animatable';
@@ -11,10 +11,19 @@ import styles from './Styles';
 //file config global
 import { ComponentVersion } from '../../ConfigGlobal';
 
+//file config firebase
+import { auth } from '../../Database/Firebase/ConfigGlobalFirebase';
+
 
 export default class Intro extends Component {
     constructor(props) {
         super(props);
+    }
+
+    componentDidMount() {
+        auth().onAuthStateChanged(user => {
+            this.props.navigation.navigate(user ? 'Home Screen' : 'Intro Screen')
+        })
     }
 
     render() {
