@@ -7,8 +7,14 @@ import { colors } from '../../ConfigGlobal';
 const { width } = Dimensions.get('screen');
 
 //bien' config style
-const WIDTH_COUNTRY = width - 60;
-const HEIGHT_COUNTRY = 620;
+const WIDTH_CITY = width - 60;
+const HEIGHT_CITY = 620;
+
+const WIDTH_CITY_VIEW_ALL = width - 45;
+const HEIGHT_CITY_VIEW_ALL = 150;
+
+const WIDTH_IMAGE = 84;
+const HEIGHT_IMAGE = 84;
 
 const styles = StyleSheet.create({
     container: {
@@ -32,10 +38,10 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         color: colors.BACKGROUND_BLUEYONDER
     },
-    containerItemCountry: {
+    containerItemCity: {
         marginLeft: 30,
-        width: WIDTH_COUNTRY,
-        height: HEIGHT_COUNTRY,
+        width: WIDTH_CITY,
+        height: HEIGHT_CITY,
         borderRadius: 22,
         shadowColor: '#000',
         shadowRadius: 5.25,
@@ -43,25 +49,25 @@ const styles = StyleSheet.create({
         shadowOpacity: .25,
         elevation: 10,
     },
-    containerLayoutItemCountry: {
-        width: WIDTH_COUNTRY,
-        height: HEIGHT_COUNTRY,
+    containerLayoutItemCity: {
+        width: WIDTH_CITY,
+        height: HEIGHT_CITY,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         borderRadius: 22,
         position: 'absolute',
         flex: 1,
         justifyContent: 'flex-end'
     },
-    imageItemCountry: {
-        width: WIDTH_COUNTRY,
-        height: HEIGHT_COUNTRY,
+    imageItemCity: {
+        width: WIDTH_CITY,
+        height: HEIGHT_CITY,
         borderRadius: 22,
     },
     containerItemInfo: {
         margin: 22,
         marginBottom: 50,
     },
-    textItemNameCountry: {
+    textItemNameCity: {
         fontSize: 35,
         fontWeight: '700',
         color: colors.BACKGROUND_CULTURE,
@@ -75,6 +81,46 @@ const styles = StyleSheet.create({
         color: colors.BACKGROUND_CULTURE,
         fontSize: 17,
         fontWeight: '500',
+    },
+    containerViewAll: {
+        backgroundColor: colors.BACKGROUND_CULTURE,
+        width: WIDTH_CITY_VIEW_ALL,
+        height: HEIGHT_CITY_VIEW_ALL,
+        marginHorizontal: 22,
+        marginVertical: 15,
+        borderRadius: 22,
+        shadowColor: '#000',
+        shadowOpacity: .36,
+        shadowRadius: 7.2,
+        shadowOffset: { width: 1, height: 2 },
+        elevation: 5,
+        flexDirection: 'row'
+    },
+    containerImageViewAll: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 22
+    },
+    imageCitiesAll: {
+        width: WIDTH_IMAGE,
+        height: HEIGHT_IMAGE,
+        borderRadius: WIDTH_IMAGE / 5
+    },
+    containerInfoViewAll: {
+        justifyContent: 'center'
+    },
+    textViewAll: {
+        fontSize: 19,
+        fontWeight: '500',
+        color: colors.TEXT_DARK_JUNGLE_GREEN
+    },
+    textVisitsViewAll: {
+        color: colors.TEXT_DARK_JUNGLE_GREEN,
+        marginTop: 5
+    },
+    containerFavouriteIcon: {
+        justifyContent: 'center',
+        marginLeft: 50
     }
 })
 

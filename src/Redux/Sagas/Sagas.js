@@ -7,7 +7,6 @@ import {
 import { takeLatest, put, call } from 'redux-saga/effects';
 
 import { postAuthEmailAndPassword, getAuthEmailAndPassword, getFirestore } from '../../Database/Firebase/ConfigGlobalFirebase';
-import { get } from 'react-native/Libraries/Utilities/PixelRatio';
 
 //post user to Auth
 function* postNewUserToAuth(action) {

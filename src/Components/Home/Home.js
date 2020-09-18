@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, 
-    SafeAreaView, StatusBar, FlatList, Image 
+    StatusBar, FlatList, Image, ActivityIndicator,
 } from 'react-native';
 
 //file component
@@ -12,30 +12,74 @@ import styles from './Styles';
 //library ngoai
 import Icons from 'react-native-vector-icons/Ionicons';
 import { colors } from '../../ConfigGlobal';
+import * as Animatable from 'react-native-animatable';
 
-import { getFirestore } from '../../Database/Firebase/ConfigGlobalFirebase';
-
-//custom item country
-const ItemContry = ({ name, description, image }) => {
+//custom item city top
+const ItemCitiesTop = ({ name, description, image }) => {
     return (
         <TouchableOpacity 
             onPress={() => {}}
             activeOpacity={.7}
         >
-            <View style={styles.containerItemCountry}>
+            <Animatable.View 
+                style={styles.containerItemCity}
+                animation="fadeInUpBig"
+            >
                 <Image 
-                    style={styles.imageItemCountry}
+                    style={styles.imageItemCity}
                     source={{uri: image}}
                 />
-                <View style={styles.containerLayoutItemCountry}>
+                <View style={styles.containerLayoutItemCity}>
                     <View style={styles.containerItemInfo}>
-                        <Text style={styles.textItemNameCountry}>{name}</Text>
+                        <Text style={styles.textItemNameCity}>{name}</Text>
                         <View style={styles.containerDescription}>
                             <Text style={styles.textDescription}>{description}</Text>
                         </View>
                     </View>
                 </View>
-            </View>
+            </Animatable.View>
+        </TouchableOpacity>
+    );
+}
+
+//list all item city
+const ItemCitiesAll = ({ name, image, visits }) => {
+    const [ heart, setTapHeart ] = React.useState(false);
+
+    return (
+        <TouchableOpacity
+            onPress={() => {
+
+            }}
+        >
+            <Animatable.View 
+                style={styles.containerViewAll}
+                animation="lightSpeedIn"
+            >
+                <View style={styles.containerImageViewAll}>
+                    <Image 
+                        style={styles.imageCitiesAll}
+                        source={{uri: image}}
+                    />
+                </View>
+                <View style={styles.containerInfoViewAll}>
+                    <Text style={styles.textViewAll}>{name}</Text>
+                    <Text style={styles.textVisitsViewAll}>number of visits: {visits}</Text>
+                </View>
+                <View style={styles.containerFavouriteIcon}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            setTapHeart(!heart);
+                        }}
+                    >
+                        <Icons 
+                            name={heart ? 'heart' : 'heart-outline'}
+                            size={23}
+                            color={colors.COLOR_HEART}
+                        />
+                    </TouchableOpacity>
+                </View>
+            </Animatable.View>
         </TouchableOpacity>
     );
 }
@@ -43,13 +87,24 @@ const ItemContry = ({ name, description, image }) => {
 export default class Home extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            viewAll: false,
+            isLoading: true
+        }
     }
 
     componentDidMount() {
         this.props.onGetVietnam();
+
+        if(this.props.vietnam.length !== 0) {
+            this.setState({ isLoading: false })
+        }
     }
 
     render() {
+        const { viewAll, isLoading } = this.state;
+
         return (
             <View style={styles.container}>
                 <StatusBar barStyle="dark-content"/>
@@ -58,27 +113,50 @@ export default class Home extends Component {
                 {/* phan get du lieu */}
                 <View style={styles.containerTop}>
                     <View style={styles.containerTopDestinations}>
-                        <Text style={styles.textTitle}>Top destinations</Text>
+                        <Text style={styles.textTitle}>
+                            {
+                                !viewAll ? 'Top destinations'
+                                : 'All destinations'
+                            }
+                        </Text>
                         <TouchableOpacity
-                            onPress={() => {}}
+                            onPress={() => this.setState({ viewAll: !viewAll })}
                         >
-                            <Text style={styles.textSeeAll}>See all</Text>
+                            <Text style={styles.textSeeAll}>
+                                {
+                                    !viewAll ? 'See all'
+                                    : 'Top cities'
+                                }
+                            </Text>
                         </TouchableOpacity>
                     </View>
                     {/* view top city */}
-                    <FlatList
-                        data={this.props.vietnam}
-                        keyExtractor={item => item.id}
-                        renderItem={({item, index}) => {
-                            if(item.visits > 500) {
-                                return(
-                                    <ItemContry name={item.name} image={item.image} description={item.description}/>
-                                )
-                            }
-                        }}
-                        horizontal={true}
-                        showsHorizontalScrollIndicator={false}
-                    />
+                    {
+                        isLoading ? <ActivityIndicator size={300}/>
+                        : 
+                        <FlatList
+                            data={this.props.vietnam.sort((a, b) => b.visits - a.visits)}
+                            keyExtractor={item => item.id}
+                            renderItem={({item, index}) => {
+                                if(!viewAll && index <= 3) {
+                                    return (
+                                        <ItemCitiesTop name={item.name} image={item.image} description={item.description}/>
+                                    );
+                                } else if(viewAll) {
+                                    return (
+                                        <ItemCitiesAll 
+                                            name={item.name} 
+                                            image={item.image} 
+                                            visits={item.visits}
+                                        />
+                                    );
+                                }
+                            }}
+                            horizontal={viewAll ? false : true}
+                            showsHorizontalScrollIndicator={false}
+                            showsVerticalScrollIndicator={false}
+                        />
+                    }
                 </View>
             </View>
         )

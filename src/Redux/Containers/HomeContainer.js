@@ -4,7 +4,6 @@ import { getDataVietnamAction } from '../Actions/index';
 import HomeComponent from '../../Components/Home/Home';
 
 const mapStateToProps = state => {
-    console.log(state);
     return {
         vietnam: state.vietnamReducers
     }

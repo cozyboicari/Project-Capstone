@@ -7,7 +7,8 @@ const version = '0.0.1';
 const colors = {
     BACKGROUND_BLUEYONDER: '#576CA8',
     BACKGROUND_CULTURE: '#F5F3F5',
-    TEXT_DARK_JUNGLE_GREEN: '#171D1C'
+    TEXT_DARK_JUNGLE_GREEN: '#171D1C',
+    COLOR_HEART: '#A62C2b'
 }
 
 //component version
