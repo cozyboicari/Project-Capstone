@@ -8,7 +8,7 @@ import SignUpComponent from '../../Components/SignUp/SignUp';
 // map sang state
 const mapStateToProps = state => {
     return {
-
+        
     }
 }
 

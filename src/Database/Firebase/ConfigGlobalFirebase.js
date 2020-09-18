@@ -16,14 +16,14 @@ GoogleSignin.configure({
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
-  apiKey: "AIzaSyDjrZw2Z3QwCeW09U4vtwqGcMhLI5dQ7Nc",
-  authDomain: "capstone-version-2.firebaseapp.com",
-  databaseURL: "https://capstone-version-2.firebaseio.com",
-  projectId: "capstone-version-2",
-  storageBucket: "capstone-version-2.appspot.com",
-  messagingSenderId: "861324526731",
-  appId: "1:861324526731:web:438e30080443376240408e",
-  measurementId: "G-51LBHFFVW0"
+  apiKey: "AIzaSyBSdrT-Y3xE7YvJJYq1edWrCqif-NAqhMc",
+  authDomain: "yourtour-c4d0f.firebaseapp.com",
+  databaseURL: "https://yourtour-c4d0f.firebaseio.com",
+  projectId: "yourtour-c4d0f",
+  storageBucket: "yourtour-c4d0f.appspot.com",
+  messagingSenderId: "855060710487",
+  appId: "1:855060710487:web:7f907ef264c514d6298f12",
+  measurementId: "G-QMSPR75J9F"
 };
 
 // Initialize Firebase

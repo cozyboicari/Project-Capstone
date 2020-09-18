@@ -15,10 +15,12 @@ import { colors } from '../../ConfigGlobal';
 import * as Animatable from 'react-native-animatable';
 
 //custom item city top
-const ItemCitiesTop = ({ name, description, image }) => {
+const ItemCitiesTop = ({ name, description, image, navigation }) => {
     return (
         <TouchableOpacity 
-            onPress={() => {}}
+            onPress={() => {
+                navigation.navigate('Tour Guides Screen');
+            }}
             activeOpacity={.7}
         >
             <Animatable.View 
@@ -43,13 +45,12 @@ const ItemCitiesTop = ({ name, description, image }) => {
 }
 
 //list all item city
-const ItemCitiesAll = ({ name, image, visits }) => {
+const ItemCitiesAll = ({ name, image, visits, navigation }) => {
     const [ heart, setTapHeart ] = React.useState(false);
-
     return (
         <TouchableOpacity
             onPress={() => {
-
+                navigation.navigate('Tour Guides Screen');
             }}
         >
             <Animatable.View 
@@ -140,7 +141,12 @@ export default class Home extends Component {
                             renderItem={({item, index}) => {
                                 if(!viewAll && index <= 3) {
                                     return (
-                                        <ItemCitiesTop name={item.name} image={item.image} description={item.description}/>
+                                        <ItemCitiesTop 
+                                            name={item.name} 
+                                            image={item.image} 
+                                            description={item.description}
+                                            navigation={this.props.navigation}
+                                        />
                                     );
                                 } else if(viewAll) {
                                     return (
@@ -148,6 +154,7 @@ export default class Home extends Component {
                                             name={item.name} 
                                             image={item.image} 
                                             visits={item.visits}
+                                            navigation={this.props.navigation}
                                         />
                                     );
                                 }
@@ -155,6 +162,7 @@ export default class Home extends Component {
                             horizontal={viewAll ? false : true}
                             showsHorizontalScrollIndicator={false}
                             showsVerticalScrollIndicator={false}
+                            style={{ marginBottom: 200 }}
                         />
                     }
                 </View>

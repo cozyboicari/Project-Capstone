@@ -22,7 +22,7 @@ export default class Intro extends Component {
 
     componentDidMount() {
         auth().onAuthStateChanged(user => {
-            this.props.navigation.navigate(user && 'Home Screen');
+            this.props.navigation.navigate(user ? 'Home Screen' : 'Intro Screen');
         })
     }
 

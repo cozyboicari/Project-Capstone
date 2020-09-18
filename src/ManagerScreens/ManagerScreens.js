@@ -15,6 +15,7 @@ import IntroScreen from '../Components/Intro/Intro';
 import SignInScreen from '../Redux/Containers/SignInContainer';
 import SignUpScreen from '../Redux/Containers/SignUpContainer';
 import HomeScreen from '../Redux/Containers/HomeContainer';
+import TourGuidesScreen from '../Components/TourGuides/TourGuides';
 
 //redux
 import { createStore, applyMiddleware } from 'redux';
@@ -37,7 +38,7 @@ const Drawer = createDrawerNavigator();
 //item drawer
 import DrawerContent  from './DrawerContent';
 
-const ScreenSignInAndSignUp = () => {
+const ScreenSignInAndSignUpAndHome = () => {
     return(
         <Provider store={store}>
             <Stack.Navigator headerMode="none">
@@ -47,6 +48,7 @@ const ScreenSignInAndSignUp = () => {
                 <Stack.Screen name="Home Screen" component={HomeScreen} options={{
                     gestureEnabled: false
                 }}/>
+                <Stack.Screen name="Tour Guides Screen" component={TourGuidesScreen} />
             </Stack.Navigator>
         </Provider>
     );
@@ -66,7 +68,7 @@ const ManagerScreens = () => {
             >
                 <Drawer.Screen 
                     name="Home" 
-                    component={ScreenSignInAndSignUp}
+                    component={ScreenSignInAndSignUpAndHome}
                     options={{
                         drawerIcon: ({size, color}) => <Icons name="home-outline" size={size} color={color}/> 
                     }}
