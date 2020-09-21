@@ -63,7 +63,7 @@ export const getAuthEmailAndPassword = (email, password) => {
 
 //GET firestore
 export const getFirestore = async (nameCollection) => {
-  const countries = [];
+  const datas = [];
   await firestore().collection(nameCollection).get()
     .then(querySnapshot => {
       querySnapshot.docs.forEach(doc => {
@@ -72,12 +72,15 @@ export const getFirestore = async (nameCollection) => {
           name: doc.data().name,
           image: doc.data().image,
           description: doc.data().description,
-          visits: doc.data().visits
+          visits: doc.data().visits,
+          email: doc.data().email,
+          phone: doc.data().phone,
+          rate: doc.data().rate
         }
-        countries.push(city);
+        datas.push(city);
       })
     })
-  return countries;
+  return datas;
 }
 
 // Sign in Facebook
@@ -113,4 +116,4 @@ export const logOutAuth = () => {
     .then(() => console.log('logout !'));
 }
 
-export { firebase, auth, firestore  };
+export { firebase, auth, firestore };

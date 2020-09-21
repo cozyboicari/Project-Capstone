@@ -1,14 +1,14 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, Platform } from 'react-native';
 
 //file config global
 import { colors } from '../../ConfigGlobal';
 
 //width height screen
-const { width } = Dimensions.get('screen');
+const { width, height } = Dimensions.get('window');
 
 //bien' config style
-const WIDTH_CITY = width - 60;
-const HEIGHT_CITY = 620;
+const WIDTH_CITY =  width - 60;
+const HEIGHT_CITY = height - 230;
 
 const WIDTH_CITY_VIEW_ALL = width - 45;
 const HEIGHT_CITY_VIEW_ALL = 150;

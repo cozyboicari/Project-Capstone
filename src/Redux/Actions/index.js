@@ -1,7 +1,8 @@
 import { 
     REGISTER, REGISTER_FAIL, REGISTER_SUCCESS,
     LOGIN, LOGIN_FAIL, LOGIN_SUCCESS,
-    GET_DATA_VIETNAM, GET_DATA_VIETNAM_FAIL, GET_DATA_VIETNAM_SUCCESS
+    GET_DATA_VIETNAM, GET_DATA_VIETNAM_FAIL, GET_DATA_VIETNAM_SUCCESS,
+    GET_DATA_TOUR_GUIDES, GET_DATA_TOUR_GUIDES_SUCCESS, GET_DATA_TOUR_GUIDES_FAIL
 } from './ActionTypes';
 
 
@@ -67,6 +68,28 @@ export const getDataVietnamSuccessAction = vietnam => {
 export const getDataVietnamFailAction = error => {
     return {
         type: GET_DATA_VIETNAM_FAIL,
+        error
+    }
+}
+
+// action get data tourguides
+export const getDataTourGuides = nameCollection => {
+    return {
+        type: GET_DATA_TOUR_GUIDES,
+        nameCollection
+    }
+}
+
+export const getDataTourGuidesSuccess = tourguides => {
+    return {
+        type: GET_DATA_TOUR_GUIDES_SUCCESS,
+        tourguides
+    }
+}
+
+export const getDataTourGuidesFail = error => {
+    return {
+        type: GET_DATA_TOUR_GUIDES_FAIL,
         error
     }
 }

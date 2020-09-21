@@ -21,12 +21,12 @@ export default class Header extends Component {
     render() {
         return(
             <View style={[styles.container, {
-                height: Platform.OS === 'ios' ? 120 : 80
+                height: Platform.OS === 'ios' ? 120 : 70
             }]}>
                 <StatusBar barStyle="light-content"/>
                 {/* header  */}
                 <View style={[styles.containerHeader, {
-                    marginTop: Platform.OS === 'ios' ? 28 : 10
+                    marginTop: Platform.OS === 'ios' ? 28 : 0
                 }]}>
                     <View style={styles.itemHeaderLeft}>
                         <TouchableOpacity

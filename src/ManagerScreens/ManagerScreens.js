@@ -15,7 +15,7 @@ import IntroScreen from '../Components/Intro/Intro';
 import SignInScreen from '../Redux/Containers/SignInContainer';
 import SignUpScreen from '../Redux/Containers/SignUpContainer';
 import HomeScreen from '../Redux/Containers/HomeContainer';
-import TourGuidesScreen from '../Components/TourGuides/TourGuides';
+import TourGuidesScreen from '../Redux/Containers/TourGuidesContainer';
 
 //redux
 import { createStore, applyMiddleware } from 'redux';

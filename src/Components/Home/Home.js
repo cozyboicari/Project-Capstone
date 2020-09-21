@@ -15,11 +15,13 @@ import { colors } from '../../ConfigGlobal';
 import * as Animatable from 'react-native-animatable';
 
 //custom item city top
-const ItemCitiesTop = ({ name, description, image, navigation }) => {
+const ItemCitiesTop = ({ name, description, image, navigation, id }) => {
     return (
         <TouchableOpacity 
             onPress={() => {
-                navigation.navigate('Tour Guides Screen');
+                navigation.navigate('Tour Guides Screen', {
+                    idCity: id
+                });
             }}
             activeOpacity={.7}
         >
@@ -45,17 +47,19 @@ const ItemCitiesTop = ({ name, description, image, navigation }) => {
 }
 
 //list all item city
-const ItemCitiesAll = ({ name, image, visits, navigation }) => {
+const ItemCitiesAll = ({ name, image, visits, navigation, id }) => {
     const [ heart, setTapHeart ] = React.useState(false);
     return (
         <TouchableOpacity
             onPress={() => {
-                navigation.navigate('Tour Guides Screen');
+                navigation.navigate('Tour Guides Screen', {
+                    idCity: id
+                });
             }}
         >
             <Animatable.View 
                 style={styles.containerViewAll}
-                animation="lightSpeedIn"
+                animation="fadeIn"
             >
                 <View style={styles.containerImageViewAll}>
                     <Image 
@@ -91,20 +95,15 @@ export default class Home extends Component {
 
         this.state = {
             viewAll: false,
-            isLoading: true
         }
     }
 
     componentDidMount() {
         this.props.onGetVietnam();
-
-        if(this.props.vietnam.length !== 0) {
-            this.setState({ isLoading: false })
-        }
     }
 
     render() {
-        const { viewAll, isLoading } = this.state;
+        const { viewAll } = this.state;
 
         return (
             <View style={styles.container}>
@@ -133,7 +132,7 @@ export default class Home extends Component {
                     </View>
                     {/* view top city */}
                     {
-                        isLoading ? <ActivityIndicator size={300}/>
+                        this.props.vietnam.length === 0 ? <ActivityIndicator size={300}/>
                         : 
                         <FlatList
                             data={this.props.vietnam.sort((a, b) => b.visits - a.visits)}
@@ -146,6 +145,7 @@ export default class Home extends Component {
                                             image={item.image} 
                                             description={item.description}
                                             navigation={this.props.navigation}
+                                            id={item.id}
                                         />
                                     );
                                 } else if(viewAll) {
@@ -155,6 +155,7 @@ export default class Home extends Component {
                                             image={item.image} 
                                             visits={item.visits}
                                             navigation={this.props.navigation}
+                                            id={item.id}
                                         />
                                     );
                                 }
