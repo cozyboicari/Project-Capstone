@@ -19,7 +19,7 @@ const ItemCitiesTop = ({ name, description, image, navigation, id }) => {
     return (
         <TouchableOpacity 
             onPress={() => {
-                navigation.navigate('Tour Guides Screen', {
+                navigation.navigate('Tours Screen', {
                     idCity: id
                 });
             }}
@@ -47,12 +47,12 @@ const ItemCitiesTop = ({ name, description, image, navigation, id }) => {
 }
 
 //list all item city
-const ItemCitiesAll = ({ name, image, visits, navigation, id }) => {
+const ItemCitiesAll = ({ name, image, visitors, navigation, id }) => {
     const [ heart, setTapHeart ] = React.useState(false);
     return (
         <TouchableOpacity
             onPress={() => {
-                navigation.navigate('Tour Guides Screen', {
+                navigation.navigate('Tours Screen', {
                     idCity: id
                 });
             }}
@@ -69,7 +69,7 @@ const ItemCitiesAll = ({ name, image, visits, navigation, id }) => {
                 </View>
                 <View style={styles.containerInfoViewAll}>
                     <Text style={styles.textViewAll}>{name}</Text>
-                    <Text style={styles.textVisitsViewAll}>number of visits: {visits}</Text>
+                    <Text style={styles.textVisitors}>{`Visitors: ${visitors}`}</Text>
                 </View>
                 <View style={styles.containerFavouriteIcon}>
                     <TouchableOpacity
@@ -99,7 +99,7 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        this.props.onGetVietnam();
+        this.props._onGetCities('countries/vietnam/cities');
     }
 
     render() {
@@ -109,7 +109,7 @@ export default class Home extends Component {
             <View style={styles.container}>
                 <StatusBar barStyle="dark-content"/>
                 {/* phan header */}
-                <HeaderComponent {...this.props}/>
+                <HeaderComponent {...this.props} isHome={true}/>
                 {/* phan get du lieu */}
                 <View style={styles.containerTop}>
                     <View style={styles.containerTopDestinations}>
@@ -132,10 +132,10 @@ export default class Home extends Component {
                     </View>
                     {/* view top city */}
                     {
-                        this.props.vietnam.length === 0 ? <ActivityIndicator size={300}/>
+                        this.props.cities.length === 0 ? <ActivityIndicator size={300}/>
                         : 
                         <FlatList
-                            data={this.props.vietnam.sort((a, b) => b.visits - a.visits)}
+                            data={this.props.cities.sort((a, b) => b.visits - a.visits)}
                             keyExtractor={item => item.id}
                             renderItem={({item, index}) => {
                                 if(!viewAll && index <= 3) {
@@ -153,8 +153,8 @@ export default class Home extends Component {
                                         <ItemCitiesAll 
                                             name={item.name} 
                                             image={item.image} 
-                                            visits={item.visits}
                                             navigation={this.props.navigation}
+                                            visitors={item.visitors}
                                             id={item.id}
                                         />
                                     );

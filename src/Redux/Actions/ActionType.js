@@ -1,0 +1,29 @@
+// get cites in country
+export const GET_CITIES = 'GET_CITIES';
+export const GET_CITIES_SUCCESS = 'GET_CITIES_SUCCESS';
+export const GET_CITIES_FAIL = 'GET_CITIES_FAIL';
+
+// get tours in city
+export const GET_TOURS = 'GET_TOURS';
+export const GET_TOURS_SUCCESS = 'GET_TOURS_SUCCESS';
+export const GET_TOURS_FAIL = 'GET_TOURS_FAIL';
+
+// login
+export const LOGIN_ACCOUNT = 'LOGIN_ACCOUNT';
+export const LOGIN_ACCOUNT_SUCCESS = 'LOGIN_ACCOUNT_SUCCESS';
+export const LOGIN_ACCOUNT_FAIL = 'LOGIN_ACCOUNT_FAIL';
+
+//login facebook
+export const LOGIN_FACEBOOK = 'LOGIN_FACEBOOK';
+export const LOGIN_FACEBOOK_SUCCESS = 'LOGIN_FACEBOOK_SUCCESS';
+export const LOGIN_FACEBOOK_FAIL = 'LOGIN_FACEBOOK_FAIL';
+
+//login gmail
+export const LOGIN_GMAIL = 'LOGIN_GMAIL';
+export const LOGIN_GMAIL_SUCCESS = 'LOGIN_GMAIL_SUCCESS';
+export const LOGIN_GMAIL_FAIL = 'LOGIN_GMAIL_FAIL';
+
+//register
+export const REGISTER_ACCOUNT = 'REGISTER_ACCOUNT';
+export const REGISTER_ACCOUNT_SUCCESS = 'REGISTER_ACCOUNT_SUCCESS';
+export const REGISTER_ACCOUNT_FAIL = 'REGISTER_ACCOUNT_FAIL';

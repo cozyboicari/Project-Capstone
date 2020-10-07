@@ -1,68 +1,101 @@
+import {
+    GET_CITIES_FAIL, GET_CITIES_SUCCESS, GET_CITIES,
+    GET_TOURS_FAIL, GET_TOURS_SUCCESS, GET_TOURS,
+    LOGIN_ACCOUNT_FAIL, LOGIN_ACCOUNT_SUCCESS, LOGIN_ACCOUNT,
+    REGISTER_ACCOUNT_FAIL, REGISTER_ACCOUNT_SUCCESS, REGISTER_ACCOUNT,
+    LOGIN_FACEBOOK_SUCCESS, LOGIN_FACEBOOK_FAIL, LOGIN_GMAIL_SUCCESS,
+    LOGIN_GMAIL_FAIL, LOGIN_GMAIL, LOGIN_FACEBOOK
+} from '../Actions/ActionType';
+
+import { takeLatest, put, call, take } from 'redux-saga/effects';
 import { 
-    REGISTER_FAIL,  REGISTER_SUCCESS, REGISTER, 
-    LOGIN_SUCCESS, LOGIN_FAIL, LOGIN,
-    GET_DATA_VIETNAM, GET_DATA_VIETNAM_SUCCESS, GET_DATA_VIETNAM_FAIL,
-    GET_DATA_TOUR_GUIDES, GET_DATA_TOUR_GUIDES_SUCCESS, GET_DATA_TOUR_GUIDES_FAIL
-} from '../Actions/ActionTypes';
+    getCitiesInCountry, getToursInCity, 
+    signInUserByEmail, createUserByEmail,
+    signInUserByFacebook, signInUserByGmail
+ } from '../../Database/Firebase/ConfigGlobalFirebase';
 
-import { takeLatest, put, call } from 'redux-saga/effects';
-
-import { postAuthEmailAndPassword, getAuthEmailAndPassword, getFirestore } from '../../Database/Firebase/ConfigGlobalFirebase';
-
-//post user to Auth
-function* postNewUserToAuth(action) {
+ // get cites in country
+function* getCitiesInCountryFromFirestore(action) {
     try {
-        const response = yield call(postAuthEmailAndPassword(action.user.email, action.user.password));
-        yield put({ type: REGISTER_SUCCESS, response });
-
-    } catch (error) {
-        yield put({ type: REGISTER_FAIL, error });
+        const cities = yield getCitiesInCountry(action.path);
+        yield put({ type: GET_CITIES_SUCCESS, cities });
+    } catch(error) {
+        yield put({ type: GET_CITIES_FAIL, error });
     }
 }
 
-export function* watchPostNewUserFromAuth() {
-    yield takeLatest(REGISTER, postNewUserToAuth);
+export function* watchGetCitiesInCountryFromFirestore() {
+    yield takeLatest(GET_CITIES, getCitiesInCountryFromFirestore);
 }
 
-//get user from auth
-function* getUserFromAuth(action) {
+// get tours in city
+function* getToursInCityFromFirestore(action) {
     try {
-        const response = yield call(getAuthEmailAndPassword(action.user.email, action.user.password));
-        yield put({ type: LOGIN_SUCCESS, response});
-    } catch (error) {
-        yield put({ type: LOGIN_FAIL, error })
+        const tours = yield getToursInCity(action.path, action.idCity);
+        yield put({ type: GET_TOURS_SUCCESS, tours });
+    } catch(error) {
+        yield put({ type: GET_TOURS_FAIL, error });
     }
 }
 
-export function* watchGetUserFromAuth() {
-    yield takeLatest(LOGIN, getUserFromAuth);
+export function* watchGetToursInCityFromFirestore() {
+    yield takeLatest(GET_TOURS, getToursInCityFromFirestore);
 }
 
-//get data vietnam
-function* getDataVietnam(action) {
+// login user
+function* signInUserFromAuth(action) {
     try {
-        const vietnam = yield getFirestore(action.nameCollection);
-        yield put({ type: GET_DATA_VIETNAM_SUCCESS, vietnam });
-        
+        const user = yield signInUserByEmail(action.user);
+        yield put({ type: LOGIN_ACCOUNT_SUCCESS, user });
     } catch (error) {
-        yield put({ type: GET_DATA_VIETNAM_FAIL, error });
+        yield put({ type: LOGIN_ACCOUNT_FAIL, error });
     }
 }
 
-export function* watchGetDataVietnam() {
-    yield takeLatest(GET_DATA_VIETNAM, getDataVietnam);
+export function* watchSignInUserFromAuth() {
+    yield takeLatest(LOGIN_ACCOUNT, signInUserFromAuth);
 }
 
-//get  data tourguide
-function* getDataTourGuides(action) {
+//login facebook
+function* signInUserFromFacebook() {
     try {
-        const tourguides = yield getFirestore(action.nameCollection);
-        yield put({ type: GET_DATA_TOUR_GUIDES_SUCCESS, tourguides });
+        const accountFacebook = yield signInUserByFacebook();
+        yield put({ type: LOGIN_FACEBOOK_SUCCESS, accountFacebook });
     } catch (error) {
-        yield put({ type: GET_DATA_TOUR_GUIDES_FAIL, error });
+        yield put({ type: LOGIN_FACEBOOK_FAIL, error });
     }
 }
 
-export function* watchGetTourGuides() {
-    yield takeLatest(GET_DATA_TOUR_GUIDES, getDataTourGuides);
+export function* watchSignInUserFromFacebook() {
+    yield takeLatest(LOGIN_FACEBOOK, signInUserFromFacebook);
+}
+
+//login gmail
+function* signInUserFromGmail() {
+    try {
+        const accountGmail = yield signInUserByGmail().then(user => {
+            console.log(user);
+        });
+        yield put({ type: LOGIN_GMAIL_SUCCESS, accountGmail });
+    } catch (error) {
+        yield put({ type: LOGIN_GMAIL_FAIL, error });
+    }
+}
+
+export function* watchSignInUserFromGmail() {
+    yield takeLatest(LOGIN_GMAIL, signInUserFromGmail);
+}
+
+// register user
+function* signUpUserFromAuth(action) {
+    try {
+        const newUser = yield createUserByEmail(action.newUser);
+        yield put({ type: REGISTER_ACCOUNT_SUCCESS, newUser });
+    } catch (error) {
+        yield put({ type: REGISTER_ACCOUNT_FAIL, error });
+    }
+}
+
+export function* watchSignUpUserFromAuth() {
+    yield takeLatest(REGISTER_ACCOUNT, signUpUserFromAuth);
 }

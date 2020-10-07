@@ -3,6 +3,9 @@ import firebase from '@react-native-firebase/app';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
+//global func
+import { uppercaseFirst } from '../../ConfigGlobal';
+
 //login facebook and gmail
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
 import { GoogleSignin } from '@react-native-community/google-signin';
@@ -10,7 +13,7 @@ import { Alert } from 'react-native';
 
 //config google signin
 GoogleSignin.configure({
-  webClientId: '861324526731-04obvgpdbfnq5hm8k8v5k9o6elpbcb2u.apps.googleusercontent.com',
+  webClientId: '855060710487-9mtegulpq0sre0q180ev2pkug31m620d.apps.googleusercontent.com',
   offlineAccess: true
 });
 
@@ -31,62 +34,80 @@ if(!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-//POST auth email & password
-export const postAuthEmailAndPassword = (email, password) => {
-  auth().createUserWithEmailAndPassword(email, password)
-    .then(() => {
-      console.log('POST Auth !');
-      Alert.alert('Notification', 'Sign Up Success!');
-    })
-    .catch(error => {
-      console.log(`POST Auth error is ${error}`);
-      Alert.alert('Notification', 'Sign Up Fail!');
-    });
-}
-
-// POST firestore
-export const postFirestore = (nameCollection, data) => {
-  firestore().collection(nameCollection).add(data)
-    .then(() => console.log('POST Firestore !'))
-    .catch(error => console.log(`POST Firestore error is ${error}`));
-}
-
-//GET auth email & password
-export const getAuthEmailAndPassword = (email, password) => {
-  auth().signInWithEmailAndPassword(email, password)
-    .then(() => console.log('GET Auth !'))
-    .catch(error => {
-      console.log(`GET Auth error is ${error}`);
-      Alert.alert('Notification', 'Sign In Fail!');
-    });
-}
-
-//GET firestore
-export const getFirestore = async (nameCollection) => {
+// get cities in country
+export const getCitiesInCountry = async (path) => {
   const datas = [];
-  await firestore().collection(nameCollection).get()
-    .then(querySnapshot => {
-      querySnapshot.docs.forEach(doc => {
-        const city = {
-          id: doc.id,
-          name: doc.data().name,
-          image: doc.data().image,
-          description: doc.data().description,
-          visits: doc.data().visits,
-          email: doc.data().email,
-          phone: doc.data().phone,
-          rate: doc.data().rate
+  await firestore().collection(path).get()
+    .then(cities => {
+      cities.forEach(city => {
+        const item = {
+          id: city.id,
+          name: city.data().name,
+          image: city.data().image,
+          description: city.data().description,
+          visitors: city.data().visitors,
+          id_tourguides: city.data().id_tourguides
         }
-        datas.push(city);
+        datas.push(item);
       })
     })
-  return datas;
+    return datas;
 }
 
-// Sign in Facebook
-export const loginFacebook = async () => {
+// get tour guide by id
+export const getTourGuideByID = async (path, idTourGuide) => {
+  return await firestore().collection(path).doc(idTourGuide).get();
+}
+
+// get tours in city
+export const getToursInCity = async (path, idCity) => {
+  const datas = [];
+  await firestore().collection(path).where('cityID', '==', idCity).get()
+    .then(tours => {
+      tours.forEach(tour => {
+        let item = {
+          id: tour.id,
+          avgRating: tour.data().avgRating,
+          cityID: uppercaseFirst(tour.data().cityID),
+          description: tour.data().description,
+          introduce: tour.data().introduce,
+          name: tour.data().name,
+          numRatings: tour.data().numRatings,
+          numberPeople: tour.data().numberPeople,
+          price: tour.data().price,
+          time: tour.data().time,
+          tourguideID: tour.data().tourguideID,
+          tourguideImageCover: tour.data().tourguideImageCover,
+          tourguideName: tour.data().tourguideName,
+          tourguideImage: tour.data().tourguideImage,
+          category: tour.data().category,
+          languages: tour.data().languages
+        }
+        datas.push(item);
+      })
+    })
+    return datas;
+}
+
+//sign up auth by email
+export const createUserByEmail = async (newUser) => {
+  await auth().createUserWithEmailAndPassword(newUser.email, newUser.password);
+}
+
+//login auth by email
+export const signInUserByEmail = async (user) => {
+  await auth().signInWithEmailAndPassword(user.email, user.password);
+}
+
+//logout auth
+export const logOut = async () => {
+  return await auth().signOut();
+}
+
+// login facebook
+export const signInUserByFacebook = async () => {
   const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
-  
+
   if(result.isCancelled) {
     throw 'User cancelled the login process';
   }
@@ -101,8 +122,8 @@ export const loginFacebook = async () => {
   return auth().signInWithCredential(facebookCredential);
 }
 
-//Sign in Gmail
-export const loginGmail = async () => {
+// login gmail
+export const signInUserByGmail = async () => {
   const { idToken } = await GoogleSignin.signIn();
   
   const googleCredential = auth.GoogleAuthProvider.credential(idToken);
@@ -110,10 +131,4 @@ export const loginGmail = async () => {
   return auth().signInWithCredential(googleCredential);
 }
 
-//Log Out Auth
-export const logOutAuth = () => {
-  auth().signOut()
-    .then(() => console.log('logout !'));
-}
-
-export { firebase, auth, firestore };
+export { auth };

@@ -1,15 +1,16 @@
-import { GET_DATA_VIETNAM_FAIL, GET_DATA_VIETNAM_SUCCESS,
-     GET_DATA_VIETNAM } from '../Actions/ActionTypes';
+import {
+    GET_CITIES_FAIL, GET_CITIES_SUCCESS, GET_CITIES
+ } from '../Actions/ActionType';
 
-const vietnamReducers = (stateVietnam = [], action) => {
+const citiesReducers = (cities = [], action) => {
     switch(action.type) {
-        case GET_DATA_VIETNAM_SUCCESS:
-            return action.vietnam;
-        case GET_DATA_VIETNAM_FAIL:
+        case GET_CITIES_SUCCESS: 
+            return action.cities;
+        case GET_CITIES_FAIL: 
             return [];
         default:
-            return stateVietnam;
+            return cities;
     }
 }
 
-export default vietnamReducers;
+export default citiesReducers;

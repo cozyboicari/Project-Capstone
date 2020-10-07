@@ -6,9 +6,6 @@ import { View, StatusBar, SafeAreaView,
 //file config global
 import { ComponentVersion } from '../../ConfigGlobal';
 
-//file config firebase
-import { postAuthEmailAndPassword, postFirestore } from '../../Database/Firebase/ConfigGlobalFirebase';
-
 //file css
 import styles from './Style';
 
@@ -75,120 +72,117 @@ export default class SignUp extends Component {
     render() {
         const { fullname, phoneNumber, email, password } = this.state;
         return(
-            <SafeAreaView style={styles.container}>
-                <StatusBar barStyle="light-content" />
-                <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
-                    <View style={styles.container}>
-                        {/* phan welcome */}
-                        <Animatable.View 
-                            animation="fadeInLeft"
-                            style={styles.containerTop}
-                        >
-                            <View style={styles.containerWelcome}>
-                                <Text style={styles.textWelcome}>Register!</Text>
-                            </View>
-                        </Animatable.View>
+            <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
+                <View style={styles.container}>
+                    <StatusBar barStyle="light-content" />
+                    {/* phan welcome */}
+                    <Animatable.View 
+                        animation="fadeInLeft"
+                        style={styles.containerTop}
+                    >
+                        <View style={styles.containerWelcome}>
+                            <Text style={styles.textWelcome}>Register!</Text>
+                        </View>
+                    </Animatable.View>
 
-                        {/* phan sign in */}
-                        <Animatable.View
-                            animation="fadeInUpBig"
-                            style={styles.containerBottom}
-                        >
-                            <Form style={styles.containerSignIn}>
-                                <Item floatingLabel>
-                                    <Label>Enter your full name</Label>
-                                    <Input
-                                        onChangeText={text => {
-                                            this.setState({ fullname: text });
-                                        }}
-                                        value={fullname}
-                                    />
-                                    <Icon 
-                                        name="person-outline" 
-                                        style={styles.iconTextInput}
-                                    />
-                                </Item>
-                                <Item floatingLabel>
-                                    <Label>Enter your phone number</Label>
-                                    <Input 
-                                        onChangeText={text => this.setState({ phoneNumber: text })}
-                                        keyboardType="numeric"
-                                        value={phoneNumber}
-                                    />
-                                    <Icon
-                                        type="FontAwesome5"
-                                        name="mobile-alt"
-                                        style={styles.iconTextInput}
-                                    />
-                                </Item>
-                                <Item floatingLabel>
-                                    <Label>Enter your email</Label>
-                                    <Input 
-                                        autoCapitalize="none"
-                                        keyboardType="email-address"
-                                        onChangeText={text => this.setState({ email: text })}
-                                        value={email}
-                                    />
-                                    <Icon 
-                                        name="mail-outline" 
-                                        style={styles.iconTextInput}
-                                    />
-                                </Item>
-                                <Item floatingLabel>  
-                                    <Label>Enter your password</Label>
-                                    <Input 
-                                        secureTextEntry
-                                        onChangeText={text => this.setState({ password: text })}
-                                        value={password}
-                                    />
-                                    <Icon
-                                        name="key-outline" 
-                                        style={styles.iconTextInput}
-                                    />
-                                </Item>
-                                
-                                {/* phan forget password */}
-                                <TouchableOpacity 
-                                    style={styles.containerForgotPassword}
-                                    onPress={() => {}}
-                                >
-                                    <Text style={styles.textForgotPassword}>
-                                        Forgot password?
-                                    </Text>
-                                </TouchableOpacity> 
+                    {/* phan sign in */}
+                    <Animatable.View
+                        animation="fadeInUpBig"
+                        style={styles.containerBottom}
+                    >
+                        <Form style={styles.containerSignIn}>
+                            <Item floatingLabel>
+                                <Label>Enter your full name</Label>
+                                <Input
+                                    onChangeText={text => {
+                                        this.setState({ fullname: text });
+                                    }}
+                                    value={fullname}
+                                />
+                                <Icon 
+                                    name="person-outline" 
+                                    style={styles.iconTextInput}
+                                />
+                            </Item>
+                            <Item floatingLabel>
+                                <Label>Enter your phone number</Label>
+                                <Input 
+                                    onChangeText={text => this.setState({ phoneNumber: text })}
+                                    keyboardType="numeric"
+                                    value={phoneNumber}
+                                />
+                                <Icon
+                                    type="FontAwesome5"
+                                    name="mobile-alt"
+                                    style={styles.iconTextInput}
+                                />
+                            </Item>
+                            <Item floatingLabel>
+                                <Label>Enter your email</Label>
+                                <Input 
+                                    autoCapitalize="none"
+                                    keyboardType="email-address"
+                                    onChangeText={text => this.setState({ email: text })}
+                                    value={email}
+                                />
+                                <Icon 
+                                    name="mail-outline" 
+                                    style={styles.iconTextInput}
+                                />
+                            </Item>
+                            <Item floatingLabel>  
+                                <Label>Enter your password</Label>
+                                <Input 
+                                    secureTextEntry
+                                    onChangeText={text => this.setState({ password: text })}
+                                    value={password}
+                                />
+                                <Icon
+                                    name="key-outline" 
+                                    style={styles.iconTextInput}
+                                />
+                            </Item>
+                            
+                            {/* phan forget password */}
+                            <TouchableOpacity 
+                                style={styles.containerForgotPassword}
+                                onPress={() => {}}
+                            >
+                                <Text style={styles.textForgotPassword}>
+                                    Forgot password?
+                                </Text>
+                            </TouchableOpacity> 
 
-                                {/* phan sign in & sign up */}
-                                <Button 
-                                    block 
-                                    style={styles.buttonSignUp}
-                                    onPress={() => {
-                                        const newUser = {
-                                            email: email,
-                                            password: password
-                                        }
-                                        this.props.onRegister(newUser);
-                                    }}
-                                >
-                                    <Text style={styles.textSignUp}>Register and Login</Text>
-                                </Button>
-                                <Button 
-                                    block
-                                    bordered 
-                                    style={styles.buttonSignIn}
-                                    onPress={() => {
-                                        const { goBack } = this.props.navigation;
-                                        goBack();
-                                    }}
-                                >
-                                    <Text style={styles.textSignIn}>Back to Sign In</Text>
-                                </Button>
-                            </Form>
-                            {/* phan version */}
-                            <ComponentVersion />
-                        </Animatable.View>
-                    </View>
-                </TouchableWithoutFeedback>
-            </SafeAreaView>
+                            {/* phan sign in & sign up */}
+                            <Button 
+                                block 
+                                style={styles.buttonSignUp}
+                                onPress={() => {
+                                    this.props._onCreateUser({
+                                        email: email,
+                                        password: password
+                                    });
+                                }}
+                            >
+                                <Text style={styles.textSignUp}>Register and Login</Text>
+                            </Button>
+                            <Button 
+                                block
+                                bordered 
+                                style={styles.buttonSignIn}
+                                onPress={() => {
+                                    const { goBack } = this.props.navigation;
+                                    goBack();
+                                }}
+                            >
+                                <Text style={styles.textSignIn}>Back to Sign In</Text>
+                            </Button>
+                        </Form>
+                        {/* phan version */}
+                        <ComponentVersion />
+                    </Animatable.View>
+                </View>
+            </TouchableWithoutFeedback>
         );
     }
 }

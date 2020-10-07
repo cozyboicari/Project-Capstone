@@ -1,22 +1,24 @@
-//thu vien redux
 import { connect } from 'react-redux';
-import { loginAction } from '../Actions/index';
 
-//file sign in component
+import { loginAction, loginFacebookAction, loginGmailAction } from '../Actions/index';
 import SignInComponent from '../../Components/SignIn/SignIn';
 
-//map sang state
 const mapStateToProps = state => {
-    return {    
-        
+    return {
+
     }
 }
 
-//map sang dispatch
 const mapDispatchToProps = dispatch => {
     return {
-        onSignIn: user => {
+        _onLogin: user => {
             dispatch(loginAction(user));
+        },
+        _onLoginFacebook: () => {
+            dispatch(loginFacebookAction());
+        },
+        _onLoginGmail: () => {
+            dispatch(loginGmailAction());
         }
     }
 }

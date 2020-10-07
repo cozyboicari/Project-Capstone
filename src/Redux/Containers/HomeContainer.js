@@ -1,18 +1,18 @@
 import { connect } from 'react-redux';
-import { getDataVietnamAction } from '../Actions/index';
+import { getCitiesAction } from '../Actions/index';
 
 import HomeComponent from '../../Components/Home/Home';
 
 const mapStateToProps = state => {
     return {
-        vietnam: state.vietnamReducers
+        cities: state.citiesReducers
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onGetVietnam: () => {
-            dispatch(getDataVietnamAction('vietnam'));
+        _onGetCities: path => {
+            dispatch(getCitiesAction(path));
         }
     }
 }

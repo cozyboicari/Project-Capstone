@@ -1,95 +1,139 @@
 import { 
-    REGISTER, REGISTER_FAIL, REGISTER_SUCCESS,
-    LOGIN, LOGIN_FAIL, LOGIN_SUCCESS,
-    GET_DATA_VIETNAM, GET_DATA_VIETNAM_FAIL, GET_DATA_VIETNAM_SUCCESS,
-    GET_DATA_TOUR_GUIDES, GET_DATA_TOUR_GUIDES_SUCCESS, GET_DATA_TOUR_GUIDES_FAIL
-} from './ActionTypes';
+    GET_CITIES, GET_CITIES_FAIL, GET_CITIES_SUCCESS,
+    GET_TOURS, GET_TOURS_FAIL, GET_TOURS_SUCCESS,
+    LOGIN_ACCOUNT, LOGIN_ACCOUNT_FAIL, LOGIN_ACCOUNT_SUCCESS,
+    REGISTER_ACCOUNT, REGISTER_ACCOUNT_FAIL, REGISTER_ACCOUNT_SUCCESS,
+    LOGIN_FACEBOOK, LOGIN_FACEBOOK_FAIL, LOGIN_FACEBOOK_SUCCESS,
+    LOGIN_GMAIL, LOGIN_GMAIL_FAIL, LOGIN_GMAIL_SUCCESS
+} from './ActionType';
 
+//get cities in country
+export const getCitiesAction = path => {
+    return { 
+        type: GET_CITIES,
+        path
+    }
+}
 
-//action sign up
+export const getCitiesSuccessAction = cities => {
+    return {
+        type: GET_CITIES_SUCCESS,
+        cities
+    }
+}
+
+export const getCitiesFailAction = error => {
+    return {
+        type: GET_CITIES_FAIL,
+        error
+    }
+}
+
+// get tours in city
+export const getToursAction = (path, idCity) => {
+    return {
+        type: GET_TOURS,
+        path,
+        idCity
+    }
+}
+
+export const getToursSuccessAction = tours => {
+    return {
+        type: GET_TOURS_SUCCESS,
+        tours
+    }
+}
+
+export const getToursFailAction = error => {
+    return {
+        type: GET_TOURS_FAIL,
+        error
+    }
+}
+
+// login
+export const loginAction = user => {
+    return {
+        type: LOGIN_ACCOUNT,
+        user
+    }
+}
+
+export const loginSuccessAction = user => {
+    return {
+        type: LOGIN_ACCOUNT_SUCCESS,
+        user
+    }
+}
+
+export const loginFailAction = error => {
+    return {
+        type: LOGIN_ACCOUNT_FAIL,
+        error
+    }
+}
+
+// login facebook
+export const loginFacebookAction = () => {
+    return {
+        type: LOGIN_FACEBOOK,
+    }
+}
+
+export const loginFacebookSuccessAction = accountFacebook => {
+    return {
+        type: LOGIN_FACEBOOK,
+        accountFacebook
+    }
+}
+
+export const loginFacebookFailAction = error => {
+    return {
+        type: LOGIN_FACEBOOK,
+        error
+    }
+}
+
+// login gmail
+export const loginGmailAction = () => {
+    return {
+        type: LOGIN_GMAIL,
+    }
+}
+
+export const loginGmailSuccessAction = accountGmail => {
+    return {
+        type: LOGIN_GMAIL_SUCCESS,
+        accountGmail
+    }
+}
+
+export const loginGmailFailAction = error => {
+    return {
+        type: LOGIN_GMAIL_FAIL,
+        error
+    }
+}
+
+// register
 export const registerAction = newUser => {
     return {
-        type: REGISTER,
-        user: newUser
+        type: REGISTER_ACCOUNT,
+        newUser
     }
 }
 
 export const registerSuccessAction = user => {
     return {
-        type: REGISTER_SUCCESS,
+        type: REGISTER_ACCOUNT_SUCCESS,
         user
     }
 }
 
 export const registerFailAction = error => {
     return {
-        type: REGISTER_FAIL,
-        error
-    }
-}
-
-// action sign in
-export const loginAction = user => {
-    return {
-        type: LOGIN,
-        user
-    }
-}
-
-export const loginSuccessAction = response => {
-    return {
-        type: LOGIN_SUCCESS,
-        response
-    }
-}
-
-export const loginFailAction = error => {
-    return {
-        type: LOGIN_FAIL,
-        error
-    }
-}
-
-// action get data vietnam
-export const getDataVietnamAction = nameCollection => {
-    return {
-        type: GET_DATA_VIETNAM,
-        nameCollection
-    }
-}
-
-export const getDataVietnamSuccessAction = vietnam => {
-    return {
-        type: GET_DATA_VIETNAM_SUCCESS,
-        vietnam
-    }
-}
-
-export const getDataVietnamFailAction = error => {
-    return {
-        type: GET_DATA_VIETNAM_FAIL,
-        error
-    }
-}
-
-// action get data tourguides
-export const getDataTourGuides = nameCollection => {
-    return {
-        type: GET_DATA_TOUR_GUIDES,
-        nameCollection
-    }
-}
-
-export const getDataTourGuidesSuccess = tourguides => {
-    return {
-        type: GET_DATA_TOUR_GUIDES_SUCCESS,
-        tourguides
-    }
-}
-
-export const getDataTourGuidesFail = error => {
-    return {
-        type: GET_DATA_TOUR_GUIDES_FAIL,
+        type: REGISTER_ACCOUNT_FAIL,
         error
     }
 }

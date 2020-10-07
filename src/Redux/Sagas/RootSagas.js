@@ -1,16 +1,21 @@
 import { all } from 'redux-saga/effects';
 
-import { 
-    watchPostNewUserFromAuth, 
-    watchGetUserFromAuth, 
-    watchGetDataVietnam,
-    watchGetTourGuides } from './Sagas';
+import {
+    watchGetCitiesInCountryFromFirestore,
+    watchGetToursInCityFromFirestore,
+    watchSignInUserFromAuth,
+    watchSignUpUserFromAuth,
+    watchSignInUserFromFacebook,
+    watchSignInUserFromGmail
+ } from './Sagas';
 
-export default function* rootSaga() {
-    yield all([
-        watchPostNewUserFromAuth(),
-        watchGetUserFromAuth(),
-        watchGetDataVietnam(),
-        watchGetTourGuides()
-    ])
-}
+ export default function* rootSagas() {
+     yield all([
+         watchGetCitiesInCountryFromFirestore(),
+         watchGetToursInCityFromFirestore(),
+         watchSignInUserFromAuth(),
+         watchSignUpUserFromAuth(),
+         watchSignInUserFromGmail(),
+         watchSignInUserFromFacebook()
+     ])
+ }

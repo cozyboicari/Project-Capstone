@@ -21,30 +21,35 @@ export default class Header extends Component {
     render() {
         return(
             <View style={[styles.container, {
-                height: Platform.OS === 'ios' ? 120 : 70
+                height: Platform.OS === 'ios' ? 110 : 70
             }]}>
                 <StatusBar barStyle="light-content"/>
                 {/* header  */}
                 <View style={[styles.containerHeader, {
                     marginTop: Platform.OS === 'ios' ? 28 : 0
                 }]}>
-                    <View style={styles.itemHeaderLeft}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                this.props.navigation.openDrawer();
-                            }}
-                        >
-                            <Icons 
-                                name="menu-outline"
-                                size={SIZE_ICON}
-                                color={colors.BACKGROUND_CULTURE}
-                            />
-                        </TouchableOpacity>
-                    </View>
+                    <TouchableOpacity 
+                        style={styles.itemHeaderLeft}
+                        onPress={() => {
+                            const { goBack } = this.props.navigation;
+                            goBack();
+                        }}
+                    >
+                        {
+                        !this.props.isHome ?
+                        <Icons 
+                            name='chevron-back-outline'
+                            size={30}
+                            color='#fff'
+                        />
+                        : <View />
+                    }
+                    </TouchableOpacity>
                     <View style={styles.itemHeaderMid}>
                         <Text style={styles.textBrand}>Your Tour</Text>
                     </View>
                     <View style={styles.itemHeaderRight}>
+                       
                     </View>
                 </View>
             </View>

@@ -4,7 +4,7 @@ import { View } from 'react-native';
 //thu vien ngoai
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icons from 'react-native-vector-icons/Ionicons';
 
 //file global config
@@ -15,96 +15,108 @@ import IntroScreen from '../Components/Intro/Intro';
 import SignInScreen from '../Redux/Containers/SignInContainer';
 import SignUpScreen from '../Redux/Containers/SignUpContainer';
 import HomeScreen from '../Redux/Containers/HomeContainer';
-import TourGuidesScreen from '../Redux/Containers/TourGuidesContainer';
+import ToursScreen from '../Redux/Containers/ToursContainer';
+import DetailsTourScreen from '../Components/DetailsTour/DetailsTour';
 
 //redux
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 
-import allReducers from '../Redux/Reducers/index';
-import rootSaga from '../Redux/Sagas/RootSagas';
+import allReducers from '../Redux/Reducers/AllReducers';
+import rootSagas from '../Redux/Sagas/RootSagas';
 
 const sagaMiddleware = createSagaMiddleware();
-
 let store = createStore(allReducers, applyMiddleware(sagaMiddleware));
 
 // stack
 const Stack = createStackNavigator();
 
 //drawer
-const Drawer = createDrawerNavigator();
+const Tab = createBottomTabNavigator();
 
-//item drawer
-import DrawerContent  from './DrawerContent';
-
-const ScreenSignInAndSignUpAndHome = () => {
-    return(
-        <Provider store={store}>
-            <Stack.Navigator headerMode="none">
-                <Stack.Screen name="Intro Screen" component={IntroScreen}/>
-                <Stack.Screen name="Sign In Screen" component={SignInScreen}/>
-                <Stack.Screen name="Sign Up Screen" component={SignUpScreen}/>
-                <Stack.Screen name="Home Screen" component={HomeScreen} options={{
+const ScreenHome = () => {
+    return (
+        <Stack.Navigator headerMode="none">
+            <Stack.Screen name="Home Screen" component={HomeScreen} />
+            <Stack.Screen name="Tours Screen" component={ToursScreen} 
+                options={{
                     gestureEnabled: false
-                }}/>
-                <Stack.Screen name="Tour Guides Screen" component={TourGuidesScreen} />
-            </Stack.Navigator>
-        </Provider>
+                }}
+            />
+        </Stack.Navigator>
+    );
+}
+
+const TabsScreen = () => {
+
+    return (
+        <Tab.Navigator
+            tabBarOptions={{
+                activeTintColor: colors.BACKGROUND_BLUEYONDER,
+                inactiveTintColor: '#aaa',
+            }}
+            
+
+        >
+            <Tab.Screen 
+                name="Home" 
+                component={ScreenHome}
+                options={() => ({
+                    tabBarIcon: ({size, color}) => <Icons name="home-outline" size={size} color={color}/>,
+                })}
+            />
+            <Tab.Screen 
+                name="Notification" 
+                component={View}
+                options={{
+                    tabBarIcon: ({size, color}) => <Icons name="notifications-outline" size={size} color={color}/> 
+                }}
+            />
+            <Tab.Screen 
+                name="Wish list" 
+                component={View}
+                options={{
+                    tabBarIcon: ({size, color}) => <Icons name="bookmarks-outline" size={size} color={color}/> 
+                }}
+            />
+            <Tab.Screen 
+                name="Conversation" 
+                component={View}
+                options={{
+                    tabBarIcon: ({size, color}) => <Icons name="chatbubbles-outline" size={size} color={color}/> 
+                }}
+            />
+            <Tab.Screen 
+                name="Settings" 
+                component={View}
+                options={{
+                    tabBarIcon: ({size, color}) => <Icons name="settings-outline" size={size} color={color}/> 
+                }}
+            />
+        </Tab.Navigator>
     );
 }
 
 const ManagerScreens = () => {
     return(
         <NavigationContainer>
-            <Drawer.Navigator 
-                drawerContentOptions={{
-                    activeBackgroundColor: colors.BACKGROUND_BLUEYONDER,
-                    activeTintColor: colors.BACKGROUND_CULTURE,
-                }}
-                drawerStyle={{
-                    width: 240,
-                }}
-            >
-                <Drawer.Screen 
-                    name="Home" 
-                    component={ScreenSignInAndSignUpAndHome}
-                    options={{
-                        drawerIcon: ({size, color}) => <Icons name="home-outline" size={size} color={color}/> 
-                    }}
-                />
-                <Drawer.Screen 
-                    name="Notification" 
-                    component={View}
-                    options={{
-                        drawerIcon: ({size, color}) => <Icons name="notifications-outline" size={size} color={color}/> 
-                    }}
-                />
-                <Drawer.Screen 
-                    name="Wish list" 
-                    component={View}
-                    options={{
-                        drawerIcon: ({size, color}) => <Icons name="bookmarks-outline" size={size} color={color}/> 
-                    }}
-                />
-                <Drawer.Screen 
-                    name="Conversation" 
-                    component={View}
-                    options={{
-                        drawerIcon: ({size, color}) => <Icons name="chatbubbles-outline" size={size} color={color}/> 
-                    }}
-                />
-                <Drawer.Screen 
-                    name="Settings" 
-                    component={View}
-                    options={{
-                        drawerIcon: ({size, color}) => <Icons name="settings-outline" size={size} color={color}/> 
-                    }}
-                />
-            </Drawer.Navigator>
+            <Provider store={store}>
+                <Stack.Navigator headerMode="none" initialRouteName="Tabs">
+                    <Stack.Screen name="Intro Screen" component={IntroScreen} />
+                    <Stack.Screen name="Sign In Screen" component={SignInScreen}/>
+                    <Stack.Screen name="Sign Up Screen" component={SignUpScreen}/>
+                    <Stack.Screen name="Tabs" component={TabsScreen}/>
+                    <Stack.Screen name="Details Tour Screen" component={DetailsTourScreen} 
+                        options={{
+                            gestureEnabled: false
+                        }}
+                    />
+                </Stack.Navigator>
+            </Provider>
         </NavigationContainer>
     );
 }
 
-sagaMiddleware.run(rootSaga);
+sagaMiddleware.run(rootSagas);
 export default ManagerScreens;

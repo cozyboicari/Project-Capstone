@@ -14,17 +14,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     itemHeaderLeft: {
-        marginLeft: 10
+        flex: 1,
+        marginLeft: 12
     },
     itemHeaderMid: {
-        
+        flex: 1
     },
     itemHeaderRight: {
-        marginRight: 43
+        flex: 1
     },
     textBrand: {
         fontSize: 30,
-        fontWeight: '600',
+        fontWeight: 'bold',
         color: colors.BACKGROUND_CULTURE
     }
 })

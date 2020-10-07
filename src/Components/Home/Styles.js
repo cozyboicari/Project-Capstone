@@ -8,10 +8,10 @@ const { width, height } = Dimensions.get('window');
 
 //bien' config style
 const WIDTH_CITY =  width - 60;
-const HEIGHT_CITY = height - 230;
+const HEIGHT_CITY = height - 280;
 
 const WIDTH_CITY_VIEW_ALL = width - 45;
-const HEIGHT_CITY_VIEW_ALL = 150;
+const HEIGHT_CITY_VIEW_ALL = 120;
 
 const WIDTH_IMAGE = 84;
 const HEIGHT_IMAGE = 84;
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         shadowRadius: 7.2,
         shadowOffset: { width: 1, height: 2 },
         elevation: 5,
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     containerImageViewAll: {
         alignItems: 'center',
@@ -107,7 +107,8 @@ const styles = StyleSheet.create({
         borderRadius: WIDTH_IMAGE / 5
     },
     containerInfoViewAll: {
-        justifyContent: 'center'
+        justifyContent: 'center',
+        flex: 1
     },
     textViewAll: {
         fontSize: 19,
@@ -118,9 +119,14 @@ const styles = StyleSheet.create({
         color: colors.TEXT_DARK_JUNGLE_GREEN,
         marginTop: 5
     },
+    textVisitors: {
+        fontSize: 15,
+        fontWeight: '500',
+        color: '#555',
+        marginTop: 5
+    },
     containerFavouriteIcon: {
-        justifyContent: 'center',
-        marginLeft: 50
+        margin: 22
     }
 })
 

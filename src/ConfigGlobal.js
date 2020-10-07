@@ -1,38 +1,34 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Dimensions } from 'react-native';
 
-const version = '0.0.1';
+const version = '0.0.5';
+
+const { height } = Dimensions.get('window');
 
 //color global
 export const colors = {
     BACKGROUND_BLUEYONDER: '#576CA8',
-    BACKGROUND_CULTURE: '#F5F3F5',
+    BACKGROUND_CULTURE: '#FFF',
     TEXT_DARK_JUNGLE_GREEN: '#171D1C',
     COLOR_HEART: '#A62C2b'
 }
 
 // rate
-export const resultRate = arr => {
-    let resultReviews = 0;
-    for(let i = 0; i < arr.length; i++) {
-        resultReviews += arr[i];
-    }
-
-    let result = 0;
-    for(let i = 0; i < arr.length; i++) {
-        result += (arr[i] * (i + 1));
-    }
-
-    return result / resultReviews;
+export const newAvgRatings = (numRatings, oldAvgRatings, rating) => {
+    return (numRatings * oldAvgRatings + rating) / (numRatings + 1);
 }
 
-export const resultReviews = arr => {
-    let result = 0;
-    for(let i = 0; i < arr.length; i++) {
-        result += arr[i];
-    }
+export const getAvgRatings = (avgRatings) => {
+    return avgRatings === 0 ? 0.0 : 0;
+}
 
-    return result;
+export const getNumRatings = (numRatings) => {
+    return numRatings;
+}
+
+//uppercase first charactor
+export const uppercaseFirst = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 //component version
@@ -48,7 +44,7 @@ export const ComponentVersion = () => {
 
 export const styles = StyleSheet.create({
     containerVersion: {
-        marginBottom: 20,
+        marginBottom: height - (height - 30),
         alignItems: 'center'
     },
     textVersion: {
