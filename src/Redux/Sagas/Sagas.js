@@ -59,7 +59,8 @@ export function* watchSignInUserFromAuth() {
 //login facebook
 function* signInUserFromFacebook() {
     try {
-        const accountFacebook = yield signInUserByFacebook();
+        const accountFacebook = yield signInUserByFacebook()
+            .then(() => console.log('login facebook!'));
         yield put({ type: LOGIN_FACEBOOK_SUCCESS, accountFacebook });
     } catch (error) {
         yield put({ type: LOGIN_FACEBOOK_FAIL, error });
@@ -73,9 +74,8 @@ export function* watchSignInUserFromFacebook() {
 //login gmail
 function* signInUserFromGmail() {
     try {
-        const accountGmail = yield signInUserByGmail().then(user => {
-            console.log(user);
-        });
+        const accountGmail = yield signInUserByGmail()
+        .then(() => console.log('login gmail!'));
         yield put({ type: LOGIN_GMAIL_SUCCESS, accountGmail });
     } catch (error) {
         yield put({ type: LOGIN_GMAIL_FAIL, error });

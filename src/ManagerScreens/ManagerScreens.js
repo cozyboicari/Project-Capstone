@@ -17,6 +17,8 @@ import SignUpScreen from '../Redux/Containers/SignUpContainer';
 import HomeScreen from '../Redux/Containers/HomeContainer';
 import ToursScreen from '../Redux/Containers/ToursContainer';
 import DetailsTourScreen from '../Components/DetailsTour/DetailsTour';
+import ReviewsScreen from '../Components/Reviews/Reviews';
+import BookingScreen from '../Components/Booking/Booking';
 
 //redux
 import { createStore, applyMiddleware } from 'redux';
@@ -108,6 +110,16 @@ const ManagerScreens = () => {
                     <Stack.Screen name="Sign Up Screen" component={SignUpScreen}/>
                     <Stack.Screen name="Tabs" component={TabsScreen}/>
                     <Stack.Screen name="Details Tour Screen" component={DetailsTourScreen} 
+                        options={{
+                            gestureEnabled: false
+                        }}
+                    />
+                    <Stack.Screen name="Reviews Tour Screen" component={ReviewsScreen} 
+                        options={{
+                            gestureEnabled: false
+                        }}
+                    />
+                    <Stack.Screen name="Booking Screen" component={BookingScreen} 
                         options={{
                             gestureEnabled: false
                         }}

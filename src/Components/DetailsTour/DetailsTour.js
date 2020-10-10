@@ -79,7 +79,10 @@ export default class ProfileTourGuides extends Component {
                             />
                             <Text style={styles.textRating}>{`(${avgRating})`}</Text>
                             <TouchableOpacity
-                                onPress={() => {}}
+                                onPress={() => {
+                                    const { navigate } = this.props.navigation;
+                                    navigate('Reviews Tour Screen');
+                                }}
                             >
                                 <Text style={styles.textReviews}>See all reviews</Text>
                             </TouchableOpacity>
@@ -152,10 +155,11 @@ export default class ProfileTourGuides extends Component {
                     <TouchableOpacity
                         onPress={() => {
                             const isUser = auth().currentUser;
-                            
+                            const { navigate } = this.props.navigation;
                             if(!isUser) {
-                                const { navigate } = this.props.navigation;
                                 navigate('Sign In Screen');
+                            } else {
+                                navigate('Booking Screen');
                             }
                         }}
                         style={styles.containerButtonBooking}

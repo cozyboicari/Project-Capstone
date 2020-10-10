@@ -160,7 +160,9 @@ export default class SignUp extends Component {
                                 onPress={() => {
                                     this.props._onCreateUser({
                                         email: email,
-                                        password: password
+                                        password: password,
+                                        fullname: fullname, 
+                                        phoneNumber: phoneNumber,
                                     });
                                 }}
                             >

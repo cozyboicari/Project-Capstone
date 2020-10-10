@@ -9,7 +9,6 @@ import { uppercaseFirst } from '../../ConfigGlobal';
 //login facebook and gmail
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
 import { GoogleSignin } from '@react-native-community/google-signin';
-import { Alert } from 'react-native';
 
 //config google signin
 GoogleSignin.configure({
@@ -91,7 +90,34 @@ export const getToursInCity = async (path, idCity) => {
 
 //sign up auth by email
 export const createUserByEmail = async (newUser) => {
-  await auth().createUserWithEmailAndPassword(newUser.email, newUser.password);
+  await auth().createUserWithEmailAndPassword(newUser.email, newUser.password)
+    .then(user => {
+      console.log(user);
+      const userFirestore = {
+        uID: user.user._user.uid,
+        name: newUser.fullname,
+        phone: newUser.phoneNumber,
+        email: newUser.email,
+        gender: true,
+        picture: 'https://profiles.utdallas.edu/img/default.png',
+        birthday: firestore.Timestamp.fromDate(new Date()),
+        address: {},
+        description: ''
+      };
+      
+      addFirestore('travelers', userFirestore)
+        .then(() => {
+          console.log('Register success !');
+        })
+        .catch(error => {
+          console.log(error);
+        })
+    });
+}
+
+//add firestore
+export const addFirestore = async (nameCollection, data) => {
+  await firestore().collection(nameCollection).add(data);
 }
 
 //login auth by email
@@ -131,4 +157,4 @@ export const signInUserByGmail = async () => {
   return auth().signInWithCredential(googleCredential);
 }
 
-export { auth };
+export { auth, firebase };

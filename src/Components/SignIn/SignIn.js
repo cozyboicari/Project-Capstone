@@ -26,7 +26,9 @@ export default class SignIn extends Component {
 
     componentDidMount() {
         auth().onAuthStateChanged(user => {
-            this.props.navigation.navigate(user ? 'Tabs' : 'Sign In Screen');
+            if(user) {
+                this.props.navigation.navigate('Tabs');
+            }
         })
     }
 
