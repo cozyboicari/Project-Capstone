@@ -4,14 +4,8 @@ import { View, Text, StatusBar, TouchableOpacity, Platform } from 'react-native'
 //file css
 import styles from './Styles';
 
-//file global config
-import { colors } from '../../ConfigGlobal'; 
-
 //library ben ngoai
 import Icons from 'react-native-vector-icons/Ionicons';
-
-//bien' config
-const SIZE_ICON = 35;
 
 export default class Header extends Component {
     constructor(props) {
@@ -35,7 +29,7 @@ export default class Header extends Component {
                             goBack();
                         }}
                     >
-                        {
+                    {
                         !this.props.isHome ?
                         <Icons 
                             name='chevron-back-outline'
@@ -49,7 +43,6 @@ export default class Header extends Component {
                         <Text style={styles.textBrand}>Your Tour</Text>
                     </View>
                     <View style={styles.itemHeaderRight}>
-                       
                     </View>
                 </View>
             </View>

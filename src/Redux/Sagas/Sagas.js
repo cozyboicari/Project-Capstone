@@ -4,14 +4,16 @@ import {
     LOGIN_ACCOUNT_FAIL, LOGIN_ACCOUNT_SUCCESS, LOGIN_ACCOUNT,
     REGISTER_ACCOUNT_FAIL, REGISTER_ACCOUNT_SUCCESS, REGISTER_ACCOUNT,
     LOGIN_FACEBOOK_SUCCESS, LOGIN_FACEBOOK_FAIL, LOGIN_GMAIL_SUCCESS,
-    LOGIN_GMAIL_FAIL, LOGIN_GMAIL, LOGIN_FACEBOOK
+    LOGIN_GMAIL_FAIL, LOGIN_GMAIL, LOGIN_FACEBOOK,
+    GET_TRAVELER_SUCCESS, GET_TRAVELER, GET_TRAVELER_FAIL,
+    UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE, UPDATE_PROFILE_FAIL
 } from '../Actions/ActionType';
 
 import { takeLatest, put, call, take } from 'redux-saga/effects';
 import { 
     getCitiesInCountry, getToursInCity, 
     signInUserByEmail, createUserByEmail,
-    signInUserByFacebook, signInUserByGmail
+    signInUserByFacebook, signInUserByGmail, getTraveler, updateTravelerByID
  } from '../../Database/Firebase/ConfigGlobalFirebase';
 
  // get cites in country
@@ -40,6 +42,34 @@ function* getToursInCityFromFirestore(action) {
 
 export function* watchGetToursInCityFromFirestore() {
     yield takeLatest(GET_TOURS, getToursInCityFromFirestore);
+}
+
+//get traveler
+function* getTravelerFromFirestore() {
+    try {
+        const traveler = yield getTraveler();
+        yield put({ type: GET_TRAVELER_SUCCESS, traveler });
+    } catch(error) {
+        yield put({ type: GET_TRAVELER_FAIL, error });
+    }
+}
+
+export function* watchGetTravelerFromFirestore() {
+    yield takeLatest(GET_TRAVELER, getTravelerFromFirestore);
+}
+
+//update traveler
+function* updateTravelerProfileFromFirestore(action) {
+    try {
+        const profileUpdated = yield updateTravelerByID(action.profile);
+        yield put({ type: UPDATE_PROFILE_SUCCESS, profileUpdated });
+    } catch(error) {
+        yield put({ type: UPDATE_PROFILE_FAIL, error });
+    }
+}
+
+export function* watchUpdateTravelerProfileFromFirestore() {
+    yield takeLatest(UPDATE_PROFILE, updateTravelerProfileFromFirestore);
 }
 
 // login user

@@ -19,7 +19,8 @@ import ToursScreen from '../Redux/Containers/ToursContainer';
 import DetailsTourScreen from '../Components/DetailsTour/DetailsTour';
 import ReviewsScreen from '../Components/Reviews/Reviews';
 import BookingScreen from '../Components/Booking/Booking';
-
+import SettingsScreen from '../Redux/Containers/SettingsContainer';
+import ProfileScreen from '../Redux/Containers/ProfileContainer';
 //redux
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -42,6 +43,19 @@ const ScreenHome = () => {
         <Stack.Navigator headerMode="none">
             <Stack.Screen name="Home Screen" component={HomeScreen} />
             <Stack.Screen name="Tours Screen" component={ToursScreen} 
+                options={{
+                    gestureEnabled: false
+                }}
+            />
+        </Stack.Navigator>
+    );
+}
+
+const ScreenSettings = () => {
+    return (
+        <Stack.Navigator headerMode="none">
+            <Stack.Screen name="Settings Screen" component={SettingsScreen} />
+            <Stack.Screen name="Profile Screen" component={ProfileScreen} 
                 options={{
                     gestureEnabled: false
                 }}
@@ -91,7 +105,7 @@ const TabsScreen = () => {
             />
             <Tab.Screen 
                 name="Settings" 
-                component={View}
+                component={ScreenSettings}
                 options={{
                     tabBarIcon: ({size, color}) => <Icons name="settings-outline" size={size} color={color}/> 
                 }}

@@ -48,7 +48,9 @@ export default class Booking extends Component {
     }
 
     _renderItem = ({ item }) => {
-        const isSelected = (this.state.selectedItem === item.time);
+        const { selectedItem } = this.state;
+        const isSelected = (selectedItem === item.time);
+        
         return(
             <TouchableOpacity
                 onPress={() => this._choosen(item.time)}

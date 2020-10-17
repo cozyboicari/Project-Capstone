@@ -53,11 +53,6 @@ export const getCitiesInCountry = async (path) => {
     return datas;
 }
 
-// get tour guide by id
-export const getTourGuideByID = async (path, idTourGuide) => {
-  return await firestore().collection(path).doc(idTourGuide).get();
-}
-
 // get tours in city
 export const getToursInCity = async (path, idCity) => {
   const datas = [];
@@ -88,11 +83,43 @@ export const getToursInCity = async (path, idCity) => {
     return datas;
 }
 
+// get traveler firestore
+export const getTraveler = async () => {
+  const uID_auth = await auth().currentUser.uid;
+  let user = {};
+  await firestore().collection('travelers').where('uID', '==', uID_auth).get()
+    .then(users => {
+      user = users.docs[0].data();
+    });
+    return user;
+}
+
+//update data traveler by uID
+export const updateTravelerByID = async (profile) => {
+  const uID_auth = await auth().currentUser.uid;
+  let id = '';
+  await firestore().collection('travelers').where('uID', '==', uID_auth).get()
+    .then(users => {
+      id = users.docs[0].id;
+    });
+  
+
+  await firestore().collection('travelers').doc(id.toString())
+    .update({
+      description: profile.description,
+      gender: profile.gender,
+      name: profile.name,
+      phone: profile.phone,
+      picture: profile.picture,
+      birthday: profile.date
+    })
+    .then(() => console.log('updated !'));
+}
+
 //sign up auth by email
 export const createUserByEmail = async (newUser) => {
   await auth().createUserWithEmailAndPassword(newUser.email, newUser.password)
     .then(user => {
-      console.log(user);
       const userFirestore = {
         uID: user.user._user.uid,
         name: newUser.fullname,
@@ -100,9 +127,9 @@ export const createUserByEmail = async (newUser) => {
         email: newUser.email,
         gender: true,
         picture: 'https://profiles.utdallas.edu/img/default.png',
-        birthday: firestore.Timestamp.fromDate(new Date()),
-        address: {},
-        description: ''
+        birthday: new Date().toISOString().slice(0, 10),
+        description: '',
+        providerId: 'firebase.com'
       };
       
       addFirestore('travelers', userFirestore)
@@ -145,7 +172,36 @@ export const signInUserByFacebook = async () => {
   }
 
   const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
-  return auth().signInWithCredential(facebookCredential);
+  return auth().signInWithCredential(facebookCredential)
+    .then(user => {
+
+      //check ton tai
+      firestore().collection('travelers')
+        .where('uID', '==', user.user._user.uid).get()
+        .then(userExist => {
+          if(userExist.docs.length === 0) {
+            const userFirestore = {
+              uID: user.user._user.uid,
+              name: user.user._user.displayName,
+              phone: '',
+              email: user.user._user.email,
+              gender: true,
+              picture: user.user._user.photoURL,
+              birthday: new Date().toISOString().slice(0, 10),
+              description: '',
+              providerId: 'facebook.com'
+            };
+            
+            addFirestore('travelers', userFirestore)
+              .then(() => {
+                console.log('Register success !');
+              })
+              .catch(error => {
+                console.log(error);
+              })
+          }
+        });
+    });
 }
 
 // login gmail
@@ -154,7 +210,36 @@ export const signInUserByGmail = async () => {
   
   const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
-  return auth().signInWithCredential(googleCredential);
+  return auth().signInWithCredential(googleCredential)
+  .then(user => {
+    
+    //check ton tai
+    firestore().collection('travelers')
+    .where('uID', '==', user.user._user.uid).get()
+    .then(userExist => {
+      if(userExist.docs.length === 0) {
+        const userFirestore = {
+          uID: user.user._user.uid,
+          name: user.user._user.displayName,
+          phone: '',
+          email: user.user._user.email,
+          gender: true,
+          picture: user.user._user.photoURL,
+          birthday: new Date().toISOString().slice(0, 10),
+          description: '',
+          providerId: 'google.com'
+        };
+        
+        addFirestore('travelers', userFirestore)
+          .then(() => {
+            console.log('Register success !');
+          })
+          .catch(error => {
+            console.log(error);
+          })
+      }
+    })
+  });
 }
 
 export { auth, firebase };

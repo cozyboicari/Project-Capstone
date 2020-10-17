@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, 
-    StatusBar, FlatList, Image, ActivityIndicator,
+    StatusBar, FlatList, Image, ActivityIndicator, Dimensions, Platform,
 } from 'react-native';
 
 //file component
@@ -13,6 +13,9 @@ import styles from './Styles';
 import Icons from 'react-native-vector-icons/Ionicons';
 import { colors } from '../../ConfigGlobal';
 import * as Animatable from 'react-native-animatable';
+
+// file const
+const { height } = Dimensions.get('screen');
 
 //custom item city top
 const ItemCitiesTop = ({ name, description, image, navigation, id }) => {
@@ -163,7 +166,10 @@ export default class Home extends Component {
                             horizontal={viewAll ? false : true}
                             showsHorizontalScrollIndicator={false}
                             showsVerticalScrollIndicator={false}
-                            style={{ marginBottom: 200 }}
+                            style={ viewAll ? 
+                                { height: Platform.OS === 'android' ? height * 0.64 : height * 0.72, marginBottom: 200 } 
+                                : {}
+                            }
                         />
                     }
                 </View>

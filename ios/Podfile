@@ -13,7 +13,6 @@ target 'CapstoneVersion2' do
     # Pods for testing
   end
   
-  
   pod 'Firebase/Analytics'
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
@@ -32,6 +31,13 @@ target 'CapstoneVersion2' do
   use_flipper!
   post_install do |installer|
     flipper_post_install(installer)
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+         if config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_f < 9.0
+           config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
+         end
+      end
+  end
   end
 end
 

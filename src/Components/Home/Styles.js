@@ -8,7 +8,7 @@ const { width, height } = Dimensions.get('window');
 
 //bien' config style
 const WIDTH_CITY =  width - 60;
-const HEIGHT_CITY = height - 280;
+const HEIGHT_CITY = height * 0.685;
 
 const WIDTH_CITY_VIEW_ALL = width - 45;
 const HEIGHT_CITY_VIEW_ALL = 120;

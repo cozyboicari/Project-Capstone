@@ -4,7 +4,9 @@ import {
     LOGIN_ACCOUNT, LOGIN_ACCOUNT_FAIL, LOGIN_ACCOUNT_SUCCESS,
     REGISTER_ACCOUNT, REGISTER_ACCOUNT_FAIL, REGISTER_ACCOUNT_SUCCESS,
     LOGIN_FACEBOOK, LOGIN_FACEBOOK_FAIL, LOGIN_FACEBOOK_SUCCESS,
-    LOGIN_GMAIL, LOGIN_GMAIL_FAIL, LOGIN_GMAIL_SUCCESS
+    LOGIN_GMAIL, LOGIN_GMAIL_FAIL, LOGIN_GMAIL_SUCCESS,
+    GET_TRAVELER, GET_TRAVELER_FAIL, GET_TRAVELER_SUCCESS,
+    UPDATE_PROFILE, UPDATE_PROFILE_FAIL, UPDATE_PROFILE_SUCCESS
 } from './ActionType';
 
 //get cities in country
@@ -52,6 +54,49 @@ export const getToursFailAction = error => {
     }
 }
 
+// get traveler
+export const getTravelerAction = () => {
+    return {
+        type: GET_TRAVELER
+    }
+}
+
+export const getTravelerSuccessAction = traveler => {
+    return {
+        type: GET_TRAVELER_SUCCESS,
+        traveler
+    }
+}
+
+export const getTravelerFailAction = error => {
+    return {
+        type: GET_TRAVELER_FAIL,
+        error
+    }
+}
+
+//update profile
+export const updateProfileAction = profile => {
+    return {
+        type: UPDATE_PROFILE,
+        profile
+    }
+}
+
+export const updateProfileSuccessAction = profileUpdated => {
+    return {
+        type: UPDATE_PROFILE_SUCCESS,
+        profileUpdated
+    }
+}
+
+export const updateProfileFailAction = error => {
+    return {
+        type: UPDATE_PROFILE_FAIL,
+        error
+    }
+}
+
 // login
 export const loginAction = user => {
     return {
@@ -83,14 +128,14 @@ export const loginFacebookAction = () => {
 
 export const loginFacebookSuccessAction = accountFacebook => {
     return {
-        type: LOGIN_FACEBOOK,
+        type: LOGIN_FACEBOOK_SUCCESS,
         accountFacebook
     }
 }
 
 export const loginFacebookFailAction = error => {
     return {
-        type: LOGIN_FACEBOOK,
+        type: LOGIN_FACEBOOK_FAIL,
         error
     }
 }
