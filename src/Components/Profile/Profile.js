@@ -57,7 +57,7 @@ export default class Profile extends Component {
             } else if (response.customButton) {
                 console.log('User tapped custom button: ', response.customButton);
             } else {
-                this.setState({ picture: response.uri });
+                this.setState({ picture: 'data:image/jpeg;base64,' + response.data });
             }
         })
     }
