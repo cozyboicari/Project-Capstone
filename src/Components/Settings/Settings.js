@@ -97,7 +97,7 @@ export default class Settings extends Component {
                         <View style={styles.containerBottom}>
                             <Item title='Profile' nameIcon='person-outline' nameScreen='Profile Screen' navigation={this.props.navigation}/>
                             <Item title='Bookings' nameIcon='calendar-outline'/>
-                            <Item title='Become a tour guide' nameIcon='medal-outline'/>
+                            <Item title='Become a tour guide' nameIcon='medal-outline' nameScreen='Register Tour Guide Screen' navigation={this.props.navigation}/>
                             <Item title='Favorites' nameIcon='heart-outline'/>
                             <Item title='Change password' nameIcon='lock-closed-outline'/>
                             <ItemSignOut title='Sign out' nameIcon='log-out-outline' _signOut={this._signOut}/>

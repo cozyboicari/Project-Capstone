@@ -40,7 +40,7 @@ export default class Header extends Component {
                     }
                     </TouchableOpacity>
                     <View style={styles.itemHeaderMid}>
-                        <Text style={styles.textBrand}>Your Tour</Text>
+                        <Text style={styles.textBrand}>Yourtour</Text>
                     </View>
                     <View style={styles.itemHeaderRight}>
                     </View>

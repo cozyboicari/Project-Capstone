@@ -21,6 +21,9 @@ import ReviewsScreen from '../Components/Reviews/Reviews';
 import BookingScreen from '../Components/Booking/Booking';
 import SettingsScreen from '../Redux/Containers/SettingsContainer';
 import ProfileScreen from '../Redux/Containers/ProfileContainer';
+import RegisterTourGuideScreen from '../Components/RegisterTourGuide/RegisterTourGuide';
+import ActiveTourGuideScreen from '../Components/RegisterTourGuide/ActiveTourguide';
+
 //redux
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -65,7 +68,6 @@ const ScreenSettings = () => {
 }
 
 const TabsScreen = () => {
-
     return (
         <Tab.Navigator
             tabBarOptions={{
@@ -134,6 +136,16 @@ const ManagerScreens = () => {
                         }}
                     />
                     <Stack.Screen name="Booking Screen" component={BookingScreen} 
+                        options={{
+                            gestureEnabled: false
+                        }}
+                    />
+                    <Stack.Screen name="Register Tour Guide Screen" component={RegisterTourGuideScreen}
+                        options={{
+                            gestureEnabled: false
+                        }}
+                    />
+                    <Stack.Screen name="Active Tour Guide Screen" component={ActiveTourGuideScreen}
                         options={{
                             gestureEnabled: false
                         }}
