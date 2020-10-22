@@ -6,14 +6,17 @@ import {
     LOGIN_FACEBOOK_SUCCESS, LOGIN_FACEBOOK_FAIL, LOGIN_GMAIL_SUCCESS,
     LOGIN_GMAIL_FAIL, LOGIN_GMAIL, LOGIN_FACEBOOK,
     GET_TRAVELER_SUCCESS, GET_TRAVELER, GET_TRAVELER_FAIL,
-    UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE, UPDATE_PROFILE_FAIL
+    UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE, UPDATE_PROFILE_FAIL,
+    GET_QUESTION_ACTIVE, GET_QUESTION_ACTIVE_SUCCESS, GET_QUESTION_ACTIVE_FAIL
 } from '../Actions/ActionType';
 
 import { takeLatest, put, call, take } from 'redux-saga/effects';
 import { 
     getCitiesInCountry, getToursInCity, 
     signInUserByEmail, createUserByEmail,
-    signInUserByFacebook, signInUserByGmail, getTraveler, updateTravelerByID
+    signInUserByFacebook, signInUserByGmail, 
+    getTraveler, updateTravelerByID,
+    getQuestionActiveTourGuide
  } from '../../Database/Firebase/ConfigGlobalFirebase';
 
  // get cites in country
@@ -128,4 +131,18 @@ function* signUpUserFromAuth(action) {
 
 export function* watchSignUpUserFromAuth() {
     yield takeLatest(REGISTER_ACCOUNT, signUpUserFromAuth);
+}
+
+// get question active tour guide
+function* getQuestionActive() {
+    try {
+        const questions = yield getQuestionActiveTourGuide();
+        yield put({ type: GET_QUESTION_ACTIVE_SUCCESS, questions });
+    } catch(error) {
+        yield put({ type: GET_QUESTION_ACTIVE_FAIL, error });
+    }
+} 
+
+export function* watchGetQuestionActive() {
+    yield takeLatest(GET_QUESTION_ACTIVE, getQuestionActive);
 }

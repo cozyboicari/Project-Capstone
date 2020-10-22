@@ -19,17 +19,19 @@ const WIDTH_BUTTON = width * 0.35;
 const HEIGHT_BUTTON = height * 0.05;
 const WIDTH_CONTAINER_TICK = width;
 const HEIGHT_CONTAINER_TICK = height * 0.045;
+const WIDTH_BUTTON_SUBMIT = width * 0.28;
+const HEIGHT_BUTTON_SUBMIT = height * 0.055;
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.BACKGROUND_CULTURE
+        backgroundColor: colors.BACKGROUND_CULTURE,
     },
     containerIntroduceAndStart: {
 
     },
     containerImageTop: {
-        
+
     },
     imageTop: {
         width: WIDTH_IMAGE_TOP,
@@ -246,6 +248,26 @@ const styles = StyleSheet.create({
     textNameTick: {
         fontWeight: 'bold',
         fontSize: 15
+    },
+    containerButtonSubmit: {
+        position: 'absolute',
+        width: WIDTH_BUTTON_SUBMIT,
+        height: HEIGHT_BUTTON_SUBMIT,
+        backgroundColor: colors.BACKGROUND_BLUEYONDER,
+        borderRadius: 12,
+        shadowColor: '#555',
+        shadowOffset: {width: 1, height: 1},
+        shadowOpacity: .25,
+        shadowRadius: 12,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 40,
+        marginTop: 20
+    },
+    textSubmit: {
+        fontSize: 19,
+        fontWeight: 'bold',
+        color: colors.BACKGROUND_CULTURE
     }
 });
 

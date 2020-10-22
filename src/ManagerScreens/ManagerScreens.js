@@ -22,7 +22,7 @@ import BookingScreen from '../Components/Booking/Booking';
 import SettingsScreen from '../Redux/Containers/SettingsContainer';
 import ProfileScreen from '../Redux/Containers/ProfileContainer';
 import RegisterTourGuideScreen from '../Components/RegisterTourGuide/RegisterTourGuide';
-import ActiveTourGuideScreen from '../Components/RegisterTourGuide/ActiveTourguide';
+import ActiveTourGuideScreen from '../Redux/Containers/ActiveTourGuideContainer';
 
 //redux
 import { createStore, applyMiddleware } from 'redux';
@@ -145,11 +145,7 @@ const ManagerScreens = () => {
                             gestureEnabled: false
                         }}
                     />
-                    <Stack.Screen name="Active Tour Guide Screen" component={ActiveTourGuideScreen}
-                        options={{
-                            gestureEnabled: false
-                        }}
-                    />
+                    <Stack.Screen name="Active Tour Guide Screen" component={ActiveTourGuideScreen} />
                 </Stack.Navigator>
             </Provider>
         </NavigationContainer>

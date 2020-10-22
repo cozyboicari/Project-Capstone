@@ -94,6 +94,21 @@ export const getTraveler = async () => {
     return user;
 }
 
+// get question active tour guide
+export const getQuestionActiveTourGuide = async () => {
+  let data = [];
+  await firestore().collection('questionActiveTourGuide').get()
+    .then(questions => {
+      questions.forEach((question, index) => {
+        data.push({
+          ...question.data(),
+          idQuestion: question.id,
+        })
+      })
+    });
+  return data;
+}
+
 //update data traveler by uID
 export const updateTravelerByID = async (profile) => {
   const uID_auth = await auth().currentUser.uid;

@@ -6,7 +6,8 @@ import {
     LOGIN_FACEBOOK, LOGIN_FACEBOOK_FAIL, LOGIN_FACEBOOK_SUCCESS,
     LOGIN_GMAIL, LOGIN_GMAIL_FAIL, LOGIN_GMAIL_SUCCESS,
     GET_TRAVELER, GET_TRAVELER_FAIL, GET_TRAVELER_SUCCESS,
-    UPDATE_PROFILE, UPDATE_PROFILE_FAIL, UPDATE_PROFILE_SUCCESS
+    UPDATE_PROFILE, UPDATE_PROFILE_FAIL, UPDATE_PROFILE_SUCCESS,
+    GET_QUESTION_ACTIVE, GET_QUESTION_ACTIVE_FAIL, GET_QUESTION_ACTIVE_SUCCESS
 } from './ActionType';
 
 //get cities in country
@@ -179,6 +180,27 @@ export const registerSuccessAction = user => {
 export const registerFailAction = error => {
     return {
         type: REGISTER_ACCOUNT_FAIL,
+        error
+    }
+}
+
+// get question active tour guide
+export const getQuestionActiveAction = () => {
+    return {
+        type: GET_QUESTION_ACTIVE
+    }
+}
+
+export const getQuestionActiveSuccessAction = questions => {
+    return {
+        type: GET_QUESTION_ACTIVE_SUCCESS,
+        questions
+    }
+}
+
+export const getQuestionActiveFailAction = error => {
+    return {
+        type: GET_QUESTION_ACTIVE_FAIL,
         error
     }
 }
