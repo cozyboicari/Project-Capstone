@@ -14,7 +14,7 @@ const HEIGHT_IMAGE_MID = height * 0.2;
 const WIDTH_CONTAINER_BOTTOM = width;
 const HEIGHT_CONTAINER_BOTTOM = height * 0.13;
 const WIDTH_CONTAINER_BOTTOM_QUESTION = width;
-const HEIGHT_CONTAINER_BOTTOM_QUESTION = height * 0.1;
+const HEIGHT_CONTAINER_BOTTOM_QUESTION = height * 0.13;
 const WIDTH_BUTTON = width * 0.35;
 const HEIGHT_BUTTON = height * 0.05;
 const WIDTH_CONTAINER_TICK = width;
@@ -222,8 +222,9 @@ const styles = StyleSheet.create({
         shadowOpacity: .65,
         shadowRadius: 6.25,
         shadowOffset: { width: 0, height: 5 },
-        alignItems: 'flex-end',
-        justifyContent: 'center'
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center'
     },
     containerTick: {
         height: HEIGHT_CONTAINER_TICK,
@@ -268,7 +269,13 @@ const styles = StyleSheet.create({
         fontSize: 19,
         fontWeight: 'bold',
         color: colors.BACKGROUND_CULTURE
-    }
+    },
+
+    //progress bar
+    textProgressBar: { 
+        marginBottom: 5,
+        color: colors.BACKGROUND_CULTURE,
+    },
 });
 
 export default styles;

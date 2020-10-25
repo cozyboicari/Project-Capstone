@@ -69,6 +69,10 @@ export default class Settings extends Component {
        this.props._onGetTraveler();
     }
 
+    componentDidUpdate() {
+        this.props._onGetTraveler();
+    }
+
     render() {
         const { user } = this.state;
         if(user) {

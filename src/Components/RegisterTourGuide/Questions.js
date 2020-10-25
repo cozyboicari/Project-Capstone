@@ -14,8 +14,7 @@ import Icons from 'react-native-vector-icons/Ionicons';
 import RNPickerSelect from 'react-native-picker-select';
 
 // question item
-export const QuestionItem = ({ itemQuestion, step }) => {
-    const [ value, setValue ] = React.useState(''); // picker
+export const QuestionItem = ({ itemQuestion, step, root }) => {
     const [ active_few, setActive_few ] = React.useState(''); // few
 
     //render item few
@@ -136,6 +135,8 @@ export const QuestionItem = ({ itemQuestion, step }) => {
                         keyboardType={itemQuestion.keyboard}
                         placeholder='Type your answer here...'
                         placeholderTextColor={colors.BACKGROUND_BLUEYONDER}
+                        onChangeText={answer => root._setAnswer(answer)}
+                        value={root._getAnswer()}
                     />) ||
                     itemQuestion.type === 'flat-list' &&
                     (
@@ -155,12 +156,12 @@ export const QuestionItem = ({ itemQuestion, step }) => {
                     ) ||
                     itemQuestion.type === 'select-picker' &&
                     (<RNPickerSelect 
-                        onValueChange={value => setValue(value)}
+                        value={root._getAnswer() === '' ? null : root._getAnswer()}
+                        onValueChange={value => root._setAnswer(value)}
                         items={itemQuestion.data}
                         placeholder={{
                             label: 'Select an option',
-                            value: null,
-                            color: '#999'
+                            value: '',
                         }}
                         style={{
                             inputIOS: {

@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 
     },
     textName: {
-        fontSize: 25,
+        fontSize: 20,
         fontWeight: 'bold',
         color: colors.BACKGROUND_BLUEYONDER,
         marginBottom: 3
