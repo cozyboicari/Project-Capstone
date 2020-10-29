@@ -9,7 +9,8 @@ import {
     watchSignInUserFromGmail,
     watchGetTravelerFromFirestore,
     watchUpdateTravelerProfileFromFirestore,
-    watchGetQuestionActive
+    watchGetQuestionActive,
+    watchPushQuestionTourGuide
  } from './Sagas';
 
  export default function* rootSagas() {
@@ -22,6 +23,7 @@ import {
          watchSignInUserFromFacebook(),
          watchGetTravelerFromFirestore(),
          watchUpdateTravelerProfileFromFirestore(),
-         watchGetQuestionActive()
+         watchGetQuestionActive(),
+         watchPushQuestionTourGuide()
      ])
  }

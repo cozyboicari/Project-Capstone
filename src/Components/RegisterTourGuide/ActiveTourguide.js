@@ -110,8 +110,8 @@ export default class ActiveTourGuide extends Component {
 
     render() {
         const { next, showSubmit, progress, 
-            progressCount, answer, answerd, listAnswer } = this.state;
-        const { questions } = this.props;
+            progressCount, answer, answerd, } = this.state;
+        const { questions, _onPushQuestions } = this.props;
 
         const WIDTH_BAR = 170;
         const HEIGHT_BAR = 6;
@@ -146,7 +146,7 @@ export default class ActiveTourGuide extends Component {
                                         {
                                             text: 'Submit',
                                             onPress: () => {
-                                                console.log(answerd);
+                                                _onPushQuestions(answerd);
                                                 Alert.alert('Notification', 'Your questions have been sent to us, and please wait for a review and we will get back to you via email !');
                                                 const { goBack } = this.props.navigation;
                                                 goBack();

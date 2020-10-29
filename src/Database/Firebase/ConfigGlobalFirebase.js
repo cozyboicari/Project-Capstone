@@ -265,8 +265,14 @@ export const signInUserByGmail = async () => {
 }
 
 // push question active tour guide
-export const addQuestionActiveTourGuide = async (question) => {
-   
+export const addQuestionActiveTourGuide = async (questions) => {
+  const uid = await auth().currentUser.uid;
+  const questionsData = {
+    questions: [...questions],
+    idTraveler: uid
+  }
+  addFirestore('questions', questionsData)
+    .then(() => console.log('push question success !'));
 }
 
 

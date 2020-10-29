@@ -1,3 +1,5 @@
+import { exp } from "react-native-reanimated";
+
 // get cites in country
 export const GET_CITIES = 'GET_CITIES';
 export const GET_CITIES_SUCCESS = 'GET_CITIES_SUCCESS';
@@ -42,3 +44,8 @@ export const UPDATE_PROFILE_FAIL = 'UPDATE_PROFILE_FAIL';
 export const GET_QUESTION_ACTIVE = 'GET_QUESTION_ACTIVE';
 export const GET_QUESTION_ACTIVE_SUCCESS = 'GET_QUESTION_ACTIVE_SUCCESS';
 export const GET_QUESTION_ACTIVE_FAIL = 'GET_QUESTION_ACTIVE_FAIL';
+
+// push question tour guide
+export const PUSH_QUESTIONS = 'PUSH_QUESTIONS';
+export const PUSH_QUESTIONS_SUCCESS = 'PUSH_QUESTIONS_SUCCESS';
+export const PUSH_QUESTIONS_FAIL = 'PUSH_QUESTIONS_FAIL';

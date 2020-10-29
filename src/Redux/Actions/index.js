@@ -8,6 +8,7 @@ import {
     GET_TRAVELER, GET_TRAVELER_FAIL, GET_TRAVELER_SUCCESS,
     UPDATE_PROFILE, UPDATE_PROFILE_FAIL, UPDATE_PROFILE_SUCCESS,
     GET_QUESTION_ACTIVE, GET_QUESTION_ACTIVE_FAIL, GET_QUESTION_ACTIVE_SUCCESS,
+    PUSH_QUESTIONS, PUSH_QUESTIONS_FAIL, PUSH_QUESTIONS_SUCCESS
 } from './ActionType';
 
 //get cities in country
@@ -201,6 +202,28 @@ export const getQuestionActiveSuccessAction = questions => {
 export const getQuestionActiveFailAction = error => {
     return {
         type: GET_QUESTION_ACTIVE_FAIL,
+        error
+    }
+}
+
+// push question tour guide
+export const pushQuestionsAction = newQuestions => {
+    return {
+        type: PUSH_QUESTIONS,
+        newQuestions
+    }
+}
+
+export const pushQuestionsSuccessAction =  questions => {
+    return {
+        type: PUSH_QUESTIONS_SUCCESS,
+        questions
+    }
+}
+
+export const pushQuestionsFailAction = error => {
+    return {
+        type: PUSH_QUESTIONS_FAIL,
         error
     }
 }

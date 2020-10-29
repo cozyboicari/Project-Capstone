@@ -5,6 +5,7 @@ import signInReducers from './SignInReducers';
 import signUpReducers from './SignUpReducers';
 import travelerReducers from './ProfileReducers';
 import questionsReducers from './QuestionsReducers';
+import pushQuestionsReducers from './PushQuestionsReducers';
 
 const allReducers = combineReducers({
     citiesReducers,
@@ -13,6 +14,7 @@ const allReducers = combineReducers({
     signUpReducers,
     travelerReducers,
     questionsReducers,
+    pushQuestionsReducers
 })
 
 export default allReducers;

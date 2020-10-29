@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { getQuestionActiveAction, pushAnswerAction } from '../Actions/index';
+import { getQuestionActiveAction, pushQuestionsAction } from '../Actions/index';
 import ActiveTourGuideComponent from '../../Components/RegisterTourGuide/ActiveTourguide';
 
 const mapStateToProps = state => {
@@ -12,6 +12,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         _onGetQuestions: () => dispatch(getQuestionActiveAction()),
+        _onPushQuestions: newQuestions => dispatch(pushQuestionsAction(newQuestions))
     }
 }
 
