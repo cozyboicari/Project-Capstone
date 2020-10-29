@@ -15,18 +15,13 @@ import RNPickerSelect from 'react-native-picker-select';
 
 // question item
 export const QuestionItem = ({ itemQuestion, step, root }) => {
-    const [ active_few, setActive_few ] = React.useState(''); // few
 
     //render item few
-    const _setActive = (nameTick) => {
-        setActive_few(nameTick);
-    }
-
     const _renderItem = ({ item }) => {
-        const isActive = (active_few === item.nameTick)
+        const isActive = (root._getAnswer() === item.text);
         return(
             <TouchableOpacity
-                onPress={() => _setActive(item.nameTick)}
+                onPress={() => root._setAnswer(item.text)}
             >
                 <View style={[styles.containerTick, {
                     borderWidth: isActive ? 2 : 1,
@@ -60,28 +55,33 @@ export const QuestionItem = ({ itemQuestion, step, root }) => {
     }
 
     // more
-    const RenderItemMore = ({ item, index }) => {
-        const [ active, setActive ] = React.useState(false);
-
+    const _renderItemMore = ({ item }) => {
+        const isActive = root._getItemAnswer(item.text);
         return(
             <TouchableOpacity
-                onPress={() => { 
-                    setActive(!active);
+                onPress={() => {
+                    if(!isActive) {
+                        root._pushItemAnswer(item.text);
+                    }
+                    else {
+                        root._removeItemAnswer(item.text);
+                    }
                 }}
             >
                 <View style={[styles.containerTick, {
-                    borderWidth: active ? 2 : 1,
+                    borderWidth: isActive ? 2 : 1,
                     height: null,
                 }]}>
+                   
                     <View style={[styles.containerNameTick, {
-                        backgroundColor: active ? colors.BACKGROUND_BLUEYONDER : colors.BACKGROUND_CULTURE,
+                        backgroundColor: isActive ? colors.BACKGROUND_BLUEYONDER : colors.BACKGROUND_CULTURE,
                     }]}>
                         <Text style={[styles.textNameTick, {
-                            color: active ? colors.BACKGROUND_CULTURE : colors.BACKGROUND_BLUEYONDER
+                            color: isActive ? colors.BACKGROUND_CULTURE : colors.BACKGROUND_BLUEYONDER
                         }]}>{item.nameTick}</Text>
                     </View>
                     <Text style={{ color: colors.BACKGROUND_BLUEYONDER, fontSize: 15, flex: 1, padding: 10 }}>{item.text}</Text>
-                    { active ? 
+                    { isActive ? 
                     <View style={{  alignItems: 'flex-end', paddingRight: 10 }}>
                         <Icons 
                             name='checkmark-outline'
@@ -99,7 +99,7 @@ export const QuestionItem = ({ itemQuestion, step, root }) => {
             </TouchableOpacity>
         )
     }
-
+    
     // question item render
     return(
         <Animatable.View 
@@ -109,18 +109,22 @@ export const QuestionItem = ({ itemQuestion, step, root }) => {
         >
             <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginLeft: 20 }}>
                 <View style={{ flexDirection: 'row', paddingRight: 5, alignItems: 'center' }}>
-                    <Text style={{ fontSize: 17, color: colors.BACKGROUND_BLUEYONDER }}>{step}</Text>
+                    <Text style={{ fontSize: 17, color: colors.BACKGROUND_BLUEYONDER }}>{step + 1}</Text>
                     <Icons name='arrow-forward-outline' size={15} color={colors.BACKGROUND_BLUEYONDER}/>
                 </View>
                 <View style={{ paddingRight: 47 }}>
                     <Text style={[styles.textQuestion, {
-                        marginBottom: step === 9 ? 7 : 30
+                        marginBottom: (step + 1) === 9 || ((step + 1 !== 9) && itemQuestion.ex) ? 7 : 30
                     }]}>
                         {`${itemQuestion.question}`}
                     </Text>
                     { 
-                        step === 9 && 
+                        (step + 1) === 9 && 
                         <Text style={{ marginBottom: 30, fontWeight: '300', color: '#666'}}>
+                            {`${itemQuestion.ex}`}
+                        </Text> ||
+                        ((step + 1 !== 9) && itemQuestion.ex) &&
+                        <Text style={{ marginBottom: 30, fontWeight: '300', color: '#666', color: colors.BACKGROUND_BLUEYONDER}}>
                             {`${itemQuestion.ex}`}
                         </Text>
                     }
@@ -134,9 +138,10 @@ export const QuestionItem = ({ itemQuestion, step, root }) => {
                         style={styles.textInputQuestion}
                         keyboardType={itemQuestion.keyboard}
                         placeholder='Type your answer here...'
+                        autoCapitalize={(itemQuestion.keyboard === 'email-address') ? 'none' : 'sentences'}
                         placeholderTextColor={colors.BACKGROUND_BLUEYONDER}
-                        onChangeText={answer => root._setAnswer(answer)}
                         value={root._getAnswer()}
+                        onChangeText={text => root._setAnswer(text)}
                     />) ||
                     itemQuestion.type === 'flat-list' &&
                     (
@@ -151,12 +156,12 @@ export const QuestionItem = ({ itemQuestion, step, root }) => {
                             bounces={false}
                             data={itemQuestion.data}
                             keyExtractor={item => item.nameTick}
-                            renderItem={({ item, index }) => <RenderItemMore item={item} index={index}/>}
+                            renderItem={_renderItemMore}
                         />
                     ) ||
                     itemQuestion.type === 'select-picker' &&
                     (<RNPickerSelect 
-                        value={root._getAnswer() === '' ? null : root._getAnswer()}
+                        value={root._getAnswer()}
                         onValueChange={value => root._setAnswer(value)}
                         items={itemQuestion.data}
                         placeholder={{

@@ -1,17 +1,17 @@
 import { connect } from 'react-redux';
 
-import { getQuestionActiveAction } from '../Actions/index';
+import { getQuestionActiveAction, pushAnswerAction } from '../Actions/index';
 import ActiveTourGuideComponent from '../../Components/RegisterTourGuide/ActiveTourguide';
 
 const mapStateToProps = state => {
     return {
-        questions: state.questionsReducers
+        questions: state.questionsReducers,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        _onGetQuestions: () => dispatch(getQuestionActiveAction())
+        _onGetQuestions: () => dispatch(getQuestionActiveAction()),
     }
 }
 

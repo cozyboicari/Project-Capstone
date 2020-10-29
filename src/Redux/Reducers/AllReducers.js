@@ -12,7 +12,7 @@ const allReducers = combineReducers({
     signInReducers,
     signUpReducers,
     travelerReducers,
-    questionsReducers
+    questionsReducers,
 })
 
 export default allReducers;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, 
     StatusBar, TouchableWithoutFeedback,
-    Keyboard, FlatList, Animated } from 'react-native';
+    Keyboard, FlatList, Animated, Alert } from 'react-native';
 
 // file css
 import styles from './Styles';
@@ -21,24 +21,45 @@ export default class ActiveTourGuide extends Component {
         super(props);
 
         this.state = {
-            next: 1,
+            next: 0,
             progress: 0,
             progressCount: 0,
             showSubmit: false,
-            arrayFilter: [],
-            answered: [],
             answer: '',
+            answerd: [],
+            listAnswer: [],
         }
 
         this.animated = new Animated.Value(0);
     }
 
-    _pushAnswerd = (item) => {
+    _getItemAnswer = text => {
+        const { listAnswer } = this.state;
+        let result = '';
+        result = listAnswer.find(item => item === text);
+        return result;
+    }
+
+    _pushItemAnswer = text => {
+        const { listAnswer } = this.state;
         this.setState({
-            answered: [
-                ...this.state.answered,
-                item
+            listAnswer: [
+                ...listAnswer,
+                text
             ]
+        });
+    }
+
+    _removeItemAnswer = text => {
+        const { listAnswer } = this.state;
+        let arrTemp = [...listAnswer];
+        
+        if(arrTemp.length > 0) {
+            arrTemp = arrTemp.filter(item => item !== text);
+        }
+
+        this.setState({
+            listAnswer:  arrTemp
         })
     }
 
@@ -47,11 +68,40 @@ export default class ActiveTourGuide extends Component {
     }
 
     _setAnswer = answer => {
-        this.setState({ answer });
+        this.setState({ answer })
+    }
+
+    _pushAnswer = (newAnswer) => {
+        const { answerd } = this.state;
+        this.setState({
+            answerd: [
+                ...answerd,
+                newAnswer
+            ],
+        })
+    }
+
+    _updateAnswer = (answerUpdate, position) => {
+        let arrTemp = [...this.state.answerd];
+        arrTemp[position] = { ...arrTemp[position], answer: answerUpdate };
+        this.setState({ answerd: arrTemp });
     }
     
     _renderItem = ({ item }) => {
-        return <QuestionItem itemQuestion={item} step={item.step} root={this}/>;
+        return <QuestionItem next={this.state.next} itemQuestion={item} step={item.step} root={this}/>;
+    }
+
+    _filterAwnser = array => {
+        let result = [];
+        array.data.filter(item => {
+            const getText = this._getItemAnswer(item.text);
+
+            if(getText) {
+                result.push(getText);
+            }
+        });
+        console.log(result);
+        return result;
     }
 
     componentDidMount() {
@@ -59,12 +109,15 @@ export default class ActiveTourGuide extends Component {
     }
 
     render() {
-        const { next, arrayFilter, showSubmit, progress, progressCount, answer, answered } = this.state;
+        const { next, showSubmit, progress, 
+            progressCount, answer, answerd, listAnswer } = this.state;
         const { questions } = this.props;
 
         const WIDTH_BAR = 170;
         const HEIGHT_BAR = 6;
         const NUMBER_PROGRESS = WIDTH_BAR / 20;
+
+        const arrayFilter = questions.filter(x => x.step === next);
  
         return(
             <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
@@ -73,10 +126,8 @@ export default class ActiveTourGuide extends Component {
                     {/* view cau hoi */}
                     <View style={{ flex: 1, justifyContent: 'center' }}>
                         <View>
-                            <FlatList 
-                                data={ next === 1 ? 
-                                    questions.filter(item => item.step === next) : arrayFilter
-                                }
+                            <FlatList
+                                data={arrayFilter}
                                 keyExtractor={item => item.idQuestion}
                                 renderItem={this._renderItem}
                                 bounces={false}
@@ -85,7 +136,24 @@ export default class ActiveTourGuide extends Component {
                         {
                             showSubmit &&
                             <TouchableOpacity
-                                onPress={() => {}}
+                                onPress={() => {
+                                    Alert.alert('Notification', 'Do you want submit questions?', [
+                                        {
+                                            text: 'Canncel',
+                                            onPress: () => {},
+                                            style: 'cancel'
+                                        },
+                                        {
+                                            text: 'Submit',
+                                            onPress: () => {
+                                                console.log(answerd);
+                                                Alert.alert('Notification', 'Your questions have been sent to us, and please wait for a review and we will get back to you via email !');
+                                                const { goBack } = this.props.navigation;
+                                                goBack();
+                                            }
+                                        }
+                                    ], { cancelable: false});
+                                }}
                             >
                                 <Animatable.View
                                     animation='fadeInUpBig'
@@ -95,8 +163,9 @@ export default class ActiveTourGuide extends Component {
                                     <Text style={styles.textSubmit}>Submit</Text>
                                 </Animatable.View>
                             </TouchableOpacity>
-                        }
+                    }
                     </View>
+
                     {/* phan next prev cau hoi */}
                     <View style={styles.containerBottomQuestion}>
                         <View style={{ alignItems: 'flex-start', justifyContent: 'center' }}>
@@ -122,18 +191,36 @@ export default class ActiveTourGuide extends Component {
                         <View style={{ flexDirection: 'row', marginRight: 20 }}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    if( next - 1 !== 0 ) {
+                                    if( next !== 0 ) {
                                         this.setState({ 
                                             next: next - 1,
-                                            arrayFilter: questions.filter(x => x.step === this.state.next - 1),
                                             showSubmit: false,
-                                            progress: progress - NUMBER_PROGRESS,
-                                            progressCount: progressCount - 5,
-                                            answer: answered[next - 2].answer
+                                            progress: next === questions.length - 1 ? (progress - (NUMBER_PROGRESS * 2)) : (progress - NUMBER_PROGRESS),
+                                            progressCount: next === questions.length - 1 ? (progressCount - 10) : (progressCount - 5),
+                                            answer: answerd[next - 1].answer !== '' ? answerd[next - 1].answer : '',
                                         });
-
+                                        
+                                        // push anwser dau tien hoac anwser moi
+                                        if(!answerd[next] && answer === '') {
+                                            let filter = [];
+                                            if(arrayFilter[0].type === 'flat-list' && arrayFilter[0].selected === 'more') {
+                                                filter = this._filterAwnser(arrayFilter[0]);
+                                            }
+                                            this._pushAnswer({
+                                                question: arrayFilter[0].question,
+                                                answer: filter.length === 0 ? answer : filter
+                                            });
+                                        } // kiem tra xem co update k?
+                                        else if(answerd[next]) {
+                                            let filter = [];
+                                            if(arrayFilter[0].type === 'flat-list' && arrayFilter[0].selected === 'more') {
+                                                filter = this._filterAwnser(arrayFilter[0]);
+                                            }
+                                            this._updateAnswer(filter.length === 0 ? answer : filter, next);
+                                        }
+                                        
                                         Animated.timing(this.animated, {
-                                            toValue: progress - NUMBER_PROGRESS,
+                                            toValue: next === questions.length - 1 ? (progress - (NUMBER_PROGRESS * 2)) : (progress - NUMBER_PROGRESS),
                                             duration: 500,
                                             useNativeDriver: false
                                         }).start();
@@ -147,52 +234,64 @@ export default class ActiveTourGuide extends Component {
                                     style={{ marginRight: 3 }}
                                 />
                             </TouchableOpacity>
+
                             <TouchableOpacity 
                                 onPress={() => {
-                                    if(next + 1 <= questions.length) {
-                                        this.setState({ 
-                                            next: next + 1,
-                                            arrayFilter: questions.filter(x => x.step === this.state.next + 1),
-                                            progress: progress + NUMBER_PROGRESS,
-                                            progressCount: progressCount + 5
-                                        });
-                                        
-                                        console.log(answered);
-
-                                        // push 
-                                        if(answered.length === 0 || answered[next - 1].question !== arrayFilter[0].question) {
-                                            const item = {
-                                                question: next === 1 ? questions[0].question : arrayFilter[0].question,
-                                                answer: answer,
-                                            }
-    
-                                            this._pushAnswerd(item);
-                                        } else {
-                                            let answeredTemp = [...answered];
-                                            answeredTemp[next - 1] = {...answeredTemp[next - 1], answer: answer};
-                                            this.setState({ answered: answeredTemp });
-                                        }
-
-
-
-                                        Animated.timing(this.animated, {
-                                            toValue: progress + NUMBER_PROGRESS,
-                                            duration: 500,
-                                            useNativeDriver: false
-                                        }).start();
-                                    }
-                                    else if(next + 1 > questions.length) {
-                                        this.setState({ 
+                                    
+                                    //cau cuoi
+                                    if(next === questions.length - 1) {
+                                        this.setState({
                                             showSubmit: true,
                                             progress: progress + NUMBER_PROGRESS,
-                                            progressCount: progressCount + 5
-                                        });
+                                            progressCount: progressCount + 5,
+                                        })
+                                        if(!answerd[next]) {
+                                            this._pushAnswer({
+                                                question: arrayFilter[0].question,
+                                                answer:  answer
+                                            });
+                                        }
                                         Animated.timing(this.animated, {
                                             toValue: progress + NUMBER_PROGRESS,
                                             duration: 500,
                                             useNativeDriver: false
                                         }).start();
+
+                                        return;
                                     }
+
+                                    this.setState({ 
+                                        next: next + 1,
+                                        progress: progress + NUMBER_PROGRESS,
+                                        progressCount: progressCount + 5,
+                                        answer: answerd[next + 1] ? answerd[next+ 1].answer : '',
+                                    });
+                                    
+                                    // push anwser dau tien hoac anwser moi
+                                    if(answerd.length === 0 || !answerd[next]) {
+                                        let filter = [];
+                                        if(arrayFilter[0].type === 'flat-list' && arrayFilter[0].selected === 'more') {
+                                            filter = this._filterAwnser(arrayFilter[0]);
+                                        }
+                                        this._pushAnswer({
+                                            question: arrayFilter[0].question,
+                                            answer: filter.length === 0 ? answer : filter
+                                        });
+                                    }  // kiem tra xem co update k?
+                                    else if(answerd[next]) {
+                                        let filter = [];
+                                        if(arrayFilter[0].type === 'flat-list' && arrayFilter[0].selected === 'more') {
+                                            filter = this._filterAwnser(arrayFilter[0]);
+                                        }
+                                        this._updateAnswer(filter.length === 0 ? answer : filter, next);
+                                    }
+
+
+                                    Animated.timing(this.animated, {
+                                        toValue: progress + NUMBER_PROGRESS,
+                                        duration: 500,
+                                        useNativeDriver: false
+                                    }).start();
                                 }}
                             >
                                 <Icons 

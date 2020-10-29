@@ -40,7 +40,9 @@ export default class Booking extends Component {
 
     componentDidMount() {
         const { times, getHours } = this.state;
-        this.setState({ selectedItem: times.filter(time => time.time > getHours)[0].time });
+        if(getHours < 22) {
+            this.setState({ selectedItem: times.filter(time => time.time > getHours)[0].time });
+        }
     }
 
     _choosen = selectedItem => {
@@ -90,7 +92,7 @@ export default class Booking extends Component {
                                 this.setState({ 
                                     selectedDate: day.dateString, 
                                     isToday: true,
-                                    selectedItem: times.filter(time => time.time > getHours)[0].time
+                                    selectedItem: getHours < 22 && times.filter(time => time.time > getHours)[0].time
                                 });
                             }
                         }}

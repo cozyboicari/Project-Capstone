@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { color } from 'react-native-reanimated';
 
 //file global
 import { colors } from '../../ConfigGlobal';
@@ -17,13 +18,15 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     containerImage: {
-        marginRight: 20
+        marginRight: 20,
     },
     image: {
         width: LOGO_IMAGE,
         height: LOGO_IMAGE,
         backgroundColor: colors.BACKGROUND_BLUEYONDER,
         borderRadius: LOGO_IMAGE / 2,
+        borderWidth: 2,
+        borderColor: colors.BACKGROUND_BLUEYONDER
     },
     containerNameAndEmail: {
 

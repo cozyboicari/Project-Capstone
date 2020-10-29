@@ -64,19 +64,18 @@ export default class Settings extends Component {
         auth().onAuthStateChanged(user => {
             if(user) {
                 this.setState({ user });
+                this.props._onGetTraveler();
             }
-       });
-       this.props._onGetTraveler();
-    }
-
-    componentDidUpdate() {
-        this.props._onGetTraveler();
+        });
     }
 
     render() {
         const { user } = this.state;
         if(user) {
             const { email, name, picture } = this.props.traveler;
+            if(!email || !name || !picture) {
+                this.props._onGetTraveler();
+            }
             return(
                 <View style={styles.container}>
                     <StatusBar barStyle="light-content"/>

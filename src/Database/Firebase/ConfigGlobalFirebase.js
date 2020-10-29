@@ -118,7 +118,6 @@ export const updateTravelerByID = async (profile) => {
       id = users.docs[0].id;
     });
   
-
   await firestore().collection('travelers').doc(id.toString())
     .update({
       description: profile.description,
@@ -144,7 +143,10 @@ export const createUserByEmail = async (newUser) => {
         picture: 'https://profiles.utdallas.edu/img/default.png',
         birthday: new Date().toISOString().slice(0, 10),
         description: '',
-        providerId: 'firebase.com'
+        providerId: 'firebase.com',
+        idCity: '',
+        languages: '',
+        isActive: false
       };
       
       addFirestore('travelers', userFirestore)
@@ -189,7 +191,6 @@ export const signInUserByFacebook = async () => {
   const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
   return auth().signInWithCredential(facebookCredential)
     .then(user => {
-
       //check ton tai
       firestore().collection('travelers')
         .where('uID', '==', user.user._user.uid).get()
@@ -201,10 +202,13 @@ export const signInUserByFacebook = async () => {
               phone: '',
               email: user.user._user.email,
               gender: true,
-              picture: user.user._user.photoURL,
+              picture: user.additionalUserInfo.profile.picture.data.url,
               birthday: new Date().toISOString().slice(0, 10),
               description: '',
-              providerId: 'facebook.com'
+              providerId: 'facebook.com',
+              idCity: '',
+              languages: '',
+              isActive: false
             };
             
             addFirestore('travelers', userFirestore)
@@ -242,7 +246,10 @@ export const signInUserByGmail = async () => {
           picture: user.user._user.photoURL,
           birthday: new Date().toISOString().slice(0, 10),
           description: '',
-          providerId: 'google.com'
+          providerId: 'google.com',
+          idCity: '',
+          languages: '',
+          isActive: false
         };
         
         addFirestore('travelers', userFirestore)
@@ -256,5 +263,11 @@ export const signInUserByGmail = async () => {
     })
   });
 }
+
+// push question active tour guide
+export const addQuestionActiveTourGuide = async (question) => {
+   
+}
+
 
 export { auth, firebase };
