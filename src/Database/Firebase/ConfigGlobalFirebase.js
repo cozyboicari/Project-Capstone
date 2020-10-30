@@ -120,7 +120,6 @@ export const updateTravelerByID = async (profile) => {
   
   await firestore().collection('travelers').doc(id.toString())
     .update({
-      description: profile.description,
       gender: profile.gender,
       name: profile.name,
       phone: profile.phone,
@@ -146,7 +145,10 @@ export const createUserByEmail = async (newUser) => {
         providerId: 'firebase.com',
         idCity: '',
         languages: '',
-        isActive: false
+        isActive: false,
+        passions: '',
+        title: '',
+        imageProfile: ''
       };
       
       addFirestore('travelers', userFirestore)
@@ -208,7 +210,10 @@ export const signInUserByFacebook = async () => {
               providerId: 'facebook.com',
               idCity: '',
               languages: '',
-              isActive: false
+              isActive: false,
+              passions: '',
+              title: '',
+              imageProfile: ''
             };
             
             addFirestore('travelers', userFirestore)
@@ -249,7 +254,10 @@ export const signInUserByGmail = async () => {
           providerId: 'google.com',
           idCity: '',
           languages: '',
-          isActive: false
+          isActive: false,
+          passions: '',
+          title: '',
+          imageProfile: ''
         };
         
         addFirestore('travelers', userFirestore)

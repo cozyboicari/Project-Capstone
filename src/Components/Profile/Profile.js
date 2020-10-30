@@ -35,7 +35,6 @@ export default class Profile extends Component {
             gender: undefined,
             name: '',
             phone: '',
-            description: '',
             picture: '',
         }
     }
@@ -63,14 +62,13 @@ export default class Profile extends Component {
     }
 
     _saveState = () => {
-        const { date, name, gender, phone, description, picture } = this.state;
+        const { date, name, gender, phone, picture } = this.state;
 
         const travelerUpdated = {
             date: date === '' ? this.props.traveler.birthday : date,
             name: name === '' ? this.props.traveler.name : name,
             gender: gender === undefined ? this.props.traveler.gender : gender,
             phone: phone === '' ? this.props.traveler.phone : phone,
-            description: description === '' ? this.props.traveler.description : description,
             picture: picture === '' ? this.props.traveler.picture : picture,
         };
 
@@ -93,7 +91,7 @@ export default class Profile extends Component {
     }
 
     render() {
-        const { birthday, picture, name, email, gender, phone, description } = this.props.traveler;
+        const { birthday, picture, name, email, gender, phone } = this.props.traveler;
         const { genders } = this.state;
 
         return (
@@ -159,23 +157,6 @@ export default class Profile extends Component {
                                     onChangeText={ phone => {
                                         this.setState({
                                             phone
-                                        })
-                                    }}
-                                />
-                            </View>
-                            {/* Description */}
-                            <View style={styles.contaienrItem}>
-                                <Text style={{ fontSize: 14, fontWeight: '300' }}>Description</Text>
-                                <TextInput 
-                                    style={[styles.textInput, { height: 100, marginVertical: 10, paddingTop: 10 }]}
-                                    multiline={true}
-                                    underlineColorAndroid='transparent'
-                                    returnKeyType='done'
-                                    placeholder={description}
-                                    onSubmitEditing={Keyboard.dismiss}
-                                    onChangeText={ description => {
-                                        this.setState({
-                                            description
                                         })
                                     }}
                                 />

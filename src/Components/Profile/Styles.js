@@ -7,10 +7,13 @@ const { width, height } = Dimensions.get('screen');
 
 //file const
 const AVATAR_PROFILE = 140;
+const AVATAR_PROFILE_DETAIL = (width + height) * 0.09;
 const WIDTH_BUTTON_CHANGE_AVATAR = 200;
 const HEIGHT_BUTTON_CHANGE_AVATAR = 45;
 const WIDTH_BUTTON_SAVE= 150;
+const HEIGHT_BUTTON_CONTACT = height * 0.065
 const HEIGHT_BUTTON_SAVE = 50;
+const HEIGHT_CONTAINER_BOTTOM = height * 0.14;
 
 
 const styles = StyleSheet.create({
@@ -123,6 +126,104 @@ const styles = StyleSheet.create({
         fontWeight: '300', 
         marginBottom: 4,
         color: colors.TEXT_DARK_JUNGLE_GREEN
+    },
+
+    //profile detail
+    containerAvatarAndInformation: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    containerAvatar: {
+        margin: 22,
+        marginBottom: 30
+    },
+    avatar: {
+        width: AVATAR_PROFILE_DETAIL,
+        height: AVATAR_PROFILE_DETAIL,
+        borderRadius: AVATAR_PROFILE / 2,
+        backgroundColor: colors.BACKGROUND_CULTURE,
+        borderWidth: 2,
+        borderColor: colors.BACKGROUND_BLUEYONDER
+    },
+    containerName: {
+        flex: 1
+    },
+    name: {
+        color: '#444',
+        marginBottom: 5
+    },
+    containerInfoDetail: {
+        margin: 22,
+    },
+    containerItemDetail: {
+        marginBottom: 20
+    },
+    text: {
+        fontSize: 18,
+        marginRight: 6,
+        marginLeft: 6,
+        fontWeight: '300',
+        color: colors.TEXT_DARK_JUNGLE_GREEN
+    },
+    data: {
+        fontSize: 17,
+        fontWeight: '500',
+        marginTop: 5
+    },
+    containerIntroduce: {
+        borderTopWidth: 1,
+        borderColor: '#ddd',
+        paddingVertical: 20
+    },
+    textIntroduce: {
+        fontSize: 20,
+        fontWeight: '600',
+        color: '#333'
+    },
+    avatarIntroduce: {
+        height: height * 0.25,
+        backgroundColor: colors.BACKGROUND_BLUEYONDER,
+        marginVertical: 20,
+        borderRadius: 7,
+        shadowColor: '#000',
+        shadowRadius: 6,
+        shadowOffset: {width: 5, height: 5},
+        shadowOpacity: .3
+    },
+    containerDescription: {
+        marginTop: 10,
+        marginBottom: 30
+    },
+    description: {
+        fontSize: 17,
+        fontWeight: '300'
+    },
+    containerViewTours: {
+        borderTopWidth: 1,
+        borderColor: '#ddd',
+        paddingVertical: 20
+    },
+    containerBottom: {
+        height: HEIGHT_CONTAINER_BOTTOM,
+        backgroundColor: colors.BACKGROUND_CULTURE,
+        shadowColor: '#000',
+        shadowOpacity: .9,
+        shadowOffset: { width: 0, height: 5 },
+        shadowRadius: 6.25,
+        justifyContent: 'center',
+        paddingHorizontal: 10
+    },
+    containerButtonContact: {
+        height: HEIGHT_BUTTON_CONTACT,
+        backgroundColor: colors.BACKGROUND_BLUEYONDER,
+        borderRadius: (HEIGHT_BUTTON_CONTACT + width) / 2,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    textButtonContact: {
+        fontSize: 20,
+        color: colors.BACKGROUND_CULTURE,
+        fontWeight: 'bold'
     }
 });
 

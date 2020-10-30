@@ -23,6 +23,7 @@ import SettingsScreen from '../Redux/Containers/SettingsContainer';
 import ProfileScreen from '../Redux/Containers/ProfileContainer';
 import RegisterTourGuideScreen from '../Components/RegisterTourGuide/RegisterTourGuide';
 import ActiveTourGuideScreen from '../Redux/Containers/ActiveTourGuideContainer';
+import ProfileDetailScreen from '../Components/Profile/ProfileDetail';
 
 //redux
 import { createStore, applyMiddleware } from 'redux';
@@ -92,13 +93,6 @@ const TabsScreen = () => {
                 }}
             />
             <Tab.Screen 
-                name="Wish list" 
-                component={View}
-                options={{
-                    tabBarIcon: ({size, color}) => <Icons name="bookmarks-outline" size={size} color={color}/> 
-                }}
-            />
-            <Tab.Screen 
                 name="Conversation" 
                 component={View}
                 options={{
@@ -141,6 +135,11 @@ const ManagerScreens = () => {
                         }}
                     />
                     <Stack.Screen name="Register Tour Guide Screen" component={RegisterTourGuideScreen}
+                        options={{
+                            gestureEnabled: false
+                        }}
+                    />
+                    <Stack.Screen name="Profile Detail Screen" component={ProfileDetailScreen} 
                         options={{
                             gestureEnabled: false
                         }}

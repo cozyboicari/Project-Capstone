@@ -72,15 +72,15 @@ export default class Settings extends Component {
     render() {
         const { user } = this.state;
         if(user) {
-            const { email, name, picture } = this.props.traveler;
-            if(!email || !name || !picture) {
+            const { email, name, picture, isActive } = this.props.traveler;
+            if(!email || !name || !picture || !isActive || isActive) {
                 this.props._onGetTraveler();
             }
             return(
                 <View style={styles.container}>
                     <StatusBar barStyle="light-content"/>
                     <HeaderComponent {...this.props} isHome={true}/>
-                    <ScrollView>
+                    <ScrollView bounces={false}>
                         <View style={styles.containerTop}>
                             <View style={styles.containerImage}>
                                 <Image 
@@ -94,9 +94,13 @@ export default class Settings extends Component {
                             </View>
                         </View>
                         <View style={styles.containerBottom}>
-                            <Item title='Profile' nameIcon='person-outline' nameScreen='Profile Screen' navigation={this.props.navigation}/>
-                            <Item title='Bookings' nameIcon='calendar-outline'/>
-                            <Item title='Become a tour guide' nameIcon='medal-outline' nameScreen='Register Tour Guide Screen' navigation={this.props.navigation}/>
+                            <Item title='Edit profile' nameIcon='construct-outline' nameScreen='Profile Screen' navigation={this.props.navigation}/>
+                            <Item title='Booking history ' nameIcon='calendar-outline'/>
+                            {
+                                !isActive ?
+                                <Item title='Become a tour guide' nameIcon='medal-outline' nameScreen='Register Tour Guide Screen' navigation={this.props.navigation}/> :
+                                <Item title='Profile tour guide' nameIcon='person-outline' nameScreen='Profile Detail Screen' navigation={this.props.navigation}/>
+                            }
                             <Item title='Favorites' nameIcon='heart-outline'/>
                             <Item title='Change password' nameIcon='lock-closed-outline'/>
                             <ItemSignOut title='Sign out' nameIcon='log-out-outline' _signOut={this._signOut}/>
