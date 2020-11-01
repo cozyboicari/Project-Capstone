@@ -3,7 +3,7 @@ import {
     UPDATE_PROFILE_FAIL, UPDATE_PROFILE_SUCCESS,
 } from '../Actions/ActionType';
 
-export const travelerReducers = (traveler = {}, action) => {
+const travelerReducers = (traveler = {}, action) => {
     switch(action.type) {
         case GET_TRAVELER_SUCCESS: 
             return action.traveler;

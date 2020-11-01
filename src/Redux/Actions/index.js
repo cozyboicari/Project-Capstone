@@ -8,7 +8,9 @@ import {
     GET_TRAVELER, GET_TRAVELER_FAIL, GET_TRAVELER_SUCCESS,
     UPDATE_PROFILE, UPDATE_PROFILE_FAIL, UPDATE_PROFILE_SUCCESS,
     GET_QUESTION_ACTIVE, GET_QUESTION_ACTIVE_FAIL, GET_QUESTION_ACTIVE_SUCCESS,
-    PUSH_QUESTIONS, PUSH_QUESTIONS_FAIL, PUSH_QUESTIONS_SUCCESS
+    PUSH_QUESTIONS, PUSH_QUESTIONS_FAIL, PUSH_QUESTIONS_SUCCESS,
+    GET_TOUR_GUIDE, GET_TOUR_GUIDE_FAIL, GET_TOUR_GUIDE_SUCCESS,
+    UPDATE_ITEM_TOUR_GUIDE, UPDATE_ITEM_TOUR_GUIDE_FAIL, UPDATE_ITEM_TOUR_GUIDE_SUCCESS
 } from './ActionType';
 
 //get cities in country
@@ -224,6 +226,50 @@ export const pushQuestionsSuccessAction =  questions => {
 export const pushQuestionsFailAction = error => {
     return {
         type: PUSH_QUESTIONS_FAIL,
+        error
+    }
+}
+
+//get tour guide
+export const getTourGuideAction = idTourGuide => {
+    return {
+        type: GET_TOUR_GUIDE,
+        idTourGuide
+    }
+}
+
+export const getTourGuideSuccessAction = tourGuide => {
+    return {
+        type: GET_TOUR_GUIDE_SUCCESS,
+        tourGuide
+    }
+}
+
+export const getTourGuideFailAction = error => {
+    return {
+        type: GET_TOUR_GUIDE_FAIL,
+        error
+    }
+}
+
+// update item tour guide
+export const updateItemTourGuideAction = itemsUpdate => {
+    return {
+        type: UPDATE_ITEM_TOUR_GUIDE,
+        itemsUpdate
+    }
+}
+
+export const updateItemTourGuideSuccessAction = itemsUpdated => {
+    return {
+        type: UPDATE_ITEM_TOUR_GUIDE_SUCCESS,
+        itemsUpdated
+    }
+}
+
+export const updateItemTourGuideFailAction = error => {
+    return {
+        type: UPDATE_ITEM_TOUR_GUIDE_FAIL,
         error
     }
 }

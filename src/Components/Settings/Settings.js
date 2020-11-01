@@ -73,7 +73,7 @@ export default class Settings extends Component {
         const { user } = this.state;
         if(user) {
             const { email, name, picture, isActive } = this.props.traveler;
-            if(!email || !name || !picture || !isActive || isActive) {
+            if(!email || !name || !picture || !isActive) {
                 this.props._onGetTraveler();
             }
             return(

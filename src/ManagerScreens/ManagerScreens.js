@@ -23,7 +23,8 @@ import SettingsScreen from '../Redux/Containers/SettingsContainer';
 import ProfileScreen from '../Redux/Containers/ProfileContainer';
 import RegisterTourGuideScreen from '../Components/RegisterTourGuide/RegisterTourGuide';
 import ActiveTourGuideScreen from '../Redux/Containers/ActiveTourGuideContainer';
-import ProfileDetailScreen from '../Components/Profile/ProfileDetail';
+import ProfileDetailScreen from '../Redux/Containers/ProfileDetailContainer';
+import EditProfileDetailScreen from '../Redux/Containers/EditProfileDetailContainer';
 
 //redux
 import { createStore, applyMiddleware } from 'redux';
@@ -140,6 +141,11 @@ const ManagerScreens = () => {
                         }}
                     />
                     <Stack.Screen name="Profile Detail Screen" component={ProfileDetailScreen} 
+                        options={{
+                            gestureEnabled: false
+                        }}
+                    />
+                    <Stack.Screen name="Edit Profile Detail Screen" component={EditProfileDetailScreen} 
                         options={{
                             gestureEnabled: false
                         }}

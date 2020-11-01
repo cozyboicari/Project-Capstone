@@ -8,7 +8,10 @@ import {
     GET_TRAVELER_SUCCESS, GET_TRAVELER, GET_TRAVELER_FAIL,
     UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE, UPDATE_PROFILE_FAIL,
     GET_QUESTION_ACTIVE, GET_QUESTION_ACTIVE_SUCCESS, GET_QUESTION_ACTIVE_FAIL,
-    PUSH_QUESTIONS_FAIL, PUSH_QUESTIONS_SUCCESS, PUSH_QUESTIONS
+    PUSH_QUESTIONS_FAIL, PUSH_QUESTIONS_SUCCESS, PUSH_QUESTIONS,
+    GET_TOUR_GUIDE_SUCCESS, GET_TOUR_GUIDE_FAIL, GET_TOUR_GUIDE,
+    UPDATE_ITEM_TOUR_GUIDE_SUCCESS, UPDATE_ITEM_TOUR_GUIDE_FAIL, 
+    UPDATE_ITEM_TOUR_GUIDE
 } from '../Actions/ActionType';
 
 import { takeLatest, put, call, take } from 'redux-saga/effects';
@@ -18,7 +21,9 @@ import {
     signInUserByFacebook, signInUserByGmail, 
     getTraveler, updateTravelerByID,
     getQuestionActiveTourGuide,
-    addQuestionActiveTourGuide
+    addQuestionActiveTourGuide,
+    getTourGuideByID,
+    updateTourGuideByID
  } from '../../Database/Firebase/ConfigGlobalFirebase';
 
  // get cites in country
@@ -162,4 +167,32 @@ function* pushQuestionTourGuide(action) {
 
 export function* watchPushQuestionTourGuide() {
     yield takeLatest(PUSH_QUESTIONS, pushQuestionTourGuide);
+}
+
+// get tour guide
+function* getTourGuideFromAuth(action) {
+    try {
+        const tourGuide = yield getTourGuideByID(action.idTourGuide);
+        yield put({ type: GET_TOUR_GUIDE_SUCCESS, tourGuide });
+    } catch(error) {
+        yield put({ type: GET_TOUR_GUIDE_FAIL, error });
+    }
+}
+
+export function* watchGetTourGuideFromAuth() {
+    yield takeLatest(GET_TOUR_GUIDE, getTourGuideFromAuth);
+}
+
+// update tour guide
+function* updateItemTourGuideFromAuth(action) {
+    try {
+        const itemsUpdated = yield updateTourGuideByID(action.itemsUpdate);
+        yield put({ type: UPDATE_ITEM_TOUR_GUIDE_SUCCESS, itemsUpdated });
+    } catch(error) {
+        yield put({ type: UPDATE_ITEM_TOUR_GUIDE_FAIL, error });
+    }
+}
+
+export function* watchUpdateItemTourGuideFromAuth() {
+    yield takeLatest(UPDATE_ITEM_TOUR_GUIDE, updateItemTourGuideFromAuth);
 }

@@ -10,7 +10,9 @@ import {
     watchGetTravelerFromFirestore,
     watchUpdateTravelerProfileFromFirestore,
     watchGetQuestionActive,
-    watchPushQuestionTourGuide
+    watchPushQuestionTourGuide,
+    watchGetTourGuideFromAuth,
+    watchUpdateItemTourGuideFromAuth
  } from './Sagas';
 
  export default function* rootSagas() {
@@ -24,6 +26,8 @@ import {
          watchGetTravelerFromFirestore(),
          watchUpdateTravelerProfileFromFirestore(),
          watchGetQuestionActive(),
-         watchPushQuestionTourGuide()
+         watchPushQuestionTourGuide(),
+         watchGetTourGuideFromAuth(),
+         watchUpdateItemTourGuideFromAuth()
      ])
  }

@@ -91,7 +91,17 @@ export const getTraveler = async () => {
     .then(users => {
       user = users.docs[0].data();
     });
-    return user;
+  return user;
+}
+
+// get tour guide
+export const getTourGuideByID = async (idTourGuide) => {
+  let tourguide = {};
+  await firestore().collection('travelers').where('uID', '==', idTourGuide).get()
+    .then(users => {
+      tourguide = users.docs[0].data();
+    });
+  return tourguide;
 }
 
 // get question active tour guide
@@ -127,6 +137,26 @@ export const updateTravelerByID = async (profile) => {
       birthday: profile.date
     })
     .then(() => console.log('updated !'));
+}
+
+//update data tourguide by uID
+export const updateTourGuideByID = async (profile) => {
+  const uID_auth = await auth().currentUser.uid;
+  let id = '';
+  await firestore().collection('travelers').where('uID', '==', uID_auth).get()
+    .then(users => {
+      id = users.docs[0].id;
+    });
+  
+  await firestore().collection('travelers').doc(id.toString())
+    .update({
+      title: profile.title,
+      languages: profile.languages,
+      passions: profile.passions,
+      imageProfile: profile.imageProfile,
+      description: profile.description
+    })
+    .then(() => console.log('updated tour guide !'));
 }
 
 //sign up auth by email

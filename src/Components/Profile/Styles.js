@@ -11,9 +11,11 @@ const AVATAR_PROFILE_DETAIL = (width + height) * 0.09;
 const WIDTH_BUTTON_CHANGE_AVATAR = 200;
 const HEIGHT_BUTTON_CHANGE_AVATAR = 45;
 const WIDTH_BUTTON_SAVE= 150;
-const HEIGHT_BUTTON_CONTACT = height * 0.065
+const HEIGHT_BUTTON_CONTACT = height * 0.06;
 const HEIGHT_BUTTON_SAVE = 50;
-const HEIGHT_CONTAINER_BOTTOM = height * 0.14;
+const HEIGHT_CONTAINER_BOTTOM = height * 0.13;
+const WIDTH_BUTTON_SAVE_EDIT = width * 0.3;
+const HEIGHT_BUTTON_SAVE_EDIT = height * 0.05
 
 
 const styles = StyleSheet.create({
@@ -146,7 +148,8 @@ const styles = StyleSheet.create({
         borderColor: colors.BACKGROUND_BLUEYONDER
     },
     containerName: {
-        flex: 1
+        flex: 1,
+        paddingHorizontal: 10
     },
     name: {
         color: '#444',
@@ -224,6 +227,58 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: colors.BACKGROUND_CULTURE,
         fontWeight: 'bold'
+    },
+
+    //edit profile
+    titleEditProfile: {
+        margin: 22,
+        fontSize: 20,
+        color: '#444',
+        fontWeight: '600'
+    },
+    containerItemEditProfile: {
+        marginHorizontal: 22,
+        marginBottom: 20
+    },
+    textItemEditProfile: {
+        fontSize: 18,
+        fontWeight: '500',
+        color: '#444',
+        marginBottom: 7
+    },
+    textInputItemEditProfile: {
+        borderWidth: 1,
+        padding: 10,
+        fontSize: 16,
+        fontWeight: '300',
+        borderRadius: 12
+    },
+    containerButtonItemEditProfile: { 
+        flex: 1, 
+        justifyContent: 'center',
+        marginLeft: 10,
+        padding: 12,
+        paddingVertical: 2,
+        borderRadius: 12,
+        backgroundColor: colors.BACKGROUND_BLUEYONDER
+    },
+    textButtonItemEditProfile: {
+        fontSize: 15,
+        fontWeight: '500',
+        color: colors.BACKGROUND_CULTURE
+    },
+    containerButtonSaveEditProfile: {
+        backgroundColor: colors.BACKGROUND_BLUEYONDER,
+        width: WIDTH_BUTTON_SAVE_EDIT,
+        height: HEIGHT_BUTTON_SAVE_EDIT,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: (WIDTH_BUTTON_SAVE_EDIT + HEIGHT_BUTTON_SAVE_EDIT) / 2
+    },
+    textButtonSaveEditProfile: {
+        fontSize: 19,
+        fontWeight: '600',
+        color: colors.BACKGROUND_CULTURE
     }
 });
 
