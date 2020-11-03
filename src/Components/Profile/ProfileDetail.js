@@ -47,24 +47,17 @@ const ItemDetail_2 = ({ text, data, nameIcon }) => {
     );
 }
 
-
-
 export default class ProfileDetail extends Component {
     constructor(props) {
         super(props);
     }
 
-    componentDidMount() {
-        const uid = auth().currentUser.uid;
-        this.props._onGetTourGuide(uid);
-    }
-
     render() {
+        const uid = auth().currentUser.uid;
         const { picture, name, title, 
-        passions, languages, imageProfile, idCity, description } = this.props.tourGuide;
-
+        passions, languages, imageProfile, idCity, description, uID } = this.props.tourGuide;
+        
         if(!title || !passions || !languages || !imageProfile || !description) {
-            const uid = auth().currentUser.uid;
             this.props._onGetTourGuide(uid);
         }
 
@@ -74,7 +67,7 @@ export default class ProfileDetail extends Component {
                 <HeaderComponent {...this.props} isHome={false}/>
 
                 {/* phan top */}
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.containerAvatarAndInformation}>
                         <View style={styles.containerAvatar}>
                             <Image 
@@ -94,7 +87,7 @@ export default class ProfileDetail extends Component {
                             }]}>{title === '' ? '(No title yet)' : title}</Text>
                         </View>
                     </View>
-                    <TouchableOpacity
+                    {(uid === uID) && <TouchableOpacity
                         onPress={() => {
                             const { navigate } = this.props.navigation;
                             navigate('Edit Profile Detail Screen', {
@@ -117,17 +110,17 @@ export default class ProfileDetail extends Component {
                                 Edit profile tour guide
                             </Text>
                         </View>
-                    </TouchableOpacity>
+                    </TouchableOpacity>}
                     {/* phan mid */}
                     <View style={styles.containerInfoDetail}>
                         <ItemDetail 
                             text='I speak'
-                            data={languages}
+                            data={languages === '' ? '*Please correct the languages you know*' : languages}
                             nameIcon='globe-outline'
                         />
                         <ItemDetail 
                             text='My passions are'
-                            data={passions}
+                            data={passions === '' ? '*Please correct the passions you know*' : passions}
                             nameIcon='heart'
                         />
 
@@ -174,7 +167,7 @@ export default class ProfileDetail extends Component {
                     </View>
                 </ScrollView>
                 {/* phan bottom */}
-                <View style={styles.containerBottom}>
+                {(uid !== uID) && <View style={styles.containerBottom}>
                     <TouchableOpacity
                         onPress={() => {}}
                     >
@@ -182,7 +175,7 @@ export default class ProfileDetail extends Component {
                             <Text style={styles.textButtonContact}>Contact me</Text>
                         </View>
                     </TouchableOpacity>
-                </View>
+                </View>}
             </View>
         );
     }
