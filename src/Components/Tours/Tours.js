@@ -102,6 +102,24 @@ export default class TourGuides extends Component {
                         <Text style={styles.textTitle}>
                             All tours destinations
                         </Text>
+                        <View style={styles.containerCreateTour}>
+                            <Text style={styles.textCreateTour}>Are you a tour guide?</Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        const { navigate } = this.props.navigation;
+                                        navigate('Create Tours Screen');
+                                    }}
+                                >
+                                    <Text style={[styles.textCreateTour, {
+                                        fontWeight: 'bold',
+                                        color: colors.BACKGROUND_BLUEYONDER
+                                    }]}>Click here!</Text>
+                                </TouchableOpacity>
+                                <Text style={styles.textCreateTour}> to create a tour of your city</Text>
+                            </View>
+                            
+                        </View>
                     </View>
 
                     {
@@ -110,7 +128,7 @@ export default class TourGuides extends Component {
                         <FlatList 
                             data={this.props.tours}
                             keyExtractor={item => item.id}
-                            style={{ marginBottom: 180 }}
+                            style={{ marginBottom: 220 }}
                             renderItem={({ item, index}) => {
                                 return(
                                     <ItemTours 

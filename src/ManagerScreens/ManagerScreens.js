@@ -25,6 +25,7 @@ import RegisterTourGuideScreen from '../Components/RegisterTourGuide/RegisterTou
 import ActiveTourGuideScreen from '../Redux/Containers/ActiveTourGuideContainer';
 import ProfileDetailScreen from '../Redux/Containers/ProfileDetailContainer';
 import EditProfileDetailScreen from '../Redux/Containers/EditProfileDetailContainer';
+import CreateToursScreen from '../Components/Tours/CreateTours';
 
 //redux
 import { createStore, applyMiddleware } from 'redux';
@@ -48,6 +49,11 @@ const ScreenHome = () => {
         <Stack.Navigator headerMode="none">
             <Stack.Screen name="Home Screen" component={HomeScreen} />
             <Stack.Screen name="Tours Screen" component={ToursScreen} 
+                options={{
+                    gestureEnabled: false
+                }}
+            />
+            <Stack.Screen name="Create Tours Screen" component={CreateToursScreen} 
                 options={{
                     gestureEnabled: false
                 }}
