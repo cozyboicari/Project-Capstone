@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, StatusBar, 
     TouchableOpacity, TextInput, 
-    Dimensions, FlatList, ScrollView, SafeAreaView } from 'react-native';
+    Dimensions, FlatList, Alert } from 'react-native';
 
 // file css
 import styles from './Styles';
@@ -14,6 +14,8 @@ import { colors } from '../../ConfigGlobal';
 //bien config
 const { width, height } = Dimensions.get('window');
 
+//firebase
+import { auth } from '../../Database/Firebase/ConfigGlobalFirebase';
 
 const WIDTH_TEXTINPUT = width * 0.6;
 const HEIGHT_TEXTINPUT = height * 0.045;
@@ -47,19 +49,20 @@ const ItemCreateTour = ({ title, data, typeInput, isButton, _chooseFileImage, _s
     );
 }
 
-const ItemCreateTourNumber = ({ title, value }) => {
+const ItemCreateTourNumber = ({ title, data,  _setText }) => {
     return(
         <View style={styles.containerItemCreateTour}>
             <Text style={styles.textItemCreateTour}>{title}</Text>
             <View style={{ flexDirection: 'row' }}>
                 <TextInput 
+                    value={data}
                     style={[styles.textInputItemCreateTour, {
                         width: width * 0.3,
                         height: HEIGHT_TEXTINPUT
                     }]}
                     keyboardType='numeric'
                     onChangeText={text => {
-
+                        _setText(title, text);
                     }}
                 />
             </View>
@@ -72,17 +75,17 @@ export default class CreateTours extends Component {
         super(props);
         this.state = {
             schedule: [
-                { name: '', detail: '' }
+                { name: '', detail: '' },
             ],
             imageTour: '',
             nameTour: '',
             introduceCity: '',
             introduceCityDetail: '',
-            tourHours: 0,
-            numberOfTourists: 0,
+            tourHours: '',
+            numberOfTourists: '',
             tourCategory: '',
             languages: '',
-            price: 0,
+            price: '',
         }
     }
 
@@ -91,11 +94,12 @@ export default class CreateTours extends Component {
             case 'Name tour': return this.setState({ nameTour: value });
             case 'Introduce city': return this.setState({ introduceCity: value });
             case 'Introduce city detail': return this.setState({ introduceCityDetail: value});
-            case 'Tour hours': return this.setState({ tourHours: parseInt(value)});
-            case 'Number of tourists': return this.setState({ numberOfTourists: parseInt(value)});
+            case 'Tour hours': return this.setState({ tourHours: value});
+            case 'Number of tourists': return this.setState({ numberOfTourists: value});
             case 'Tour category': return this.setState({ tourCategory: value});
             case 'Languages': return this.setState({ languages: value });
-            case 'Price': return this.setState({ price: parseInt(value )});
+            case 'Price ( ...$ / hour )': return this.setState({ price: value});
+            default: return;
         }
     }
 
@@ -125,13 +129,29 @@ export default class CreateTours extends Component {
                 marginBottom: 10
             }]}>
                 <View style={{ marginBottom: 10}}>
-                    <Text style={styles.textItemScheduleDetail}>{`${index + 1}. Schedule name`}</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <Text style={styles.textItemScheduleDetail}>{`${index + 1}. Schedule name`}</Text>
+                        <TouchableOpacity
+                            onPress={() => {
+                                const { schedule } = this.state;
+                                if(schedule.length > 1) {
+                                    let array = [...schedule];
+                                    array.splice(index, 1);
+                                    this.setState({ schedule: array });
+                                }
+                            }}
+                        >
+                            <View style={styles.containerDeleteSchedule}>
+                                <Text style={styles.textDeleteSchedule}>delete schedule</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                     <TextInput 
                         style={[styles.textInputItemCreateTour, {
                             width: width * 0.5,
                             height: height * 0.04
                         }]}
-                        value={item.value}
+                        value={item.name}
                         onChangeText={text => {
                             const updateText = this.state.schedule.slice();
                             updateText[index].name = text;
@@ -159,11 +179,18 @@ export default class CreateTours extends Component {
         );
     }
 
+    componentDidMount() {
+        this.props._onGetTourGuide(auth().currentUser.uid)
+    }
+
     render() {
         const { schedule, imageTour, nameTour, 
             introduceCity, introduceCityDetail, tourHours,
             numberOfTourists, tourCategory, languages, price
         } = this.state;
+
+        const { idCity, name, uID, picture } = this.props.tourGuide;
+
         return(
             <View style={styles.container}>
                 <StatusBar barStyle='light-content'/>
@@ -172,7 +199,40 @@ export default class CreateTours extends Component {
                     <Text style={styles.textTitleCreateTour}>Create your tour</Text>
                     <TouchableOpacity
                         onPress={() => {
-                            console.log(this.state);
+                            const newTour = {
+                                avgRating: 0,
+                                category: tourCategory,
+                                description: introduceCityDetail,
+                                introduce: introduceCity,
+                                languages: languages,
+                                name: nameTour,
+                                numRatings: 0,
+                                numberPeople: parseInt(numberOfTourists),
+                                price: parseFloat(price),
+                                time: parseFloat(tourHours),
+                                tourguideID: uID,
+                                tourguideImage: picture,
+                                tourguideImageCover: imageTour,
+                                tourguideName: name,
+                                cityID: idCity,
+                                scheduleDetail: schedule
+                            };
+                            Alert.alert('Notification', 'Would you like create your tour?', [
+                                {
+                                    text: 'OK',
+                                    onPress: () => {
+                                        this.props._onCreateTour(newTour);
+                                        const { goBack } = this.props.navigation;
+                                        goBack();
+                                    }
+                                },
+                                {
+                                    text: 'Cannel',
+                                    onPress: () => {},
+                                    style: 'cancel'
+                                },
+                                { cancelable: false }
+                            ])     
                         }}
                         style={{ padding: 12}}
                     >
@@ -205,7 +265,7 @@ export default class CreateTours extends Component {
                             </View>
                             <ItemCreateTour _setText={this._setText} data={tourCategory} title='Tour category' typeInput='default' isButton={false}/>
                             <ItemCreateTour _setText={this._setText} data={languages} title='Languages' typeInput='default' isButton={false}/>
-                            <ItemCreateTourNumber _setText={this._setText} data={price} title='Price' typeInput='numeric' isButton={false}/>
+                            <ItemCreateTourNumber _setText={this._setText} data={price} title='Price ( ...$ / hour )' isButton={false}/>
                             {/* flatlist schedule */}
                             <Text style={[styles.textItemCreateTour, {
                                 marginHorizontal: 22,

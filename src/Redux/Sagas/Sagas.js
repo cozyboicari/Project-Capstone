@@ -11,7 +11,7 @@ import {
     PUSH_QUESTIONS_FAIL, PUSH_QUESTIONS_SUCCESS, PUSH_QUESTIONS,
     GET_TOUR_GUIDE_SUCCESS, GET_TOUR_GUIDE_FAIL, GET_TOUR_GUIDE,
     UPDATE_ITEM_TOUR_GUIDE_SUCCESS, UPDATE_ITEM_TOUR_GUIDE_FAIL, 
-    UPDATE_ITEM_TOUR_GUIDE
+    UPDATE_ITEM_TOUR_GUIDE, CREATE_TOUR_FAIL, CREATE_TOUR_SUCCESS, CREATE_TOUR
 } from '../Actions/ActionType';
 
 import { takeLatest, put, call, take } from 'redux-saga/effects';
@@ -23,7 +23,8 @@ import {
     getQuestionActiveTourGuide,
     addQuestionActiveTourGuide,
     getTourGuideByID,
-    updateTourGuideByID
+    updateTourGuideByID,
+    createTour
  } from '../../Database/Firebase/ConfigGlobalFirebase';
 
  // get cites in country
@@ -195,4 +196,18 @@ function* updateItemTourGuideFromAuth(action) {
 
 export function* watchUpdateItemTourGuideFromAuth() {
     yield takeLatest(UPDATE_ITEM_TOUR_GUIDE, updateItemTourGuideFromAuth);
+}
+
+// create tour for tour guide
+function* createTourFromTourGuide(action) {
+    try {
+        const tour = yield createTour(action.newTour);
+        yield put({ type: CREATE_TOUR_SUCCESS, tour });
+    } catch(error) {
+        yield put({ type: CREATE_TOUR_FAIL, error });
+    }
+}
+
+export function* watchCreateTourFromTourGuide() {
+    yield takeLatest(CREATE_TOUR, createTourFromTourGuide);
 }

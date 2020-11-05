@@ -8,6 +8,7 @@ import questionsReducers from './QuestionsReducers';
 import pushQuestionsReducers from './PushQuestionsReducers';
 import tourGuideReducers from './ProfileDetailReducers';
 import editProfileDetailReducers from './EditProfileDetailReducers';
+import createToursReducers from './CreateToursReducers';
 
 const allReducers = combineReducers({
     citiesReducers,
@@ -18,7 +19,8 @@ const allReducers = combineReducers({
     questionsReducers,
     pushQuestionsReducers,
     tourGuideReducers,
-    editProfileDetailReducers
+    editProfileDetailReducers,
+    createToursReducers
 })
 
 export default allReducers;

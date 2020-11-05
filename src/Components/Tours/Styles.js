@@ -201,6 +201,14 @@ const styles = StyleSheet.create({
     containerSubmit: {
         backgroundColor: colors.BACKGROUND_BLUEYONDER,
         borderRadius: 22
+    },
+    containerDeleteSchedule: {
+        marginLeft: 10
+    },
+    textDeleteSchedule: {
+        color: colors.BACKGROUND_BLUEYONDER,
+        fontSize: 16,
+        fontWeight: 'bold'
     }
 });
 

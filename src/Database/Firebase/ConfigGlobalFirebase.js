@@ -196,6 +196,15 @@ export const addFirestore = async (nameCollection, data) => {
   await firestore().collection(nameCollection).add(data);
 }
 
+// create post tour for tour guide
+export const createTour = async (newTour) => {
+  await firestore().collection('tours').add(newTour)
+    .then(tour => {
+      // tour.collection('ratings').add({});
+      console.log('created tour !');
+    })
+}
+
 //login auth by email
 export const signInUserByEmail = async (user) => {
   await auth().signInWithEmailAndPassword(user.email, user.password);

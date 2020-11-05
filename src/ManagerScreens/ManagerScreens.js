@@ -25,7 +25,7 @@ import RegisterTourGuideScreen from '../Components/RegisterTourGuide/RegisterTou
 import ActiveTourGuideScreen from '../Redux/Containers/ActiveTourGuideContainer';
 import ProfileDetailScreen from '../Redux/Containers/ProfileDetailContainer';
 import EditProfileDetailScreen from '../Redux/Containers/EditProfileDetailContainer';
-import CreateToursScreen from '../Components/Tours/CreateTours';
+import CreateToursScreen from '../Redux/Containers/CreateToursContainer';
 
 //redux
 import { createStore, applyMiddleware } from 'redux';
