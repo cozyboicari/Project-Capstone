@@ -1,6 +1,4 @@
 import { StyleSheet, Dimensions } from 'react-native';
-import { shadow } from 'react-native-paper';
-import { color } from 'react-native-reanimated';
 
 //file global
 import { colors } from '../../ConfigGlobal';
@@ -121,7 +119,6 @@ const styles = StyleSheet.create({
     containerSchedule: {
         padding: 20,
         borderColor: '#aaa',
-        borderBottomWidth: 1,
     },
     textSchedule: {
         fontSize: 19,
@@ -136,8 +133,9 @@ const styles = StyleSheet.create({
     },
     containerGoodToKnow: {
         borderColor: '#aaa',
-        borderBottomWidth: 1,
-        padding: 20
+        borderTopWidth: 1,
+        padding: 20,
+        marginTop: 20
     },
     textGoodToKnow: {
         marginBottom: 20,
@@ -200,6 +198,47 @@ const styles = StyleSheet.create({
         color: colors.BACKGROUND_CULTURE,
         marginTop: 14,
         textAlign: 'center'
+    },
+    containerPlan: {
+        borderColor: '#aaa',
+        borderTopWidth: 1,
+        padding: 20
+    },
+    titlePlan: {
+        marginBottom: 10,
+        fontSize: 25,
+        fontWeight: 'bold',
+        color: colors.TEXT_DARK_JUNGLE_GREEN 
+    },
+    textPlan: {
+        fontSize: 16,
+        fontWeight: '300',
+        color: colors.TEXT_DARK_JUNGLE_GREEN ,
+        marginBottom: 7,
+    },
+    containerItemPlan: {
+        marginLeft: 22,
+    },
+    containerItemPlanTop: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    containerItemPlanBottom: {
+        flexDirection: 'row',
+    },
+    textTitleItemPlan: {
+        fontSize: 17,
+        fontWeight: '600',
+        color: '#222'
+    },
+    barItemPlan: {
+        borderLeftWidth: 3,
+        borderColor: colors.BACKGROUND_BLUEYONDER,
+        flex: 1,
+        marginLeft: 11.7,
+        paddingLeft: 25,
+        justifyContent: 'center',
+        paddingVertical: 19
     }
 });
 
