@@ -27,6 +27,7 @@ import ProfileDetailScreen from '../Redux/Containers/ProfileDetailContainer';
 import EditProfileDetailScreen from '../Redux/Containers/EditProfileDetailContainer';
 import CreateToursScreen from '../Redux/Containers/CreateToursContainer';
 import ChatAllScreen from '../Components/Chat/AllChat';
+import ChatUserScreen from '../Components/Chat/ChatUser';
 
 //redux
 import { createStore, applyMiddleware } from 'redux';
@@ -153,6 +154,11 @@ const ManagerScreens = () => {
                         }}
                     />
                     <Stack.Screen name="Edit Profile Detail Screen" component={EditProfileDetailScreen} 
+                        options={{
+                            gestureEnabled: false
+                        }}
+                    />
+                    <Stack.Screen name="Chat User Screen" component={ChatUserScreen} 
                         options={{
                             gestureEnabled: false
                         }}
