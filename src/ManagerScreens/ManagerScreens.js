@@ -26,6 +26,7 @@ import ActiveTourGuideScreen from '../Redux/Containers/ActiveTourGuideContainer'
 import ProfileDetailScreen from '../Redux/Containers/ProfileDetailContainer';
 import EditProfileDetailScreen from '../Redux/Containers/EditProfileDetailContainer';
 import CreateToursScreen from '../Redux/Containers/CreateToursContainer';
+import ChatAllScreen from '../Components/Chat/AllChat';
 
 //redux
 import { createStore, applyMiddleware } from 'redux';
@@ -101,7 +102,7 @@ const TabsScreen = () => {
             />
             <Tab.Screen 
                 name="Conversation" 
-                component={View}
+                component={ChatAllScreen}
                 options={{
                     tabBarIcon: ({size, color}) => <Icons name="chatbubbles-outline" size={size} color={color}/> 
                 }}

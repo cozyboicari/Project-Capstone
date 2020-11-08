@@ -201,7 +201,7 @@ export default class ActiveTourGuide extends Component {
                                         });
                                         
                                         // push anwser dau tien hoac anwser moi
-                                        if(!answerd[next] && answer === '') {
+                                        if(answerd.length === 0 || !answerd[next]) {
                                             let filter = [];
                                             if(arrayFilter[0].type === 'flat-list' && arrayFilter[0].selected === 'more') {
                                                 filter = this._filterAwnser(arrayFilter[0]);

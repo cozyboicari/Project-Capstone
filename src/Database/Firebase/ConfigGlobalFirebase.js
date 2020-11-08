@@ -231,6 +231,7 @@ export const signInUserByFacebook = async () => {
   }
 
   const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+
   return auth().signInWithCredential(facebookCredential)
     .then(user => {
       //check ton tai
