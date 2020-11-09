@@ -8,7 +8,6 @@ const { width, height } = Dimensions.get('screen');
 
 const AVATAR = width * 0.17
 const HEIGHT_BOTTOM = height * 0.13;
-const HEIGHT_TEXT_INPUT = height * 0.037;
 
 const styles = StyleSheet.create({ 
     container: {
@@ -74,12 +73,24 @@ const styles = StyleSheet.create({
         backgroundColor: colors.BACKGROUND_CULTURE
     },
     textInput: {
-        height: HEIGHT_TEXT_INPUT,
+        flex: 1,
         borderWidth: 1,
         borderColor: '#333',
-        paddingLeft: 12,
+        paddingHorizontal: 15,
         borderRadius: 12,
     },
+    containerItemMessage: {
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        backgroundColor: colors.BACKGROUND_BLUEYONDER,
+        borderRadius: 12,
+        marginTop: 5
+    },
+    textItemMessage: {
+        fontSize: 15,
+        fontWeight: '500',
+        color: colors.BACKGROUND_CULTURE
+    }
 });
 
 export default styles;

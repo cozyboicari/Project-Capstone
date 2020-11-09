@@ -158,7 +158,7 @@ app.post('/managertravelers/edit/:id', upload.single('image'), async (req, res, 
     await db.collection('travelers').doc(idData).update({ name, phone, idCity, description, passions, email, languages, isActive, gender })
     res.redirect('/managertravelers')
 })
-app.get('/becometourguide', redirectIfAuthenticatedMiddleware, async (req, res) => {
+app.get('/becometourguide', async (req, res) => {
     const snapshotAnswer = await db.collection('questions').get();
     const snapshotTravelers = await db.collection('travelers').where('isActive', '==', false).get();
     const answerData = snapshotAnswer.docs.map(doc => doc.data())

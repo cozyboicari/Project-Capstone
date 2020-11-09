@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, StatusBar, 
     TextInput, TouchableOpacity, 
-    KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native';
+    KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, FlatList } from 'react-native';
 
 //file css
 import styles from './Styles';
@@ -18,24 +18,60 @@ import { colors } from '../../ConfigGlobal';
 export default class ChatUser extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            messages: [
+                {
+                    type: 'host',
+                    text: 'abc'
+                },
+                {
+                    type: 'guest',
+                    text: '1'
+                }
+            ],
+            text: ''
+        }
+    }
+
+    _pushMessage = text => {
+       this.setState({ 
+           messages: [...this.state.messages, {text: text}],
+           text: ''
+       })
+    }
+
+    _renderItem = ({ item }) => {
+        return(
+            <View style={[styles.containerItemMessage, {
+                backgroundColor: item.type === 'guest' ? 'pink' : colors.BACKGROUND_BLUEYONDER,
+            }]}>
+                <Text style={styles.textItemMessage}>{item.text}</Text>
+            </View>
+        );
     }
 
     render() {
+        const { messages, text } = this.state;
         return(
             <View style={styles.container}>
                 <StatusBar barStyle='light-content'/>
                 <HeaderComponent {...this.props} isHome={false}/>
                     <KeyboardAvoidingView behavior='padding' style={styles.container}>
                         {/* phan chat */}
-                        <ScrollView
-                            style={{ justifyContent: 'flex-end'}}
-                            ref={ref => {this.scrollView = ref}}
-                            onContentSizeChange={() => this.scrollView.scrollToEnd({animated: false})}
-                        >
-                            <View style={{ flex: 1, backgroundColor: 'red'}}>
-                                <Text>a</Text>
-                            </View>
-                        </ScrollView>
+                        <FlatList
+                            data={messages}
+                            keyExtractor={(item, index) => index.toString()}
+                            ref={ref => {this.flatlist = ref}}
+                            renderItem={this._renderItem}
+                            onContentSizeChange={() => this.flatlist.scrollToEnd({animated: false})}
+                            contentContainerStyle={{
+                                flex: 1,
+                                justifyContent: 'flex-end',
+                                alignItems: item.type === 'guest' ? 'flex-start' : 'flex-end',
+                                margin: 30
+                            }}
+                        />
                         {/* phan ghi chat */}
                         <TouchableWithoutFeedback
                             style={styles.container}
@@ -54,11 +90,15 @@ export default class ChatUser extends Component {
                                             multiline={true}
                                             placeholder='Type a massage...'
                                             autoCorrect={false}
+                                            value={text}
+                                            onChangeText={text => {
+                                                this.setState({ text });
+                                            }}
                                         />
                                     </View>
                                     <View style={{ flex: .7, alignItems: 'center' }}>
                                         <TouchableOpacity
-                                            onPress={() => {}}
+                                            onPress={() => this._pushMessage(text)}
                                         >
                                             <Icons name='send' color={colors.BACKGROUND_BLUEYONDER} size={25}/>
                                         </TouchableOpacity>
