@@ -5,7 +5,10 @@ import { colors } from '../../ConfigGlobal';
 
 // const
 const { width, height } = Dimensions.get('screen');
+
 const AVATAR = width * 0.17
+const HEIGHT_BOTTOM = height * 0.13;
+const HEIGHT_TEXT_INPUT = height * 0.037;
 
 const styles = StyleSheet.create({ 
     container: {
@@ -58,7 +61,25 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: '400',
         color: '#666',
-    }
+    },
+
+    //chat with user
+    containerBottom: {
+        height: HEIGHT_BOTTOM,
+        justifyContent: 'center',
+        shadowRadius: 6.25,
+        shadowOpacity: .62,
+        shadowOffset: { width: 0, height: 5 },
+        shadowColor: '#000',
+        backgroundColor: colors.BACKGROUND_CULTURE
+    },
+    textInput: {
+        height: HEIGHT_TEXT_INPUT,
+        borderWidth: 1,
+        borderColor: '#333',
+        paddingLeft: 12,
+        borderRadius: 12,
+    },
 });
 
 export default styles;
