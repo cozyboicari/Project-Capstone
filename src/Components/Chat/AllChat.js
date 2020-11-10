@@ -21,7 +21,7 @@ const ItemChatAll = ({ navigation }) => {
                     <View style={styles.containerInformationChat}>
                         <View style={styles.containerNameAndTime}>
                             <Text style={styles.name}>Phong Le</Text>
-                            <Text style={styles.time}>9:12pm</Text>
+                            {/* <Text style={styles.time}>9:12pm</Text> */}
                         </View>
                         <View style={styles.containerContent}>
                             <Text 

@@ -53,7 +53,8 @@ export default class ProfileDetail extends Component {
     }
 
     render() {
-        const uid = auth().currentUser.uid;
+        let uid = !this.props.route.params ? auth().currentUser.uid : this.props.route.params.idTourGuide;
+ 
         const { picture, name, title, 
         passions, languages, imageProfile, idCity, description, uID } = this.props.tourGuide;
         
@@ -87,7 +88,7 @@ export default class ProfileDetail extends Component {
                             }]}>{title === '' ? '(No title yet)' : title}</Text>
                         </View>
                     </View>
-                    {(uid === uID) && <TouchableOpacity
+                    {(uid === auth().currentUser.uid) && <TouchableOpacity
                         onPress={() => {
                             const { navigate } = this.props.navigation;
                             navigate('Edit Profile Detail Screen', {
@@ -167,7 +168,7 @@ export default class ProfileDetail extends Component {
                     </View>
                 </ScrollView>
                 {/* phan bottom */}
-                {(uid !== uID) && <View style={styles.containerBottom}>
+                {(uid !== auth().currentUser.uid) && <View style={styles.containerBottom}>
                     <TouchableOpacity
                         onPress={() => {}}
                     >

@@ -63,7 +63,7 @@ export default class ProfileTourGuides extends Component {
         const { name, tourguideName, avgRating, introduce, 
             time, numberPeople, category, languages, 
             description, price, tourguideImage, 
-            tourguideImageCover, schedule } = this.props.route.params.tour;
+            tourguideImageCover, schedule, tourguideID } = this.props.route.params.tour;
 
         return (
             <View style={styles.container}>
@@ -146,7 +146,16 @@ export default class ProfileTourGuides extends Component {
                                     </Text>
                                 </View>
                                 <View style={styles.containerTextTitleNameTourGuide}>
-                                    <Text style={styles.textTitleNameTourGuide}>{`With ${tourguideName}`}</Text>
+                                    <TouchableOpacity 
+                                        onPress={() => {
+                                            const { navigate } = this.props.navigation;
+                                            navigate('Profile Detail Screen', {
+                                                idTourGuide: tourguideID
+                                            });
+                                        }}
+                                    >
+                                        <Text style={styles.textTitleNameTourGuide}>{`With ${tourguideName}`}</Text>
+                                    </TouchableOpacity>
                                 </View>
                                 <View style={styles.containerRating}>
                                     <Rating 

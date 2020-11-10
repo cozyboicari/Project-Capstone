@@ -20,16 +20,7 @@ export default class ChatUser extends Component {
         super(props);
 
         this.state = {
-            messages: [
-                {
-                    type: 'host',
-                    text: 'abc'
-                },
-                {
-                    type: 'guest',
-                    text: '1'
-                }
-            ],
+            messages: [],
             text: ''
         }
     }
@@ -44,9 +35,13 @@ export default class ChatUser extends Component {
     _renderItem = ({ item }) => {
         return(
             <View style={[styles.containerItemMessage, {
-                backgroundColor: item.type === 'guest' ? 'pink' : colors.BACKGROUND_BLUEYONDER,
+                alignItems: item.type === 'guest' ? 'flex-start' : 'flex-end',
             }]}>
-                <Text style={styles.textItemMessage}>{item.text}</Text>
+                <View style={[styles.itemMessage, {
+                    backgroundColor: item.type === 'guest' ? '#abb5d3' : colors.BACKGROUND_BLUEYONDER,
+                }]}>
+                    <Text style={styles.textItemMessage}>{item.text}</Text>
+                </View>
             </View>
         );
     }
@@ -66,10 +61,10 @@ export default class ChatUser extends Component {
                             renderItem={this._renderItem}
                             onContentSizeChange={() => this.flatlist.scrollToEnd({animated: false})}
                             contentContainerStyle={{
-                                flex: 1,
+                                flexGrow: 1,
                                 justifyContent: 'flex-end',
-                                alignItems: item.type === 'guest' ? 'flex-start' : 'flex-end',
-                                margin: 30
+                                marginHorizontal: 20,
+                                paddingBottom: 40
                             }}
                         />
                         {/* phan ghi chat */}
