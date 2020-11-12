@@ -52,7 +52,12 @@ export default class ProfileDetail extends Component {
         super(props);
     }
 
+    componentDidMount() {
+        this.props._onGetTraveler();
+    }
+
     render() {
+        //check user va tour guide
         let uid = !this.props.route.params ? auth().currentUser.uid : this.props.route.params.idTourGuide;
  
         const { picture, name, title, 
@@ -173,11 +178,21 @@ export default class ProfileDetail extends Component {
                         onPress={() => {
                             firestore().collection('threads')
                                 .add({
-                                    name: 'Test chat',
                                     latestMessage: {
                                         text: '',
                                         createdAt: new Date().getTime()
-                                    }
+                                    },
+                                    // add them id, image, nameUser cua 2 user
+                                    user_1: {
+                                        _id: uID,
+                                        nameUser: name,
+                                        image: picture
+                                    },
+                                    user_2: {
+                                        _id: this.props.traveler.uID,
+                                        nameUser: this.props.traveler.name,
+                                        image: this.props.traveler.picture
+                                    },
                                 })
                                 .then(docRef => {
                                     docRef.collection('messages').add({

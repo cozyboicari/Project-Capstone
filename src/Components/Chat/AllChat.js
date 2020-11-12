@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StatusBar, FlatList, TouchableOpacity } from 'react-native';
+import { Text, View, StatusBar, FlatList, TouchableOpacity, Image} from 'react-native';
 
 // file css
 import styles from './Styles';
@@ -7,9 +7,13 @@ import styles from './Styles';
 // file component
 import HeaderComponent from '../Header/Header';
 
-import { firestore } from '../../Database/Firebase/ConfigGlobalFirebase';
+import { firestore, auth } from '../../Database/Firebase/ConfigGlobalFirebase';
 
 const ItemChatAll = ({ item, navigation }) => {
+    const user = auth().currentUser.uid === item.user_1._id ? item.user_2 : item.user_1;
+    const amToPm = new Date(item.latestMessage.createdAt).toLocaleTimeString().slice(8);
+    const time = new Date(item.latestMessage.createdAt).toLocaleTimeString().slice(0, 5) + amToPm;
+    
     return(
         <TouchableOpacity 
             onPress={() => {
@@ -21,11 +25,11 @@ const ItemChatAll = ({ item, navigation }) => {
         >
             <View style={styles.containerItemChatAll}>
                 <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                    <View style={styles.image}/>
+                    <Image style={styles.image} source={{ uri: user.image }}/>
                     <View style={styles.containerInformationChat}>
                         <View style={styles.containerNameAndTime}>
-                            <Text style={styles.name}>{item.name}</Text>
-                            <Text style={styles.time}>9:12pm</Text>
+                            <Text style={styles.name}>{user.nameUser}</Text>
+                            <Text style={styles.time}>{time}</Text>
                         </View>
                         <View style={styles.containerContent}>
                             <Text 
@@ -43,6 +47,9 @@ const ItemChatAll = ({ item, navigation }) => {
 }
 
 export default class AllChat extends Component {
+
+    _isMounted = false;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -50,7 +57,21 @@ export default class AllChat extends Component {
         }
     }
 
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
+    componentDidUpdate() {
+        this._getThreads();
+    }
+    
     componentDidMount() {
+        this._getThreads();
+    }
+
+    _getThreads = () => {
+        this._isMounted = true;
+
         firestore()
         .collection('threads')
         .orderBy('latestMessage.createdAt', 'desc')
@@ -64,7 +85,9 @@ export default class AllChat extends Component {
                     
                 }
             });
-            this.setState({ threads });
+            if(this._isMounted) {
+                this.setState({ threads });
+            }
         })
     }
 
@@ -78,11 +101,11 @@ export default class AllChat extends Component {
                     <Text style={styles.textTitle}>All Chat Message</Text>
                 </View>
                 <View style={styles.containerChatAll}>
-                    <FlatList 
+                    {auth().currentUser && <FlatList 
                         data={this.state.threads}
                         keyExtractor={(item) => item._id}
                         renderItem={ ({ item }) => <ItemChatAll item={item} navigation={this.props.navigation}/>}
-                    />
+                    />}
                 </View>
             </View>
         );

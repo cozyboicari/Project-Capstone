@@ -123,6 +123,8 @@ export default class ChatUser extends Component {
                     messages={messages}
                     onSend={this._handleSend}
                     user={{ _id: auth().currentUser.uid }}
+                    renderSend={this._renderIconSend}
+                    alwaysShowSend
                 />
             </View>
         );
