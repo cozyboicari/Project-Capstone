@@ -42,15 +42,14 @@
               <div class="col-12">
 
                 <div class="card">
-                  <form method="POST" action="/managertravelers/edit/<%= dataTraveler.uID %>"
-                     enctype="multipart/form-data" >
+                  <form method="POST" action="/cities/edit/<%= dataCity.idCity %>" enctype="multipart/form-data">
                     <div class="card-body">
                       <div class="row">
                         <div class="col-12 col-sm-auto mb-3">
                           <div class="mx-auto" style="width: 240px;">
                             <div class="d-flex justify-content-center align-items-center rounded"
                               style="height: 240px; background-color: rgb(233, 236, 239);">
-                              <img id="img" src="<%= dataTraveler.picture %>" alt='img'
+                              <img id="img" src="<%= dataCity.image %>" alt='img'
                                 class=" rounded mx-auto d-block" style="width: 240px; height: 240px; ">
                             </div>
                           </div>
@@ -68,101 +67,25 @@
                       <div class="form-group row">
                         <label for="example-text-input" class="col-md-2 col-form-label">ID</label>
                         <div class="col-md-10">
-                          <input class="form-control" type="text" value="<%= dataTraveler.uID %>"
+                          <input class="form-control" type="text" value="<%= dataCity.idCity %>"
                             id="example-text-input" readonly>
                         </div>
                       </div>
                       <div class="form-group row">
                         <label for="example-text-input" class="col-md-2 col-form-label">Name</label>
                         <div class="col-md-10">
-                          <input class="form-control" type="text" value="<%= dataTraveler.name %>"
+                          <input class="form-control" type="text" value="<%= dataCity.name %>"
                             id="example-text-input" name="name">
                         </div>
                       </div>
-                      <div class="form-group row">
-                        <label for="example-email-input" class="col-md-2 col-form-label">Email</label>
-                        <div class="col-md-10">
-                          <input class="form-control" type="email" value="<%= dataTraveler.email %>"
-                            id="example-email-input" name="email">
-                        </div>
-                      </div>
-
-                      <div class="form-group row">
-                        <label for="example-tel-input" class="col-md-2 col-form-label">Telephone</label>
-                        <div class="col-md-10">
-                          <input class="form-control" type="tel" value="<%= dataTraveler.phone %>"
-                            id="example-tel-input" name="phone">
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="example-date-input" class="col-md-2 col-form-label">Date</label>
-                        <div class="col-md-10">
-                          <input class="form-control" type="date" value="2019-08-19" id="example-date-input">
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-md-2 col-form-label">Gender</label>
-                        <div class="col-md-10">
-                          <select class="form-control" name="gender">
-                            <% if(dataTraveler.gender){ %>
-                            <option selected>Male</option>
-                            <option>Female</option>
-                            <% }else { %>
-                            <option selected>Female</option>
-                            <option>Male</option>
-                            <% }%>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-md-2 col-form-label">Is Tour guide?</label>
-                        <div class="col-md-10">
-                          <select class="form-control" name="isActive">
-                            <% if(dataTraveler.isActive){ %>
-                            <option selected>True</option>
-                            <option>False</option>
-                            <% }else { %>
-                            <option selected>False</option>
-                            <option>True</option>
-                            <% }%>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-md-2 col-form-label">City</label>
-                        <div class="col-md-10">
-                          <select class="form-control" name="idCity">
-                            <option selected><%= dataTraveler.idCity %></option>
-                            <% for(let data of cities){ %>
-                              <% if(data !== dataTraveler.idCity ){ %>
-                              <option><%= data %></option>
-                              <%} %>
-                            <%} %>
-                          </select>
-                        </div>
-                      </div>
+                      
                       <div class="form-group row">
                         <label for="example-text-input" class="col-md-2 col-form-label">Description</label>
                         <div class="col-md-10">
-                          <input class="form-control" type="text" value="<%= dataTraveler.description %>"
-                            id="example-text-input" name="description">
+                          <textarea class="form-control" type="text"
+                            id="example-text-input" name="description"><%= dataCity.description %></textarea>
                         </div>
                       </div>
-                      <div class="form-group row">
-                        <label for="example-text-input" class="col-md-2 col-form-label">Passion</label>
-                        <div class="col-md-10">
-                          <input class="form-control" type="text" value="<%= dataTraveler.passions %>"
-                            id="example-text-input" name="passions">
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="example-text-input" class="col-md-2 col-form-label">Language</label>
-                        <div class="col-md-10">
-                          <input class="form-control" type="text" value="<%= dataTraveler.languages %>"
-                            id="example-text-input" name="languages">
-                        </div>
-                      </div>
-
                     </div>
 
                 </div>
@@ -221,6 +144,7 @@
     <i class="fas fa-angle-up"></i>
   </a>
   
+
 </body>
 
 </html>
