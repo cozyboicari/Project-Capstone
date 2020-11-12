@@ -7,12 +7,16 @@ import styles from './Styles';
 // file component
 import HeaderComponent from '../Header/Header';
 
-const ItemChatAll = ({ navigation }) => {
+import { firestore } from '../../Database/Firebase/ConfigGlobalFirebase';
+
+const ItemChatAll = ({ item, navigation }) => {
     return(
         <TouchableOpacity 
             onPress={() => {
                 const { navigate } = navigation;
-                navigate('Chat User Screen');
+                navigate('Chat User Screen', {
+                    thread: item
+                });
             }}
         >
             <View style={styles.containerItemChatAll}>
@@ -20,14 +24,16 @@ const ItemChatAll = ({ navigation }) => {
                     <View style={styles.image}/>
                     <View style={styles.containerInformationChat}>
                         <View style={styles.containerNameAndTime}>
-                            <Text style={styles.name}>Phong Le</Text>
-                            {/* <Text style={styles.time}>9:12pm</Text> */}
+                            <Text style={styles.name}>{item.name}</Text>
+                            <Text style={styles.time}>9:12pm</Text>
                         </View>
                         <View style={styles.containerContent}>
                             <Text 
                                 style={styles.content}
                                 numberOfLines={2}
-                            >asdasdasdasdasdasdasd</Text>
+                            >
+                                {item.latestMessage.text.slice(0, 90)}
+                            </Text>
                         </View>
                     </View>
                 </View>
@@ -39,6 +45,27 @@ const ItemChatAll = ({ navigation }) => {
 export default class AllChat extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            threads: []
+        }
+    }
+
+    componentDidMount() {
+        firestore()
+        .collection('threads')
+        .orderBy('latestMessage.createdAt', 'desc')
+        .onSnapshot(querySnapshot => {
+            const threads = querySnapshot.docs.map(documentSnapshot => {
+                return {
+                    _id: documentSnapshot.id,
+                    name: '',
+                    latestMessage: { text: '' },
+                    ...documentSnapshot.data(),
+                    
+                }
+            });
+            this.setState({ threads });
+        })
     }
 
     render() {
@@ -51,7 +78,11 @@ export default class AllChat extends Component {
                     <Text style={styles.textTitle}>All Chat Message</Text>
                 </View>
                 <View style={styles.containerChatAll}>
-                    <ItemChatAll navigation={this.props.navigation}/>
+                    <FlatList 
+                        data={this.state.threads}
+                        keyExtractor={(item) => item._id}
+                        renderItem={ ({ item }) => <ItemChatAll item={item} navigation={this.props.navigation}/>}
+                    />
                 </View>
             </View>
         );

@@ -15,7 +15,7 @@ import Icons from 'react-native-vector-icons/Ionicons';
 import { colors } from '../../ConfigGlobal';
 
 // firebase
-import { auth } from '../../Database/Firebase/ConfigGlobalFirebase';
+import { auth, firestore } from '../../Database/Firebase/ConfigGlobalFirebase';
 
 const ItemDetail = ({ text, data, nameIcon }) => {
     return(
@@ -170,7 +170,26 @@ export default class ProfileDetail extends Component {
                 {/* phan bottom */}
                 {(uid !== auth().currentUser.uid) && <View style={styles.containerBottom}>
                     <TouchableOpacity
-                        onPress={() => {}}
+                        onPress={() => {
+                            firestore().collection('threads')
+                                .add({
+                                    name: 'Test chat',
+                                    latestMessage: {
+                                        text: '',
+                                        createdAt: new Date().getTime()
+                                    }
+                                })
+                                .then(docRef => {
+                                    docRef.collection('messages').add({
+                                        text: `Please enter something...!`,
+                                        createdAt: new Date().getTime(),
+                                        system: true
+                                    })
+
+                                    const { navigate } = this.props.navigation;
+                                    navigate('Conversation');
+                                })
+                        }}
                     >
                         <View style={styles.containerButtonContact}>
                             <Text style={styles.textButtonContact}>Contact me</Text>

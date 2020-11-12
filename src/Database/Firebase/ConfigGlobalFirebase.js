@@ -325,4 +325,4 @@ export const addQuestionActiveTourGuide = async (questions) => {
 }
 
 
-export { auth, firebase };
+export { auth, firebase, firestore };
