@@ -42,28 +42,29 @@
               <div class="col-12">
 
                 <div class="card">
-
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-12 col-sm-auto mb-3">
-                        <div class="mx-auto" style="width: 240px;">
-                          <div class="d-flex justify-content-center align-items-center rounded"
-                            style="height: 240px; background-color: rgb(233, 236, 239);">
-                            <img src="<%= dataTourguide.picture %>"" class=" rounded mx-auto d-block"
-                              style="width: 240px; height: 240px; ">
+                  <form method="POST" action="/managertourguides/edit/<%= dataTourguide.uID %>" 
+                    enctype="multipart/form-data">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-12 col-sm-auto mb-3">
+                          <div class="mx-auto" style="width: 240px;">
+                            <div class="d-flex justify-content-center align-items-center rounded"
+                              style="height: 240px; background-color: rgb(233, 236, 239);">
+                              <img id="img" src="<%= dataTourguide.picture %>" alt='img'
+                                class=" rounded mx-auto d-block" style="width: 240px; height: 240px; ">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                          <div class="mt-">
+                            <label for="upload">
+                              <span class="fas fa-upload" aria-hidden="true"></span>
+                              <input type="file" id="upload" accept="image/*" name="image" style="display:none">
+                            </label>
                           </div>
                         </div>
                       </div>
-                      <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
-                        <div class="mt-">
-                          <label for="upload">
-                            <span class="fas fa-upload" aria-hidden="true"></span>
-                            <input type="file" id="upload" accept="image/*" name="image" style="display:none">
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                    <form method="POST" action="/managertravelers/edit/<%= dataTourguide.uID %>">
+
                       <div class="form-group row">
                         <label for="example-text-input" class="col-md-2 col-form-label">ID</label>
                         <div class="col-md-10">
@@ -102,7 +103,7 @@
                       <div class="form-group row">
                         <label class="col-md-2 col-form-label">Gender</label>
                         <div class="col-md-10">
-                          <select class="form-control">
+                          <select class="form-control" name = 'gender'>
                             <% if(dataTourguide.gender){ %>
                             <option selected>Male</option>
                             <option>Female</option>
@@ -116,7 +117,7 @@
                       <div class="form-group row">
                         <label class="col-md-2 col-form-label">Is Tour guide?</label>
                         <div class="col-md-10">
-                          <select class="form-control">
+                          <select class="form-control" name="isActive">
                             <% if(dataTourguide.isActive){ %>
                             <option selected>True</option>
                             <option>False</option>
@@ -128,17 +129,24 @@
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="example-text-input" class="col-md-2 col-form-label">City</label>
+                        <label class="col-md-2 col-form-label">City</label>
                         <div class="col-md-10">
-                          <input class="form-control" type="text" value="<%= dataTourguide.idCity %>"
-                            id="example-text-input" name="idCity">
+                          <select class="form-control" name="idCity">
+                            <option selected><%= dataTourguide.idCity %></option>
+                            <% for(let data of cities){ %>
+                              <% if(data !== dataTourguide.idCity ){ %>
+                              <option><%= data %></option>
+                              <%} %>
+                            <%} %>
+                            <option></option>
+                          </select>
                         </div>
                       </div>
                       <div class="form-group row">
                         <label for="example-text-input" class="col-md-2 col-form-label">Description</label>
                         <div class="col-md-10">
-                          <input class="form-control" type="text" value="<%= dataTourguide.description %>"
-                            id="example-text-input" name="description">
+                          <textarea class="form-control" type="text"
+                            id="example-text-input" name="description"><%= dataTourguide.description %></textarea> 
                         </div>
                       </div>
                       <div class="form-group row">
@@ -156,7 +164,7 @@
                         </div>
                       </div>
 
-                  </div>
+                    </div>
 
                 </div>
 
@@ -213,24 +221,9 @@
   <a class=" scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
+    <!-- Bootstrap core JavaScript-->
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="/vendor/jquery/jquery.min.js"></script>
-  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="/js/sb-admin-2.min.js"></script>
-
-  <!-- Page level plugins -->
-  <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="/js/demo/datatables-demo.js"></script>
-
+    
 </body>
 
 </html>

@@ -24,7 +24,7 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">
-                  Quản lý travelers
+                  Quản lý tourguides
                 </h6>
               </div>
               <div class="card-body">
@@ -37,48 +37,47 @@
                   >
                     <thead>
                       <tr>
-                        <th>ID</th>
-                        <th>Ảnh</th>
-                        <th>Họ tên</th>
-                        <th>Email</th>
-                        <th>City</th>
+                        <th>Name</th>
+                        <th>Image</th>
+                        <th>Tours</th>
+                        <th>Visitors</th>
                         <th>Action</th>
                       </tr>
                     </thead>
 
                     <tbody id="tab">
-                      <% for(let data of becometourguide){ %>
-                      <tr style="text-align: center;">
-                        <td><%= data.uID %></td>
+                      <% for(let data of dataCities){ %>
+                      <tr style="text-align: center">
+                        <td><%= data.name %></td>
                         <td>
                           <img
-                            src="<%= data.picture %>"
+                            src="<%= data.image %>"
                             class="rounded mx-auto d-block"
-                            style="width: 100px; height: 100px"
+                            style="width: 320px; height: 200px; padding: 0 0"
                           />
                         </td>
-                        <td><%= data.name %></td>
-                        <td><%= data.email %></td>
-                        <td><%= data.idCity %></td>
+                        <td><%= data.tours.length %></td>
+                        <td><%= data.visitors %></td>
                         <td>
-                                <form
-                                  method="GET"
-                                  action="/becometourguide/view/<%= data.uID %>"
-                                  style="
+                          <div class="panel-footer row">
+                            <!-- panel-footer -->
+
+                            <form
+                              method="GET"
+                              action="cities/edit/<%= data.idCity %>"
+                              style="
                                 width: 100%;
                                 display: flex;
                                 justify-content: space-around;
                               "
-                                >
-                                  <button type="submit" class="btn btn-primary">View
-
-                                  </button>
-                               
-                          
-                                  <button type="button" class="btn btn-danger">Delete
-                                    
-                                  </button>
-                                </form>           
+                            >
+                              <button type="submit" class="btn btn-primary">
+                                <span>View</span>
+                              </button>
+                              <button type="button" class="btn btn-danger">
+                                <span>Delete</span>
+                              </button>
+                            </form>
                           </div>
                         </td>
                       </tr>
