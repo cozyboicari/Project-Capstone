@@ -176,34 +176,56 @@ export default class ProfileDetail extends Component {
                 {(uid !== auth().currentUser.uid) && <View style={styles.containerBottom}>
                     <TouchableOpacity
                         onPress={() => {
-                            firestore().collection('threads')
-                                .add({
-                                    latestMessage: {
-                                        text: '',
-                                        createdAt: new Date().getTime()
-                                    },
-                                    // add them id, image, nameUser cua 2 user
-                                    user_1: {
-                                        _id: uID,
-                                        nameUser: name,
-                                        image: picture
-                                    },
-                                    user_2: {
-                                        _id: this.props.traveler.uID,
-                                        nameUser: this.props.traveler.name,
-                                        image: this.props.traveler.picture
-                                    },
-                                })
-                                .then(docRef => {
-                                    docRef.collection('messages').add({
-                                        text: `Please enter something...!`,
-                                        createdAt: new Date().getTime(),
-                                        system: true
-                                    })
+                            let check = false;
+                            firestore()
+                                .collection('threads')
+                                .get()
+                                .then(querySnapshot => {
+                                    querySnapshot.docs.forEach(item => {
+                                        const idUser1 = item.data().user_1._id;
+                                        const idUser2 = item.data().user_2._id;
+                                        if(uid === idUser1 && this.props.traveler.uID === idUser2) {
+                                            check = true;
+                                            return;
+                                        }
+                                    });
 
-                                    const { navigate } = this.props.navigation;
-                                    navigate('Conversation');
-                                })
+                                    if(check) {
+                                        const { navigate } = this.props.navigation;
+                                        navigate('Conversation')
+                                        return;
+                                    }
+
+                                    // kiem tra khong trung thi push vao
+                                    firestore().collection('threads')
+                                    .add({
+                                        latestMessage: {
+                                            text: '',
+                                            createdAt: new Date().getTime()
+                                        },
+                                        // add them id, image, nameUser cua 2 user
+                                        user_1: {
+                                            _id: uID,
+                                            nameUser: name,
+                                            image: picture
+                                        },
+                                        user_2: {
+                                            _id: this.props.traveler.uID,
+                                            nameUser: this.props.traveler.name,
+                                            image: this.props.traveler.picture
+                                        },
+                                    })
+                                    .then(docRef => {
+                                        docRef.collection('messages').add({
+                                            text: `Please enter something...!`,
+                                            createdAt: new Date().getTime(),
+                                            system: true
+                                        })
+
+                                        const { navigate } = this.props.navigation;
+                                        navigate('Conversation');
+                                    })
+                                });
                         }}
                     >
                         <View style={styles.containerButtonContact}>

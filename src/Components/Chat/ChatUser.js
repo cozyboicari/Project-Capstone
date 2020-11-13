@@ -16,6 +16,7 @@ import { GiftedChat, Send } from 'react-native-gifted-chat'
 //file config
 import { colors } from '../../ConfigGlobal';
 import { firestore, auth } from '../../Database/Firebase/ConfigGlobalFirebase';
+import { firebase } from '@react-native-firebase/auth';
 
 export default class ChatUser extends Component {
     _isMounted = false;
@@ -25,7 +26,6 @@ export default class ChatUser extends Component {
 
         this.state = {
             messages: [],
-            
         }
     }
 
@@ -41,7 +41,7 @@ export default class ChatUser extends Component {
 
     _handleSend = async (messages) => {
         const text = messages[0].text;
-        const { thread } = this.props.route.params;
+        const { thread, imageUser } = this.props.route.params;
 
         firestore()
         .collection('threads')
@@ -52,7 +52,8 @@ export default class ChatUser extends Component {
             createdAt: new Date().getTime(),
             user: {
                 _id: auth().currentUser.uid,
-                displayName: auth().currentUser.displayName
+                displayName: auth().currentUser.displayName,
+                avatar: imageUser
             }
         })
 
@@ -101,7 +102,8 @@ export default class ChatUser extends Component {
                 if(!firebaseData.system) {
                     data.user = {
                         ...firebaseData.user,
-                        name: firebaseData.user.displayName
+                        name: firebaseData.user.displayName,
+                        avatar: firebaseData.user.avatar
                     }
                 }
                 return data;
@@ -124,7 +126,6 @@ export default class ChatUser extends Component {
                     onSend={this._handleSend}
                     user={{ _id: auth().currentUser.uid }}
                     renderSend={this._renderIconSend}
-                    alwaysShowSend
                 />
             </View>
         );

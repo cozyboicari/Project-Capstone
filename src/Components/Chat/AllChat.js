@@ -19,7 +19,8 @@ const ItemChatAll = ({ item, navigation }) => {
             onPress={() => {
                 const { navigate } = navigation;
                 navigate('Chat User Screen', {
-                    thread: item
+                    thread: item,
+                    imageUser: auth().currentUser.uid !== item.user_1._id ? item.user_2.image : item.user_1.image
                 });
             }}
         >
@@ -48,21 +49,11 @@ const ItemChatAll = ({ item, navigation }) => {
 
 export default class AllChat extends Component {
 
-    _isMounted = false;
-
     constructor(props) {
         super(props);
         this.state = {
             threads: []
         }
-    }
-
-    componentWillUnmount() {
-        this._isMounted = false;
-    }
-
-    componentDidUpdate() {
-        this._getThreads();
     }
     
     componentDidMount() {
@@ -70,8 +61,6 @@ export default class AllChat extends Component {
     }
 
     _getThreads = () => {
-        this._isMounted = true;
-
         firestore()
         .collection('threads')
         .orderBy('latestMessage.createdAt', 'desc')
@@ -82,16 +71,14 @@ export default class AllChat extends Component {
                     name: '',
                     latestMessage: { text: '' },
                     ...documentSnapshot.data(),
-                    
                 }
             });
-            if(this._isMounted) {
-                this.setState({ threads });
-            }
+            this.setState({ threads });
         })
     }
 
     render() {
+
         return(
             <View style={styles.container}>
                 <StatusBar barStyle='light-content'/>
