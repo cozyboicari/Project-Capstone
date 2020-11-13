@@ -65,15 +65,21 @@ export default class AllChat extends Component {
         .collection('threads')
         .orderBy('latestMessage.createdAt', 'desc')
         .onSnapshot(querySnapshot => {
-            const threads = querySnapshot.docs.map(documentSnapshot => {
-                return {
-                    _id: documentSnapshot.id,
-                    name: '',
-                    latestMessage: { text: '' },
-                    ...documentSnapshot.data(),
+            let arrTemp = [];
+            querySnapshot.docs.forEach(documentSnapshot => {
+                if(auth().currentUser.uid === documentSnapshot.data().user_1._id 
+                    || auth().currentUser.uid === documentSnapshot.data().user_2._id
+                ) {
+                    const thread = {
+                        _id: documentSnapshot.id,
+                        name: '',
+                        latestMessage: { text: '' },
+                        ...documentSnapshot.data(),
+                    }
+                    arrTemp.push(thread);
                 }
             });
-            this.setState({ threads });
+            this.setState({ threads: arrTemp });
         })
     }
 
