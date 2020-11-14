@@ -181,18 +181,22 @@ export default class ProfileDetail extends Component {
                                 .collection('threads')
                                 .get()
                                 .then(querySnapshot => {
+                                    let tempItem = {};
                                     querySnapshot.docs.forEach(item => {
                                         const idUser1 = item.data().user_1._id;
                                         const idUser2 = item.data().user_2._id;
                                         if(uid === idUser1 && this.props.traveler.uID === idUser2) {
                                             check = true;
+                                            tempItem = item;
                                             return;
                                         }
                                     });
 
                                     if(check) {
                                         const { navigate } = this.props.navigation;
-                                        navigate('Conversation')
+                                        navigate('Chat User Screen', {
+                                            thread: tempItem
+                                        });
                                         return;
                                     }
 

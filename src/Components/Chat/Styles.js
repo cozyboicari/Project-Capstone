@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         margin: 22
     },
     containerChatAll: {
-        
+        flex: 1
     },
     containerItemChatAll: {
         width: width,

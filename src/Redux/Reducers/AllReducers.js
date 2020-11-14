@@ -20,7 +20,7 @@ const allReducers = combineReducers({
     pushQuestionsReducers,
     tourGuideReducers,
     editProfileDetailReducers,
-    createToursReducers
+    createToursReducers,
 })
 
 export default allReducers;

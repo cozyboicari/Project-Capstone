@@ -11,7 +11,7 @@ import {
     PUSH_QUESTIONS_FAIL, PUSH_QUESTIONS_SUCCESS, PUSH_QUESTIONS,
     GET_TOUR_GUIDE_SUCCESS, GET_TOUR_GUIDE_FAIL, GET_TOUR_GUIDE,
     UPDATE_ITEM_TOUR_GUIDE_SUCCESS, UPDATE_ITEM_TOUR_GUIDE_FAIL, 
-    UPDATE_ITEM_TOUR_GUIDE, CREATE_TOUR_FAIL, CREATE_TOUR_SUCCESS, CREATE_TOUR
+    UPDATE_ITEM_TOUR_GUIDE, CREATE_TOUR_FAIL, CREATE_TOUR_SUCCESS, CREATE_TOUR,
 } from '../Actions/ActionType';
 
 import { takeLatest, put, call, take } from 'redux-saga/effects';
@@ -24,7 +24,8 @@ import {
     addQuestionActiveTourGuide,
     getTourGuideByID,
     updateTourGuideByID,
-    createTour
+    createTour,
+    getAllChat
  } from '../../Database/Firebase/ConfigGlobalFirebase';
 
  // get cites in country

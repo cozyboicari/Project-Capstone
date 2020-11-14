@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, StatusBar, FlatList, TouchableOpacity, Image} from 'react-native';
+import { Text, View, StatusBar, FlatList, TouchableOpacity, 
+    Image, ActivityIndicator, RefreshControl } from 'react-native';
 
 // file css
 import styles from './Styles';
@@ -7,7 +8,7 @@ import styles from './Styles';
 // file component
 import HeaderComponent from '../Header/Header';
 
-import { firestore, auth } from '../../Database/Firebase/ConfigGlobalFirebase';
+import { auth, firestore } from '../../Database/Firebase/ConfigGlobalFirebase';
 
 const ItemChatAll = ({ item, navigation }) => {
     const user = auth().currentUser.uid === item.user_1._id ? item.user_2 : item.user_1;
@@ -48,43 +49,52 @@ const ItemChatAll = ({ item, navigation }) => {
 }
 
 export default class AllChat extends Component {
+    _isMounted = false;
 
     constructor(props) {
         super(props);
         this.state = {
-            threads: []
+            threads: [],
         }
     }
     
     componentDidMount() {
-        this._getThreads();
-    }
+        this._isMounted = true;
 
-    _getThreads = () => {
-        firestore()
-        .collection('threads')
-        .orderBy('latestMessage.createdAt', 'desc')
-        .onSnapshot(querySnapshot => {
-            let arrTemp = [];
-            querySnapshot.docs.forEach(documentSnapshot => {
-                if(auth().currentUser.uid === documentSnapshot.data().user_1._id 
-                    || auth().currentUser.uid === documentSnapshot.data().user_2._id
-                ) {
-                    const thread = {
-                        _id: documentSnapshot.id,
-                        name: '',
-                        latestMessage: { text: '' },
-                        ...documentSnapshot.data(),
-                    }
-                    arrTemp.push(thread);
-                }
-            });
-            this.setState({ threads: arrTemp });
+        auth().onAuthStateChanged(() => {
+            if(auth().currentUser) {  
+                firestore()
+                    .collection('threads')
+                    .orderBy('latestMessage.createdAt', 'desc')
+                    .onSnapshot(querySnapshot => {
+                        let threads = [];
+                        querySnapshot.docs.forEach(documentSnapshot => {
+                            if(documentSnapshot.data().user_1._id === auth().currentUser.uid
+                            || documentSnapshot.data().user_2._id === auth().currentUser.uid
+                            ) {
+                                threads.push({
+                                    id: documentSnapshot.id,
+                                    name: '',
+                                    latestMessage: { text: '' },
+                                    ...documentSnapshot.data(),
+                                });
+                            }
+                        });
+                        if(this._isMounted) {
+                            this.setState({ threads });
+                        }
+                    });
+            }
         })
     }
 
-    render() {
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
 
+    render() {
+        const { threads } = this.state;
+           
         return(
             <View style={styles.container}>
                 <StatusBar barStyle='light-content'/>
@@ -94,11 +104,14 @@ export default class AllChat extends Component {
                     <Text style={styles.textTitle}>All Chat Message</Text>
                 </View>
                 <View style={styles.containerChatAll}>
-                    {auth().currentUser && <FlatList 
-                        data={this.state.threads}
-                        keyExtractor={(item) => item._id}
-                        renderItem={ ({ item }) => <ItemChatAll item={item} navigation={this.props.navigation}/>}
-                    />}
+                    {threads.length !== 0 ? 
+                    (auth().currentUser && <FlatList 
+                        data={threads}
+                        keyExtractor={(item) => item.id}
+                        renderItem={ ({ item }) => <ItemChatAll item={item} navigation={this.props.navigation}/>
+                        }
+                    />):
+                    <ActivityIndicator size={300}/>}
                 </View>
             </View>
         );

@@ -4,7 +4,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 //global func
-import { uppercaseFirst } from '../../ConfigGlobal';
+import { colors, uppercaseFirst } from '../../ConfigGlobal';
 
 //login facebook and gmail
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
@@ -323,6 +323,5 @@ export const addQuestionActiveTourGuide = async (questions) => {
   addFirestore('questions', questionsData)
     .then(() => console.log('push question success !'));
 }
-
 
 export { auth, firebase, firestore };

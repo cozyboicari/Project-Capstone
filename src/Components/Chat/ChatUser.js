@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, StatusBar, 
     TextInput, TouchableOpacity, 
-    KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, FlatList } from 'react-native';
+    KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, FlatList, ActivityIndicator } from 'react-native';
 
 //file css
 import styles from './Styles';
@@ -40,12 +40,13 @@ export default class ChatUser extends Component {
     }
 
     _handleSend = async (messages) => {
+        this._isMounted = true;
         const text = messages[0].text;
         const { thread, imageUser } = this.props.route.params;
 
         firestore()
         .collection('threads')
-        .doc(thread._id)
+        .doc(thread.id)
         .collection('messages')
         .add({
             text,
@@ -58,17 +59,17 @@ export default class ChatUser extends Component {
         })
 
         await firestore()
-        .collection('threads')
-        .doc(thread._id)
-        .set(
-            {
-                latestMessage: {
-                    text,
-                    createdAt: new Date().getTime()
-                }
-            },
-            { merge: true }
-        )
+            .collection('threads')
+            .doc(thread.id)
+            .set(
+                {
+                    latestMessage: {
+                        text,
+                        createdAt: new Date().getTime()
+                    }
+                },
+                { merge: true }
+            )
     }
 
     componentDidMount() {
@@ -85,7 +86,7 @@ export default class ChatUser extends Component {
 
         firestore()
         .collection('threads')
-        .doc(thread._id)
+        .doc(thread.id)
         .collection('messages')
         .orderBy('createdAt', 'desc')
         .onSnapshot(querySnapshot => {
@@ -121,12 +122,13 @@ export default class ChatUser extends Component {
                 <StatusBar barStyle='light-content'/>
                 <HeaderComponent {...this.props} isHome={false}/>
                 
+                { messages.length === 0 ? <ActivityIndicator size={300} /> : 
                 <GiftedChat 
                     messages={messages}
                     onSend={this._handleSend}
                     user={{ _id: auth().currentUser.uid }}
                     renderSend={this._renderIconSend}
-                />
+                />}
             </View>
         );
     }
