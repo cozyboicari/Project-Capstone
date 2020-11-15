@@ -55,6 +55,7 @@ export default class AllChat extends Component {
         super(props);
         this.state = {
             threads: [],
+            loading: false,
         }
     }
     
@@ -81,9 +82,11 @@ export default class AllChat extends Component {
                             }
                         });
                         if(this._isMounted) {
-                            this.setState({ threads });
+                            this.setState({ threads, loading: false });
                         }
                     });
+            } else {
+                this.setState({ loading: true })
             }
         })
     }
@@ -93,8 +96,8 @@ export default class AllChat extends Component {
     }
 
     render() {
-        const { threads } = this.state;
-           
+        const { threads, loading } = this.state;
+        
         return(
             <View style={styles.container}>
                 <StatusBar barStyle='light-content'/>
@@ -104,7 +107,7 @@ export default class AllChat extends Component {
                     <Text style={styles.textTitle}>All Chat Message</Text>
                 </View>
                 <View style={styles.containerChatAll}>
-                    {threads.length !== 0 ? 
+                    {!loading ? 
                     (auth().currentUser && <FlatList 
                         data={threads}
                         keyExtractor={(item) => item.id}

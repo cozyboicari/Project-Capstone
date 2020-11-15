@@ -25,7 +25,7 @@ import {
     getTourGuideByID,
     updateTourGuideByID,
     createTour,
-    getAllChat
+    getChatAll
  } from '../../Database/Firebase/ConfigGlobalFirebase';
 
  // get cites in country

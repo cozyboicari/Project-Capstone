@@ -13,7 +13,7 @@ import {
     watchPushQuestionTourGuide,
     watchGetTourGuideFromAuth,
     watchUpdateItemTourGuideFromAuth,
-    watchCreateTourFromTourGuide,r
+    watchCreateTourFromTourGuide,
  } from './Sagas';
 
  export default function* rootSagas() {
