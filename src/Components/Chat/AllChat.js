@@ -8,7 +8,14 @@ import styles from './Styles';
 // file component
 import HeaderComponent from '../Header/Header';
 
+//file db
 import { auth, firestore } from '../../Database/Firebase/ConfigGlobalFirebase';
+
+//file library
+import Icons from 'react-native-vector-icons/Ionicons';
+
+//file global
+import { colors } from '../../ConfigGlobal';
 
 const ItemChatAll = ({ item, navigation }) => {
     const user = auth().currentUser.uid === item.user_1._id ? item.user_2 : item.user_1;
@@ -62,6 +69,7 @@ export default class AllChat extends Component {
     componentDidMount() {
         this._isMounted = true;
 
+        // view chat group all
         auth().onAuthStateChanged(() => {
             if(auth().currentUser) {  
                 firestore()
@@ -103,8 +111,18 @@ export default class AllChat extends Component {
                 <StatusBar barStyle='light-content'/>
                 <HeaderComponent {...this.props} isHome={true}/>
                 
-                <View style={{ borderBottomWidth: 1, borderColor: '#ddd',}}>
+                <View style={styles.containerTitle}>
                     <Text style={styles.textTitle}>All Chat Message</Text>
+                    <TouchableOpacity
+                        onPress={() => {
+                            const { navigate } = this.props.navigation;
+                            navigate('Chatbot Screen');
+                        }}
+                        style={styles.containerChatbot}
+                    >
+                        <Text style={styles.textChatbot}>Chatbot</Text>
+                        <Icons name='rocket-outline' size={20} color={colors.BACKGROUND_BLUEYONDER}/>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.containerChatAll}>
                     {!loading ? 

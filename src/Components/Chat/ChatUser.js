@@ -39,11 +39,13 @@ export default class ChatUser extends Component {
         )
     }
 
+    // send message vao gift
     _handleSend = async (messages) => {
         this._isMounted = true;
         const text = messages[0].text;
         const { thread, imageUser } = this.props.route.params;
 
+        // push message len firstore
         firestore()
         .collection('threads')
         .doc(thread.id)
@@ -58,6 +60,7 @@ export default class ChatUser extends Component {
             }
         })
 
+        // cap nhat cau mess moi nhat
         await firestore()
             .collection('threads')
             .doc(thread.id)
@@ -128,6 +131,7 @@ export default class ChatUser extends Component {
                     onSend={this._handleSend}
                     user={{ _id: auth().currentUser.uid }}
                     renderSend={this._renderIconSend}
+                    alwaysShowSend
                 />}
             </View>
         );
