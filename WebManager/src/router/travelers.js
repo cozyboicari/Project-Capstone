@@ -18,9 +18,21 @@ router
         .collection('travelers')
         .where('isActive', '==', false)
         .get()
-      const travelers = snapshotTravelers.docs.map((doc) => doc.data())
+      const travelers = snapshotTravelers.docs.map((doc) => {
+        const { id } = doc
+        const data = doc.data()
+        return { id, ...data }
+      })
       app.set('travelers', travelers)
       res.render('managertravelers', { travelers })
+    } catch (err) {
+      next(err)
+    }
+  })
+  .delete('/delete/:id', async (req, res, next) => {
+    try {
+      const { id } = req.params
+      await db.collection('travelers').doc(id).delete()
       res.end()
     } catch (err) {
       next(err)
@@ -37,7 +49,6 @@ router
       const travelers = app.get('travelers')
       const dataTraveler = travelers.find((doc) => doc.uID === req.params.id)
       res.render('edittraveler', { dataTraveler, cities })
-      res.end()
     } catch (err) {
       next(err)
     }
@@ -57,15 +68,11 @@ router
       const convertIsActive = req.body.isActive
       const gender = convertGender === 'Male'
       const isActive = convertIsActive === 'True'
-      const ref = await db
-        .collection('travelers')
-        .where('uID', '==', req.params.id)
-        .get()
-      const idData = ref.docs[0].id
+      const { id } = req.params
       if (req.file) {
         const imageBase64 = req.file.buffer.toString('base64')
         const image = `data:image/jpg;base64,${imageBase64}`
-        await db.collection('travelers').doc(idData).update(
+        await db.collection('travelers').doc(id).update(
           {
             picture: image,
             name,
@@ -81,9 +88,8 @@ router
           { merge: true },
         )
         res.redirect('/managertravelers')
-        res.end()
       } else {
-        await db.collection('travelers').doc(idData).update(
+        await db.collection('travelers').doc(id).update(
           {
             name,
             phone,
@@ -98,7 +104,6 @@ router
           { merge: true },
         )
         res.redirect('/managertravelers')
-        res.end()
       }
     } catch (err) {
       next(err)

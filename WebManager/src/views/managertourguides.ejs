@@ -37,9 +37,8 @@
                   >
                     <thead>
                       <tr>
-                        <th>ID</th>
-                        <th>Ảnh</th>
                         <th>Họ tên</th>
+                        <th>Ảnh</th>
                         <th>Email</th>
                         <th>City</th>
                         <th>Action</th>
@@ -48,36 +47,38 @@
 
                     <tbody id="tab">
                       <% for(let data of tourguides){ %>
-                      <tr style="text-align: center;">
-                        <td><%= data.uID %></td>
+                      <tr style="text-align: center">
+                        <td><%= data.name %></td>
                         <td>
                           <img
                             src="<%= data.picture %>"
                             class="rounded mx-auto d-block"
-                            style="width: 100px; height: 100px"
+                            style="width: 125px; height: 125px"
                           />
                         </td>
-                        <td><%= data.name %></td>
                         <td><%= data.email %></td>
                         <td><%= data.idCity %></td>
                         <td>
-                        
-                                <form
-                                  method="GET"
-                                  action="/managertourguides/edit/<%= data.uID %>"
-                                  style="
-                                width: 100%;
-                                display: flex;
-                                justify-content: space-around;
-                              "
-                                >
-                                  <button type="submit" class="btn btn-primary">View
-                                  </button>   
-                                  <button type="button" class="btn btn-danger">Delete 
-                                  </button>
-                                </form>
-                            
-                          </div>
+                          <form
+                            method="GET"
+                            action="/managertourguides/edit/<%= data.uID %>"
+                            style="
+                              width: 100%;
+                              display: flex;
+                              justify-content: space-around;
+                            "
+                          >
+                            <button type="submit" class="btn btn-primary">
+                              View
+                            </button>
+                            <button type="button" class="btn btn-danger">
+                              <span
+                                class="delete"
+                                data-url="/managertourguides/delete/<%= data.id%>"
+                                >Delete</span
+                              >
+                            </button>
+                          </form>
                         </td>
                       </tr>
 
@@ -100,8 +101,6 @@
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
-
-
-    
+    <script src="/js/deleteButton.js" defer></script>
   </body>
 </html>
