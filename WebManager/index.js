@@ -12,7 +12,7 @@ const port = process.env.PORT || 8080
 
 const app = express()
 
-app.use(morgan('tiny'))
+// app.use(morgan('tiny'))
 
 app.use(
   helmet({
@@ -79,25 +79,25 @@ global.loggedIn = null
 
 app.get('/', async (req, res, next) => {
   try {
-    if (req.session.loggedIn) {
-      const [snapshot, snapshotTours, snapshotBookings] = await Promise.all([
-        db.collection('travelers').get(),
-        db.collection('tours').get(),
-        db.collection('bookings').get(),
-      ])
-      const snapshotData = snapshot.docs.map((doc) => doc.data())
-      const tours = snapshotTours.docs.map((doc) => doc.data())
-      const bookings = snapshotBookings.docs.map((doc) => doc.data())
-      const tourguides = snapshotData.filter((doc) => doc.isActive === true)
-      const travelers = snapshotData.filter((doc) => doc.isActive === false)
-      res.render('admin', {
-        numberTourguides: tourguides.length,
-        numberTravelers: travelers.length,
-        numberTours: tours.length,
-        numberBookings: bookings.length,
-      })
-      res.end()
-    } else res.render('login')
+    // if (req.session.loggedIn) {
+    const [snapshot, snapshotTours, snapshotBookings] = await Promise.all([
+      db.collection('travelers').get(),
+      db.collection('tours').get(),
+      db.collection('bookings').get(),
+    ])
+    const snapshotData = snapshot.docs.map((doc) => doc.data())
+    const tours = snapshotTours.docs.map((doc) => doc.data())
+    const bookings = snapshotBookings.docs.map((doc) => doc.data())
+    const tourguides = snapshotData.filter((doc) => doc.isActive === true)
+    const travelers = snapshotData.filter((doc) => doc.isActive === false)
+    res.render('admin', {
+      numberTourguides: tourguides.length,
+      numberTravelers: travelers.length,
+      numberTours: tours.length,
+      numberBookings: bookings.length,
+    })
+    res.end()
+    // } else res.render('login')
   } catch (err) {
     next(err)
   }

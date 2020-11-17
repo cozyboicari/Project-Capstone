@@ -5,8 +5,8 @@ module.exports = async (req, res) => {
   const { username, password } = req.body
   if (username && password) {
     if (
-      username === snapshot.data().username
-      && password === snapshot.data().password
+      username === snapshot.data().username &&
+      password === snapshot.data().password
     ) {
       req.session.loggedIn = true
       req.session.username = username
