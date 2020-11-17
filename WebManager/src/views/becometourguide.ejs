@@ -48,7 +48,7 @@
 
                     <tbody id="tab">
                       <% for(let data of becometourguide){ %>
-                      <tr style="text-align: center;">
+                      <tr style="text-align: center">
                         <td><%= data.uID %></td>
                         <td>
                           <img
@@ -61,25 +61,27 @@
                         <td><%= data.email %></td>
                         <td><%= data.idCity %></td>
                         <td>
-                                <form
-                                  method="GET"
-                                  action="/becometourguide/view/<%= data.uID %>"
-                                  style="
-                                width: 100%;
-                                display: flex;
-                                justify-content: space-around;
-                              "
-                                >
-                                  <button type="submit" class="btn btn-primary">View
+                          <form
+                            method="GET"
+                            action="/becometourguide/view/<%= data.uID %>"
+                            style="
+                              width: 100%;
+                              display: flex;
+                              justify-content: space-around;
+                            "
+                          >
+                            <button type="submit" class="btn btn-primary">
+                              View
+                            </button>
 
-                                  </button>
-                               
-                          
-                                  <button type="button" class="btn btn-danger">Delete
-                                    
-                                  </button>
-                                </form>           
-                          </div>
+                            <button type="button" class="btn btn-danger">
+                              <span
+                                class="delete"
+                                data-url="/becometourguide/delete/<%= data.id %>"
+                                >Delete</span
+                              >
+                            </button>
+                          </form>
                         </td>
                       </tr>
 
@@ -103,4 +105,5 @@
       <i class="fas fa-angle-up"></i>
     </a>
   </body>
+  <script src="/js/deleteButton.js" defer></script>
 </html>
