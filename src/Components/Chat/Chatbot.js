@@ -34,7 +34,7 @@ export default class ChatUser extends Component {
             messages: [
                 {
                     _id: 1,
-                    text: `Hi! I am the FAQ bot 🤖 from Yourtour.\n\nHow may I help you with today?`,
+                    text: `Hi! Tôi là yourtour-bot 🤖 đến từ Yourtour.\n\nTôi có thể giúp gì được cho bạn?`,
                     createdAt: new Date().getTime(),
                     user: BOT_USER
                 }
