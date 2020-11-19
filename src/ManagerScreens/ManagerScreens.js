@@ -28,6 +28,8 @@ import EditProfileDetailScreen from '../Redux/Containers/EditProfileDetailContai
 import CreateToursScreen from '../Redux/Containers/CreateToursContainer';
 import ChatAllScreen from '../Components/Chat/AllChat';
 import ChatUserScreen from '../Components/Chat/ChatUser';
+import OrderTourScreen from '../Components/OrderTour/OrderTour';
+import NumberOfPeopleScreen from '../Components/OrderTour/NumberOfPeople';
 
 //redux
 import { createStore, applyMiddleware } from 'redux';
@@ -139,6 +141,16 @@ const ManagerScreens = () => {
                         }}
                     />
                     <Stack.Screen name="Booking Screen" component={BookingScreen} 
+                        options={{
+                            gestureEnabled: false
+                        }}
+                    />
+                    <Stack.Screen name="Order Tour Screen" component={OrderTourScreen} 
+                        options={{
+                            gestureEnabled: false
+                        }}
+                    />
+                    <Stack.Screen name="Number of People Screen" component={NumberOfPeopleScreen} 
                         options={{
                             gestureEnabled: false
                         }}

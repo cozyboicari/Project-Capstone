@@ -22,40 +22,50 @@ export default class Booking extends Component {
             getHours: new Date().getHours(),
             isToday: true,
             times: [
-                { time: 7, text: '07:00', picked: false },
-                { time: 8.3, text: '08:30', picked: false },
-                { time: 10, text: '10:00', picked: false },
-                { time: 11.3, text: '11:30', picked: false },
-                { time: 13, text: '13:00', picked: false },
-                { time: 14.3, text: '14:30', picked: false },
-                { time: 16, text: '16:00', picked: false },
-                { time: 17.3, text: '17:30', picked: false },
-                { time: 19, text: '19:00', picked: false },
-                { time: 20.3, text: '20:30', picked: false },
-                { time: 22, text: '22:00', picked: false },
+                { time: 7, text: '07:00', },
+                { time: 8.3, text: '08:30', },
+                { time: 10, text: '10:00', },
+                { time: 11.3, text: '11:30', },
+                { time: 13, text: '13:00', },
+                { time: 14.3, text: '14:30', },
+                { time: 16, text: '16:00', },
+                { time: 17.3, text: '17:30', },
+                { time: 19, text: '19:00', },
+                { time: 20.3, text: '20:30', },
+                { time: 22, text: '22:00', },
             ],
-            selectedItem: null
+            selectedItem: null,
+            time: ''
         }
     }
 
     componentDidMount() {
         const { times, getHours } = this.state;
         if(getHours < 22) {
-            this.setState({ selectedItem: times.filter(time => time.time > getHours)[0].time });
+            this.setState({ 
+                selectedItem: times.filter(time => time.time > getHours)[0].time,
+                time: times.filter(time => time.time > getHours)[0].text
+            });
         }
     }
 
     _choosen = selectedItem => {
-        this.setState({ selectedItem });
+        this.setState({ 
+            selectedItem: selectedItem.time,
+            time: selectedItem.text
+        });
     }
+
 
     _renderItem = ({ item }) => {
         const { selectedItem } = this.state;
         const isSelected = (selectedItem === item.time);
-        
+
         return(
             <TouchableOpacity
-                onPress={() => this._choosen(item.time)}
+                onPress={() => {
+                    this._choosen(item);
+                }}
             >
                 <View style={[styles.containerItemTime, {
                     backgroundColor: isSelected ? colors.BACKGROUND_BLUEYONDER : color.BACKGROUND_CULTURE
@@ -68,8 +78,26 @@ export default class Booking extends Component {
         );
     }
 
+    _getDateTime = (date, time) => {
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        const month = monthNames[new Date(date).getMonth()];
+        const day = new Date(date).getDate();
+
+        return {
+            month,
+            day,
+            time
+        }
+    }
+
     render() {
-        const { selectedDate, times, getHours, isToday, selectedItem } = this.state;
+        const { selectedDate, times, 
+            getHours, isToday, time } = this.state;
+
         return(
             <View style={styles.container}>
                 <StatusBar barStyle="light-content"/>
@@ -86,13 +114,15 @@ export default class Booking extends Component {
                                 this.setState({ 
                                     selectedDate: day.dateString, 
                                     isToday: false,
-                                    selectedItem: times[0].time
+                                    selectedItem: times[0].time,
+                                    time: times[0].text
                                 });
                             } else if(day.dateString === getDay) {
                                 this.setState({ 
                                     selectedDate: day.dateString, 
                                     isToday: true,
-                                    selectedItem: getHours < 22 && times.filter(time => time.time > getHours)[0].time
+                                    selectedItem: getHours < 22 && times.filter(time => time.time > getHours)[0].time,
+                                    time: getHours < 22 && times.filter(time => time.time > getHours)[0].text
                                 });
                             }
                         }}
@@ -113,7 +143,14 @@ export default class Booking extends Component {
                         style={{ marginRight: 25, flex: 1, }}
                     />
                     <TouchableOpacity
-                        onPress={() => {}}
+                        onPress={() => {
+                            const { navigate } = this.props.navigation;
+                            const dayBooking = this._getDateTime(selectedDate, time);
+                            navigate('Number of People Screen', {
+                                dayBooking,
+                                tour: this.props.route.params.tour
+                            });
+                        }}
                         style={{ flex: 2, paddingHorizontal: 20 }}
                     >
                         <View style={styles.containerButton}>

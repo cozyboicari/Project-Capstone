@@ -218,7 +218,9 @@ export default class ProfileTourGuides extends Component {
                             if(!isUser) {
                                 navigate('Sign In Screen');
                             } else {
-                                navigate('Booking Screen');
+                                navigate('Booking Screen', {
+                                    tour: this.props.route.params.tour
+                                });
                             }
                         }}
                         style={styles.containerButtonBooking}
