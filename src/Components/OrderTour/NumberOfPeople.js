@@ -123,7 +123,7 @@ export default class NumberOfPeople extends Component {
 
 
     render() {
-        const { total, adults, children, numberPeople } = this.state;
+        const { total, adults, children, numberPeople, price } = this.state;
         return(
             <View style={styles.container}>
                 <StatusBar barStyle='light-content'/>
@@ -168,7 +168,7 @@ export default class NumberOfPeople extends Component {
                             const { navigate } = this.props.navigation;
                             const { dayBooking, tour } = this.props.route.params;
                             navigate('Order Tour Screen', {
-                                total,
+                                total: (numberPeople * price),
                                 dayBooking,
                                 tour
                             });
