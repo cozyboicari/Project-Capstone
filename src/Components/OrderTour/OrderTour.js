@@ -184,7 +184,6 @@ export default class OrderTour extends Component {
                                 }]}
                             >
                                 <LiteCreditCardInput
-                                    blurOnSubmit={false}
                                     autoFocus
                                     onFocus={this._onFocus}
                                     onChange={this._onChange}
