@@ -15,11 +15,29 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.BACKGROUND_CULTURE
     },
+    containerTitle: { 
+        borderBottomWidth: 1, 
+        borderColor: '#ddd', 
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
     textTitle: {
         fontSize: 20,
         fontWeight: '600',
         color: '#444',
         margin: 22
+    },
+    containerChatbot: {
+        margin: 22,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    textChatbot: {
+        fontSize: 17,
+        marginRight: 4,
+        fontWeight: 'bold',
+        color: colors.BACKGROUND_BLUEYONDER
     },
     containerChatAll: {
         flex: 1

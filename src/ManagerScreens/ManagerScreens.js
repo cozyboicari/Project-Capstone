@@ -30,6 +30,7 @@ import ChatAllScreen from '../Components/Chat/AllChat';
 import ChatUserScreen from '../Components/Chat/ChatUser';
 import OrderTourScreen from '../Components/OrderTour/OrderTour';
 import NumberOfPeopleScreen from '../Components/OrderTour/NumberOfPeople';
+import ChatbotScreen from '../Components/Chat/Chatbot';
 
 //redux
 import { createStore, applyMiddleware } from 'redux';
@@ -171,6 +172,11 @@ const ManagerScreens = () => {
                         }}
                     />
                     <Stack.Screen name="Chat User Screen" component={ChatUserScreen} 
+                        options={{
+                            gestureEnabled: false
+                        }}
+                    />
+                    <Stack.Screen name="Chatbot Screen" component={ChatbotScreen} 
                         options={{
                             gestureEnabled: false
                         }}
