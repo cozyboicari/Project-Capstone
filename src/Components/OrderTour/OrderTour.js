@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StatusBar, Image, Linking, Alert,
+    ScrollView, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 
 // file css
 import styles from './Styles';
@@ -9,6 +10,8 @@ import HeaderComponent from '../Header/Header';
 
 //file library
 import Icons from 'react-native-vector-icons/Ionicons';
+import { LiteCreditCardInput } from 'react-native-credit-card-input';
+import * as Animatable from 'react-native-animatable'; 
 
 // file global
 import { colors } from '../../ConfigGlobal';
@@ -32,20 +35,47 @@ const Item = ({ title, money }) => {
     );
 }
 
-const ItemPayment = ({ title, urlImage }) => {
+const ItemPayment = ({ title, urlImage, selectPayment, choosePayment }) => {
+    const isSelect = (selectPayment === title);
+
     return(
         <View style={[styles.containerItemPayment, {
             borderBottomWidth: title === 'Credit card' ? 1 : 0
         }]}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <TouchableOpacity
-                    onPress={() => {}}
+                    onPress={() => {
+                        choosePayment(title);
+                        {
+                            title === 'PayPal' &&
+                            Alert.alert('Notification', 'Do you want to go to paypal link?', 
+                                [
+                                    { 
+                                        text: 'Yes',
+                                        onPress: () => Linking.openURL('https://www.paypal.com/signin')
+                                    },
+                                    {
+                                        text: 'No',
+                                        onPress: () => {},
+                                        style: 'cancel'
+                                    }
+                                ], { cancelable: false }
+                            );
+                        }
+                    }}
                 >
-                    <Icons 
-                        name='ellipse-outline'
-                        size={20}
-                        color='#444'
-                    />
+                    { !isSelect ?
+                        <Icons 
+                            name='ellipse-outline'
+                            size={20}
+                            color='#444'
+                        /> :
+                        <Icons 
+                            name='ellipse'
+                            size={20}
+                            color='#444'
+                        />
+                    }
                 </TouchableOpacity>
                 <Text style={styles.textItemPayment}>{title}</Text>
             </View>
@@ -63,7 +93,8 @@ export default class OrderTour extends Component {
         this.state = {
             dayBooking: {},
             total: 0,
-            tour: {}
+            tour: {},
+            selectPayment: null
         }
     }
 
@@ -74,15 +105,25 @@ export default class OrderTour extends Component {
         });
     }
 
+    _choosePayment = selectPayment => {
+        this.setState({ selectPayment });
+    }
+
+
+    //credit card
+    _onChange = (formData) => console.log(JSON.stringify(formData, null, ' '));
+    _onFocus = (field) => console.log('focusing', field);
+
     render() {
-        const { dayBooking, total, tour } = this.state;
+        const { dayBooking, total, tour, selectPayment } = this.state;
 
         return(
-            <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.container} behavior='padding' enabled>
+                <View style={styles.container}>
                 <StatusBar barStyle='light-content'/>
                 <HeaderComponent {...this.props} isHome={false}/>
 
-                <ScrollView>
+                <ScrollView bounces={false}>
                     {/* phan gioi thieu tour */}
                     <View style={styles.containerTopOrder}>
                         <View style={styles.containerInfomationTourguide}>
@@ -123,15 +164,37 @@ export default class OrderTour extends Component {
                         </View>
                         <ItemPayment 
                             title='PayPal'
+                            choosePayment={this._choosePayment}
+                            selectPayment={selectPayment}
                             urlImage='https://withlocals-com-res.cloudinary.com/image/upload/w_104,h_26,c_fill,g_auto,q_auto,dpr_3.0,f_auto/better_paypal_logo_id6ln2'
                         />
-                        <ItemPayment 
-                            title='Credit card'
-                            urlImage='https://e7.pngegg.com/pngimages/739/826/png-clipart-logo-credit-card-payment-card-american-express-credit-card-text-display-advertising.png'
-                        />
+                        {
+                            selectPayment !== 'Credit card' ?
+                            <ItemPayment 
+                                title='Credit card'
+                                choosePayment={this._choosePayment}
+                                selectPayment={selectPayment}
+                                urlImage='https://e7.pngegg.com/pngimages/739/826/png-clipart-logo-credit-card-payment-card-american-express-credit-card-text-display-advertising.png'
+                            /> :
+                            <Animatable.View 
+                                animation='fadeIn'
+                                style={[styles.containerItemPayment, {
+                                    borderBottomWidth: 1,
+                                    paddingVertical: 17
+                                }]}
+                            >
+                                <LiteCreditCardInput
+                                    blurOnSubmit={false}
+                                    autoFocus
+                                    onFocus={this._onFocus}
+                                    onChange={this._onChange}
+                                />
+                            </Animatable.View>
+                        }
                     </View>
                 </ScrollView>
             </View>
+            </KeyboardAvoidingView>
         );
     }
 }

@@ -7,8 +7,8 @@ const { width, height } = Dimensions.get('screen');
 
 const HEIGHT_CONTAINER_NEXT = height * 0.12;
 
-const AVATAR_TOUR_GUIDE = width * 0.1;
-const AVATAR_PAYMENT = width * 0.19;
+const AVATAR_TOUR_GUIDE = width * 0.2;
+const AVATAR_PAYMENT = width * 0.18;
 
 const styles = StyleSheet.create({
     container: {
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
         width: AVATAR_PAYMENT,
         height: AVATAR_PAYMENT,
         resizeMode: 'contain'
-    }
+    },
 });
 
 export default styles;
