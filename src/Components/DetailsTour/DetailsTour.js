@@ -208,7 +208,7 @@ export default class ProfileTourGuides extends Component {
                 {/* phan bottom gia tien */}
                 <View style={styles.containerBookingAndPrice}>
                     <View style={styles.containerPrice}>
-                        <Text style={styles.textPrice}>{`${price}$`}</Text>
+                        <Text style={styles.textPrice}>{`${price}$ per person`}</Text>
                         <Text style={styles.textInvite}>{`Invite ${numberPeople - 1} friends for free`}</Text>
                     </View>
                     <TouchableOpacity

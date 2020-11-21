@@ -86,6 +86,7 @@ export default class CreateTours extends Component {
             tourCategory: '',
             languages: '',
             price: '',
+            numberAccount: ''
         }
     }
 
@@ -99,6 +100,7 @@ export default class CreateTours extends Component {
             case 'Tour category': return this.setState({ tourCategory: value});
             case 'Languages': return this.setState({ languages: value });
             case 'Price ( ...$ / hour )': return this.setState({ price: value});
+            case 'Number account bank': return this.setState({ numberAccount: value})
             default: return;
         }
     }
@@ -186,7 +188,7 @@ export default class CreateTours extends Component {
     render() {
         const { schedule, imageTour, nameTour, 
             introduceCity, introduceCityDetail, tourHours,
-            numberOfTourists, tourCategory, languages, price
+            numberOfTourists, tourCategory, languages, price, numberAccount
         } = this.state;
 
         const { idCity, name, uID, picture } = this.props.tourGuide;
@@ -215,7 +217,8 @@ export default class CreateTours extends Component {
                                 tourguideImageCover: imageTour,
                                 tourguideName: name,
                                 cityID: idCity,
-                                scheduleDetail: schedule
+                                scheduleDetail: schedule,
+                                numberAccount
                             };
                             Alert.alert('Notification', 'Would you like create your tour?', [
                                 {
@@ -266,6 +269,7 @@ export default class CreateTours extends Component {
                             <ItemCreateTour _setText={this._setText} data={tourCategory} title='Tour category' typeInput='default' isButton={false}/>
                             <ItemCreateTour _setText={this._setText} data={languages} title='Languages' typeInput='default' isButton={false}/>
                             <ItemCreateTourNumber _setText={this._setText} data={price} title='Price ( ...$ / hour )' isButton={false}/>
+                            <ItemCreateTour _setText={this._setText} data={numberAccount} title='Number account bank' typeInput='numeric' isButton={false}/>
                             {/* flatlist schedule */}
                             <Text style={[styles.textItemCreateTour, {
                                 marginHorizontal: 22,
