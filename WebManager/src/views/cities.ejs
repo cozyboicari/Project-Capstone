@@ -3,7 +3,7 @@
   <head>
     <%-include('layouts/header'); %>
 
-    <title>Manager Tour guides</title>
+    <title>Quản lý thành phố</title>
   </head>
 
   <body id="page-top">
@@ -34,7 +34,7 @@
                   data-toggle="modal"
                   data-target="#exampleModal"
                 >
-                  Create new city
+                  Thêm thành phố
                 </button>
               </div>
               <div class="card-body">
@@ -47,11 +47,11 @@
                   >
                     <thead>
                       <tr>
-                        <th>Name</th>
-                        <th>Image</th>
-                        <th>Tours</th>
-                        <th>Visitors</th>
-                        <th>Action</th>
+                        <th>Tên</th>
+                        <th>Hình ảnh</th>
+                        <th>Số tour</th>
+                        <th>Số khách</th>
+                        <th>Tùy chỉnh</th>
                       </tr>
                     </thead>
 
@@ -83,14 +83,14 @@
                                 action="cities/edit/<%= data.id %>"
                               >
                                 <button type="submit" class="btn btn-primary">
-                                  <span>View</span>
+                                  <span>Chỉnh sửa</span>
                                 </button>
                               </form>
                               <button type="button" class="btn btn-danger">
                                 <span
                                   class="delete"
                                   data-url="/cities/delete/<%= data.id%>"
-                                  >Delete</span
+                                  >Xóa</span
                                 >
                               </button>
                             </div>
@@ -118,7 +118,9 @@
           <div class="modal-dialog modal-xl">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New city</h5>
+                <h5 class="modal-title" id="exampleModalLabel">
+                  Thêm thành phố
+                </h5>
                 <button
                   type="button"
                   class="close"
@@ -135,20 +137,29 @@
                   method="POST"
                   enctype="multipart/form-data"
                 >
-                  <img
-                    id="img"
-                    src="#"
-                    alt="img"
-                    class="rounded mx-auto d-block"
+                  <div
+                    class="post__img"
                     style="
-                      width: 600px;
-                      height: 335px;
-                      text-align: center;
-                      line-height: 50px;
-                      margin: 10px auto 20px;
-                      display: block;
+                      display: flex;
+                      flex-direction: column;
+                      width: 700px;
+                      height: 525px;
+                      margin: auto;
                     "
-                  />
+                  >
+                    <img
+                      id="img"
+                      src="https://firebasestorage.googleapis.com/v0/b/yourtour-c4d0f.appspot.com/o/default-image.jpg?alt=media&token=6907d130-31c7-4428-986b-b7c9a1690f2b"
+                      style="
+                        border: 2px solid #000;
+                        margin: auto;
+                        line-height: 50px;
+                        display: block;
+                        width: 700px;
+                        height: 525px;
+                      "
+                    />
+                  </div>
                   <label for="upload">Select a file:</label>
                   <input
                     type="file"
@@ -178,7 +189,7 @@
                     <label
                       for="example-text-input"
                       class="col-md-2 col-form-label"
-                      >Name</label
+                      >Tên</label
                     >
                     <div class="col-md-10">
                       <input
@@ -196,7 +207,7 @@
                     <label
                       for="example-text-input"
                       class="col-md-2 col-form-label"
-                      >Description</label
+                      >Mô tả</label
                     >
                     <div class="col-md-10">
                       <textarea
@@ -215,7 +226,7 @@
                       data-dismiss="modal"
                       id="btn-close"
                     >
-                      Close
+                      Đóng
                     </button>
                     <button
                       type="button"
@@ -223,7 +234,7 @@
                       data-toggle="modal"
                       data-target="#exampleModalCenter"
                     >
-                      Save
+                      Lưu
                     </button>
                   </div>
                   <div
@@ -241,7 +252,7 @@
                       <div class="modal-content">
                         <div class="modal-header">
                           <h5 class="modal-title" id="exampleModalLongTitle">
-                            Confirm
+                            Xác nhận
                           </h5>
                           <button
                             type="button"
@@ -261,10 +272,10 @@
                             class="btn btn-secondary"
                             id="btn-cancel"
                           >
-                            Cancel
+                            Hủy bỏ
                           </button>
                           <button type="submit" class="btn btn-primary">
-                            Confirm
+                            Xác nhận
                           </button>
                         </div>
                       </div>

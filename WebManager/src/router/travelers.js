@@ -9,7 +9,7 @@ const multer = require('multer')
 const storage = multer.memoryStorage()
 const upload = multer({ storage })
 
-const db = require('../models/FirebaseAdmin')
+const { db, bucket } = require('../models/FirebaseAdmin')
 
 router
   .get('/', async (req, res, next) => {

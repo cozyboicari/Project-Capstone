@@ -3,7 +3,7 @@
   <head>
     <%-include('layouts/header'); %>
 
-    <title>Manager Tour guides</title>
+    <title>Duyệt HDV</title>
   </head>
 
   <body id="page-top">
@@ -24,7 +24,7 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">
-                  Quản lý travelers
+                  Quản lý hướng dẫn viên
                 </h6>
               </div>
               <div class="card-body">
@@ -41,8 +41,8 @@
                         <th>Ảnh</th>
                         <th>Họ tên</th>
                         <th>Email</th>
-                        <th>City</th>
-                        <th>Action</th>
+                        <th>Thành phố</th>
+                        <th>Tùy chỉnh</th>
                       </tr>
                     </thead>
 
@@ -71,14 +71,14 @@
                             "
                           >
                             <button type="submit" class="btn btn-primary">
-                              View
+                              Chỉnh sửa
                             </button>
 
                             <button type="button" class="btn btn-danger">
                               <span
                                 class="delete"
                                 data-url="/becometourguide/delete/<%= data.id %>"
-                                >Delete</span
+                                >Xóa</span
                               >
                             </button>
                           </form>

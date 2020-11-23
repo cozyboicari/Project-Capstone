@@ -3,7 +3,7 @@
   <head>
     <%-include('layouts/header'); %>
 
-    <title>Manager Travelers</title>
+    <title>Quản lý du khách</title>
   </head>
 
   <body id="page-top">
@@ -24,7 +24,7 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">
-                  Quản lý travelers
+                  Quản lý du khách
                 </h6>
               </div>
               <div class="card-body">
@@ -40,8 +40,8 @@
                         <th>Họ tên</th>
                         <th>Ảnh</th>
                         <th>Email</th>
-                        <th>City</th>
-                        <th>Action</th>
+                        <th>Thành phố</th>
+                        <th>Tùy chỉnh</th>
                       </tr>
                     </thead>
                     <tbody id="tab">
@@ -67,13 +67,13 @@
                             "
                           >
                             <button type="submit" class="btn btn-primary">
-                              View
+                              Chỉnh sửa
                             </button>
                             <button type="button" class="btn btn-danger">
                               <span
                                 class="delete"
                                 data-url="/managertravelers/delete/<%= data.id %>"
-                                >Delete</span
+                                >Xóa</span
                               >
                             </button>
                           </form>
