@@ -125,7 +125,7 @@ export default class ProfileDetail extends Component {
                             nameIcon='globe-outline'
                         />
                         <ItemDetail 
-                            text='Sở thích của tôi là'
+                            text='Niềm đam mê của tôi là'
                             data={passions === '' ? '*Hãy nhập sở thích của bạn*' : passions}
                             nameIcon='heart'
                         />

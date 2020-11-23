@@ -69,7 +69,6 @@ const ItemCitiesAll = ({ name, image, visitors, navigation, id }) => {
                 </View>
                 <View style={styles.containerInfoViewAll}>
                     <Text style={styles.textViewAll}>{name}</Text>
-                    <Text style={styles.textVisitors}>{`Visitors: ${visitors}`}</Text>
                 </View>
             </Animatable.View>
         </TouchableOpacity>

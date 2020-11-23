@@ -115,7 +115,7 @@ export default class EditProfileDetail extends Component {
                     {/* phan view item edit */}
                     <ItemEditProfile text='Tiêu đề' data={title} isMultiple={false} isButton={false} _setText={this._setText} _chooseFileImage={this.chooseFileImage} isImage={false}/>
                     <ItemEditProfile text='Ngôn ngữ' data={languages} isMultiple={false} isButton={false} _setText={this._setText} _chooseFileImage={this.chooseFileImage} isImage={false}/>
-                    <ItemEditProfile text='Sở thích' data={passions} isMultiple={false} isButton={false} _setText={this._setText} _chooseFileImage={this.chooseFileImage} isImage={false}/>
+                    <ItemEditProfile text='Đam mê' data={passions} isMultiple={false} isButton={false} _setText={this._setText} _chooseFileImage={this.chooseFileImage} isImage={false}/>
                     <ItemEditProfile text='Nội dung' data={description} isMultiple={true} isButton={false} _setText={this._setText} _chooseFileImage={this.chooseFileImage} isImage={false}/>
                     <ItemEditProfile text='Chọn ảnh cho hồ sơ' data={imageProfile} isMultiple={false} isButton={true} _setText={this._setText} _chooseFileImage={this.chooseFileImage} isImage={true}/>
 

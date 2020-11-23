@@ -89,7 +89,7 @@ export default class SignIn extends Component {
                                 onPress={() => {}}
                             >
                                 <Text style={styles.textForgotPassword}>
-                                    Forgot password?
+                                    Quên mật khẩu?
                                 </Text>
                             </TouchableOpacity> 
 

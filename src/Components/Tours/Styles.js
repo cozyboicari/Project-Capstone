@@ -182,11 +182,11 @@ const styles = StyleSheet.create({
         height: HEIGHT_BUTTON_ADD,
         backgroundColor: colors.BACKGROUND_BLUEYONDER,
         marginHorizontal: 22,
-        marginBottom: 10,
+        marginBottom: 50,
         borderRadius: 12,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 10
+        marginTop: 10,
     },
     textButtonAddSchedule: {
         fontSize: 16,
@@ -194,19 +194,23 @@ const styles = StyleSheet.create({
         color: colors.BACKGROUND_CULTURE,
     },
     containerTitleCreateTour: {
-        height: height * 0.14,
+        height: height * 0.1,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 5 },
+        shadowOffset: { width: 0, height: 1 },
         shadowOpacity: .65,
         shadowRadius: 6.72,
         backgroundColor: '#fff',
+        flexDirection: 'row',
+        paddingHorizontal: 20
     },
     containerSubmit: {
         backgroundColor: colors.BACKGROUND_BLUEYONDER,
         borderRadius: 33,
-        paddingHorizontal: 22
+        height: height * 0.07,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     containerDeleteSchedule: {
         marginLeft: 10
