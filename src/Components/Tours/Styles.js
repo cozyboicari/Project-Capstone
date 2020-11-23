@@ -193,14 +193,20 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         color: colors.BACKGROUND_CULTURE,
     },
-    containerTitleCreateTour: { 
-        flexDirection: 'row',
+    containerTitleCreateTour: {
+        height: height * 0.14,
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 5 },
+        shadowOpacity: .65,
+        shadowRadius: 6.72,
+        backgroundColor: '#fff',
     },
     containerSubmit: {
         backgroundColor: colors.BACKGROUND_BLUEYONDER,
-        borderRadius: 22
+        borderRadius: 33,
+        paddingHorizontal: 22
     },
     containerDeleteSchedule: {
         marginLeft: 10
@@ -209,6 +215,10 @@ const styles = StyleSheet.create({
         color: colors.BACKGROUND_BLUEYONDER,
         fontSize: 16,
         fontWeight: 'bold'
+    },
+    containerFavouriteIcon: {
+       position: 'absolute',
+       padding: 10
     }
 });
 

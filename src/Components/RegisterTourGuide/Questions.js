@@ -137,7 +137,7 @@ export const QuestionItem = ({ itemQuestion, step, root }) => {
                         multiline={true}
                         style={styles.textInputQuestion}
                         keyboardType={itemQuestion.keyboard}
-                        placeholder='Type your answer here...'
+                        placeholder='Hãy nhập câu trả lời...'
                         autoCapitalize={(itemQuestion.keyboard === 'email-address') ? 'none' : 'sentences'}
                         placeholderTextColor={colors.BACKGROUND_BLUEYONDER}
                         value={root._getAnswer()}
@@ -165,7 +165,7 @@ export const QuestionItem = ({ itemQuestion, step, root }) => {
                         onValueChange={value => root._setAnswer(value)}
                         items={itemQuestion.data}
                         placeholder={{
-                            label: 'Select an option',
+                            label: 'Hãy chọn một tuỳ chọn',
                             value: '',
                         }}
                         style={{

@@ -137,17 +137,17 @@ export default class ActiveTourGuide extends Component {
                             showSubmit &&
                             <TouchableOpacity
                                 onPress={() => {
-                                    Alert.alert('Notification', 'Do you want submit questions?', [
+                                    Alert.alert('Thông báo', 'Bạn có muốn gửi câu trả lời?', [
                                         {
-                                            text: 'Canncel',
+                                            text: 'Huỷ',
                                             onPress: () => {},
                                             style: 'cancel'
                                         },
                                         {
-                                            text: 'Submit',
+                                            text: 'Xác nhận',
                                             onPress: () => {
                                                 _onPushQuestions(answerd);
-                                                Alert.alert('Notification', 'Your questions have been sent to us, and please wait for a review and we will get back to you via email !');
+                                                Alert.alert('Thông báo', 'Câu trả lời của bạn đã được gửi đến chúng tôi, và chúng tôi sẽ xem xét và trả lời bạn qua email!');
                                                 const { goBack } = this.props.navigation;
                                                 goBack();
                                             }
@@ -160,7 +160,7 @@ export default class ActiveTourGuide extends Component {
                                     duration={800}
                                     style={styles.containerButtonSubmit}
                                 >
-                                    <Text style={styles.textSubmit}>Submit</Text>
+                                    <Text style={styles.textSubmit}>Gửi câu hỏi</Text>
                                 </Animatable.View>
                             </TouchableOpacity>
                     }
@@ -169,7 +169,7 @@ export default class ActiveTourGuide extends Component {
                     {/* phan next prev cau hoi */}
                     <View style={styles.containerBottomQuestion}>
                         <View style={{ alignItems: 'flex-start', justifyContent: 'center' }}>
-                            <Text style={styles.textProgressBar}>{`${progressCount}% completed`}</Text>
+                            <Text style={styles.textProgressBar}>{`${progressCount}% hoàn thành`}</Text>
                             <View style={styles.containerProgressBar}>
                                 {/* thanh bar o duoi */}
                                 <View style={{

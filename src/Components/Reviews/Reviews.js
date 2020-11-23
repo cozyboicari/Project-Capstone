@@ -53,7 +53,7 @@ export default class Reviews extends Component {
             <View style={styles.container}>
                 <StatusBar barStyle="light-content"/>
                 <HeaderComponent {...this.props}/>
-                <Text style={styles.textTitle}>Reviews from guests</Text>
+                <Text style={styles.textTitle}>Đánh giá từ khách hàng</Text>
                 {/* review cua khach */}
                 <View style={styles.containerReviews}>
                     

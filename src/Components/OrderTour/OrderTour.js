@@ -20,14 +20,14 @@ const Item = ({ title, money }) => {
     return(
         <View style={styles.containerTotal}>
             <Text style={[styles.textTotal, {
-                color: title === 'Total' ? '#000' : '#444',
-                fontWeight: title === 'Total' ? '600' : '400'
+                color: title === 'Tổng' ? '#000' : '#444',
+                fontWeight: title === 'Tổng' ? '600' : '400'
             }]}>
                 {title}
             </Text>
             <Text style={[styles.textTotal, {
-                color: title === 'Total' ? '#000' : '#444',
-                fontWeight: title === 'Total' ? '600' : '400'
+                color: title === 'Tổng' ? '#000' : '#444',
+                fontWeight: title === 'Tổng' ? '600' : '400'
             }]}>
                 {`$${money}`}
             </Text>
@@ -40,7 +40,7 @@ const ItemPayment = ({ title, urlImage, selectPayment, choosePayment }) => {
 
     return(
         <View style={[styles.containerItemPayment, {
-            borderBottomWidth: title === 'Credit card' ? 1 : 0
+            borderBottomWidth: title === 'Thẻ tín dụng' ? 1 : 0
         }]}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <TouchableOpacity
@@ -48,14 +48,14 @@ const ItemPayment = ({ title, urlImage, selectPayment, choosePayment }) => {
                         choosePayment(title);
                         {
                             title === 'PayPal' &&
-                            Alert.alert('Notification', 'Do you want to go to paypal link?', 
+                            Alert.alert('Thông báo', 'Bạn muốn thanh toán bằng PayPal', 
                                 [
                                     { 
-                                        text: 'Yes',
+                                        text: 'Xác nhân',
                                         onPress: () => Linking.openURL('https://www.paypal.com/signin')
                                     },
                                     {
-                                        text: 'No',
+                                        text: 'Huỷ',
                                         onPress: () => {},
                                         style: 'cancel'
                                     }
@@ -130,7 +130,7 @@ export default class OrderTour extends Component {
                             <View style={styles.containerInformation}>
                                 <Text style={styles.textTopOrderTitle}>{tour.name}</Text>
                                 <Text style={styles.textTopOrderNameTourGuide}>
-                                    {`With tour guide `}
+                                    {`Với hướng dẫn viên `}
                                     <Text style={styles.textName}>{tour.tourguideName}</Text>
                                 </Text>
                                 <Text style={styles.textTopOrderDay}>{`${dayBooking.time} - ${dayBooking.day} ${dayBooking.month}`}</Text>
@@ -142,16 +142,16 @@ export default class OrderTour extends Component {
                     </View>
                     {/* tong gia tien */}
                     <View style={styles.containerMidOrder}>
-                        <Text style={styles.textKidForFree}>Kids join for free</Text>
-                        <Item title='Subtotal' money={total}/>
-                        <Item title='Service fee' money={4.5}/>
-                        <Item title='Total' money={total + 4.5}/>
+                        <Text style={styles.textKidForFree}>Miễn phí dành cho trẻ em</Text>
+                        <Item title='Tổng phụ' money={total}/>
+                        <Item title='Phí dịch vụ' money={4.5}/>
+                        <Item title='Tổng' money={total + 4.5}/>
                     </View>
 
                     {/* thanh toan online */}
                     <View style={styles.containerBottomOrder}>
-                        <Item title='Pay online now:' money={total + 4.5}/>
-                        <Text style={styles.titleSelectPayment}>Select payment</Text>
+                        <Item title='Thanh toán online ngay bây giờ:' money={total + 4.5}/>
+                        <Text style={styles.titleSelectPayment}>Chọn thanh toán</Text>
                         <View style={styles.containerTitlePayment}>
                             <Icons 
                                 name='lock-closed-outline'
@@ -159,7 +159,7 @@ export default class OrderTour extends Component {
                                 color={colors.BACKGROUND_BLUEYONDER}
                             />
                             <Text style={styles.textTitlePayment}>
-                                This checkout is encrypted and your information is always secure.
+                                Thanh toán này được mã hóa và thông tin của bạn luôn được bảo mật.
                             </Text>
                         </View>
                         <ItemPayment 

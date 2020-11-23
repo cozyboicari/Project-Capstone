@@ -90,7 +90,7 @@ export default class ProfileDetail extends Component {
                             <Text style={[styles.name, {
                                 fontSize: 24,
                                 fontWeight: '500'
-                            }]}>{title === '' ? '(No title yet)' : title}</Text>
+                            }]}>{title === '' ? '(Chưa có tiêu đề)' : title}</Text>
                         </View>
                     </View>
                     {(uid === auth().currentUser.uid) && <TouchableOpacity
@@ -113,26 +113,26 @@ export default class ProfileDetail extends Component {
                                 fontWeight: 'bold',
                                 color: colors.BACKGROUND_BLUEYONDER
                             }}>
-                                Edit profile tour guide
+                                Chỉnh sửa hồ sơ hướng dẫn viên
                             </Text>
                         </View>
                     </TouchableOpacity>}
                     {/* phan mid */}
                     <View style={styles.containerInfoDetail}>
                         <ItemDetail 
-                            text='I speak'
-                            data={languages === '' ? '*Please correct the languages you know*' : languages}
+                            text='Tôi có thể nói được'
+                            data={languages === '' ? '*Bạn chưa có ngôn ngữ nào*' : languages}
                             nameIcon='globe-outline'
                         />
                         <ItemDetail 
-                            text='My passions are'
-                            data={passions === '' ? '*Please correct the passions you know*' : passions}
+                            text='Sở thích của tôi là'
+                            data={passions === '' ? '*Hãy nhập sở thích của bạn*' : passions}
                             nameIcon='heart'
                         />
 
                         {/* phan gioi thieu */}
                         <View style={styles.containerIntroduce}>
-                            <Text style={styles.textIntroduce}>Hi there! Nice to meet you</Text>
+                            <Text style={styles.textIntroduce}>Xin chào! rất vui được gặp bạn</Text>
                             {   imageProfile === '' ?
                                 <View style={[styles.avatarIntroduce, {
                                     alignItems: 'center',
@@ -142,7 +142,7 @@ export default class ProfileDetail extends Component {
                                         fontSize: 17,
                                         color: colors.BACKGROUND_CULTURE
                                     }}>
-                                        No picture for profile yet
+                                        Chưa có ảnh cho hồ sơ
                                     </Text>
                                 </View> :
                                 <Image 
@@ -156,13 +156,13 @@ export default class ProfileDetail extends Component {
                                 }</Text>
                             </View>
                             <ItemDetail_2 
-                                text='I live in'
+                                text='Tôi đang sống tại'
                                 data={idCity}
                                 nameIcon='location'
                             />
                             <ItemDetail_2 
-                                text='Verified'
-                                data='tour guide'
+                                text='Xác nhận'
+                                data='Hướng dẫn viên'
                                 nameIcon='ribbon'
                             />
                         </View>
@@ -233,7 +233,7 @@ export default class ProfileDetail extends Component {
                         }}
                     >
                         <View style={styles.containerButtonContact}>
-                            <Text style={styles.textButtonContact}>Contact me</Text>
+                            <Text style={styles.textButtonContact}>Liên lạc với tôi</Text>
                         </View>
                     </TouchableOpacity>
                 </View>}

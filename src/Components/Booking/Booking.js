@@ -133,7 +133,7 @@ export default class Booking extends Component {
                 </View>
                 {/* picker time */}
                 <View style={styles.containerBottom}>
-                    <Text style={styles.textSelectTime}>Select time</Text>
+                    <Text style={styles.textSelectTime}>Chọn giờ</Text>
                     <FlatList 
                         data={isToday ? times.filter(time => time.time > getHours) : times}
                         keyExtractor={item => item.text}
@@ -154,7 +154,7 @@ export default class Booking extends Component {
                         style={{ flex: 2, paddingHorizontal: 20 }}
                     >
                         <View style={styles.containerButton}>
-                            <Text style={styles.textSelect}>Select</Text>
+                            <Text style={styles.textSelect}>Xác nhận</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

@@ -84,20 +84,20 @@ export default class ProfileTourGuides extends Component {
                     }}
                     ListFooterComponent={
                         <View style={styles.containerGoodToKnow}>
-                            <Text style={styles.textGoodToKnow}>Good to know</Text>
+                            <Text style={styles.textGoodToKnow}>Thông tin cần biết</Text>
                             <View style={`${styles.containerMeetingPoint}`}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <Icons 
                                         name='videocam-outline'
                                         size={25}
                                     />
-                                    <Text style={styles.textTitleMeetingPoint}>Meeting point</Text>
+                                    <Text style={styles.textTitleMeetingPoint}>Điểm gặp</Text>
                                 </View>
                                 <Text style={styles.textMeetingPoint}>
-                                    We will meet online in a video call. You will receive a custom link after your booking is confirmed.
+                                    Chúng ta sẽ gặp nhau trực tuyến trong một cuộc gọi video. Bạn sẽ nhận được một liên kết tùy chỉnh sau khi đặt phòng của bạn được xác nhận.
                                 </Text>
                                 <Text style={[styles.textTitleMeetingPoint, { marginTop: 15, marginLeft: 0}]}>
-                                    Cancellations
+                                    Huỷ bỏ
                                 </Text>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <Icons 
@@ -106,7 +106,7 @@ export default class ProfileTourGuides extends Component {
                                         color={colors.COLOR_HEART}
                                     />
                                     <Text style={[styles.textMeetingPoint, { marginLeft: 5 }]}>
-                                        Free cancellation up to 24H in advance
+                                        Miễn phí hủy trước 24H
                                     </Text>
                                 </View>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -116,7 +116,7 @@ export default class ProfileTourGuides extends Component {
                                         color={colors.COLOR_HEART}
                                     />
                                     <Text style={[styles.textMeetingPoint, { marginLeft: 5 }]}>
-                                        Reschedule at any time without any additional costs
+                                        Lên lịch lại bất cứ lúc nào mà không có thêm bất kỳ chi phí nào
                                     </Text>
                                 </View>
                             </View>
@@ -154,7 +154,7 @@ export default class ProfileTourGuides extends Component {
                                             });
                                         }}
                                     >
-                                        <Text style={styles.textTitleNameTourGuide}>{`With ${tourguideName}`}</Text>
+                                        <Text style={styles.textTitleNameTourGuide}>{`Với ${tourguideName}`}</Text>
                                     </TouchableOpacity>
                                 </View>
                                 <View style={styles.containerRating}>
@@ -172,7 +172,7 @@ export default class ProfileTourGuides extends Component {
                                             navigate('Reviews Tour Screen');
                                         }}
                                     >
-                                        <Text style={styles.textReviews}>See all reviews</Text>
+                                        <Text style={styles.textReviews}>Xem đánh giá</Text>
                                     </TouchableOpacity>
                                 </View>
                                 {/* gioi thieu ve tourguide */}
@@ -181,23 +181,23 @@ export default class ProfileTourGuides extends Component {
                                 </View>
                                 {/* thong tin ve chuyen di */}
                                 <View style={styles.containerInformationTour}>
-                                    <TourItemInformation nameIcon='time-outline' text={`${time} hours`}/>
-                                    <TourItemInformation nameIcon='people-outline' text={`Private group up to ${numberPeople} people`}/>
+                                    <TourItemInformation nameIcon='time-outline' text={`${time} giờ`}/>
+                                    <TourItemInformation nameIcon='people-outline' text={`Nhóm có thể lên đến ${numberPeople} người`}/>
                                     <TourItemInformation nameIcon='map-outline' text={category}/>
                                     <TourItemInformation nameIcon='globe-outline' text={languages}/>
                                 </View>
                                 <View style={styles.containerSchedule}>
                                     <Text style={styles.titleSchedule}>
-                                        What we are going to do
+                                        Những gì chúng ta sẽ làm
                                     </Text>
                                     <Text style={styles.textSchedule}>
                                         {description}
                                     </Text>
                                 </View>
                                 <View style={styles.containerPlan}>
-                                    <Text style={styles.titlePlan}>This is the plan</Text>
+                                    <Text style={styles.titlePlan}>Đây là kế hoạch</Text>
                                     <Text style={styles.textPlan}>
-                                        Check out plan below to see what you'll get up to with your local host.
+                                        Kiểm tra kế hoạch bên dưới để biết những gì bạn sẽ làm với hướng dẫn viên địa phương của bạn.
                                     </Text>
                                 </View>
                             </View>
@@ -206,28 +206,40 @@ export default class ProfileTourGuides extends Component {
                 />
                 
                 {/* phan bottom gia tien */}
-                <View style={styles.containerBookingAndPrice}>
-                    <View style={styles.containerPrice}>
-                        <Text style={styles.textPrice}>{`${price}$ per person`}</Text>
-                        <Text style={styles.textInvite}>{`Invite ${numberPeople - 1} friends for free`}</Text>
+                { auth().currentUser.uid !== tourguideID ?
+                    <View style={styles.containerBookingAndPrice}>
+                        <View style={styles.containerPrice}>
+                            <Text style={styles.textPrice}>{`${price}$ mỗi người`}</Text>
+                            <Text style={styles.textInvite}>{`Mời ${numberPeople - 1} người bạn miễn phí`}</Text>
+                        </View>
+                        <TouchableOpacity
+                            onPress={() => {
+                                const isUser = auth().currentUser;
+                                const { navigate } = this.props.navigation;
+                                if(!isUser) {
+                                    navigate('Sign In Screen');
+                                } else {
+                                    navigate('Booking Screen', {
+                                        tour: this.props.route.params.tour
+                                    });
+                                }
+                            }}
+                            style={styles.containerButtonBooking}
+                        >
+                            <Text style={styles.textButtonBooking}>Đặt chuyến đi</Text>
+                        </TouchableOpacity>
+                    </View> :
+                    <View style={styles.containerBookingAndPrice}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                
+                            }}
+                            style={styles.containerButtonBooking}
+                        >
+                            <Text style={styles.textButtonBooking}>Chỉnh sửa bài viết</Text>
+                        </TouchableOpacity>
                     </View>
-                    <TouchableOpacity
-                        onPress={() => {
-                            const isUser = auth().currentUser;
-                            const { navigate } = this.props.navigation;
-                            if(!isUser) {
-                                navigate('Sign In Screen');
-                            } else {
-                                navigate('Booking Screen', {
-                                    tour: this.props.route.params.tour
-                                });
-                            }
-                        }}
-                        style={styles.containerButtonBooking}
-                    >
-                        <Text style={styles.textButtonBooking}>Book now</Text>
-                    </TouchableOpacity>
-                </View>
+                }
             </View>
         );
     }

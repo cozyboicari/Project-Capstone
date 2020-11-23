@@ -47,7 +47,7 @@ export default class SignIn extends Component {
                         style={styles.containerTop}
                     >
                         <View style={styles.containerWelcome}>
-                            <Text style={styles.textWelcome}>Welcome!</Text>
+                            <Text style={styles.textWelcome}>Chào mừng!</Text>
                         </View>
                     </Animatable.View>
 
@@ -71,7 +71,7 @@ export default class SignIn extends Component {
                                 />
                             </Item>
                             <Item floatingLabel>  
-                                <Label>Password</Label>
+                                <Label>Mật khẩu</Label>
                                 <Input 
                                     secureTextEntry 
                                     onChangeText={text => this.setState({ password: text })}
@@ -104,7 +104,7 @@ export default class SignIn extends Component {
                                     });
                                 }}
                             >
-                                <Text style={styles.textSignIn}>Sign In</Text>
+                                <Text style={styles.textSignIn}>Đăng nhập</Text>
                             </Button>
 
                             <Button 
@@ -116,12 +116,12 @@ export default class SignIn extends Component {
                                     navigate('Sign Up Screen')
                                 }}
                             >
-                                <Text style={styles.textSignUp}>Sign Up</Text>
+                                <Text style={styles.textSignUp}>Đăng kí</Text>
                             </Button>
 
                             {/* phan sign in social */}
                             <Text style={styles.textSocial}>
-                                Sign in with social accounts
+                                Đăng nhập với tài khoản xã hội
                             </Text>
 
                             {/* button facebook */}
@@ -134,7 +134,7 @@ export default class SignIn extends Component {
                             >
                                 <Icon type="FontAwesome5" name="facebook-square"/>
                                 <Text style={styles.textSignInSocial}>
-                                    Sign In with Facebook 
+                                    Đăng nhập bằng Facebook
                                 </Text>
                             </Button>
 
@@ -148,7 +148,7 @@ export default class SignIn extends Component {
                             >
                                 <Icon type="FontAwesome5" name="google"/>
                                 <Text style={styles.textSignInSocial}>
-                                    Sign In with Gmail 
+                                    Đăng nhập bằng Gmail
                                 </Text>
                             </Button>
                         </Form>

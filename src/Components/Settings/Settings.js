@@ -72,9 +72,10 @@ export default class Settings extends Component {
     render() {
         const { user } = this.state;
         if(user) {
-            const { email, name, picture, isActive } = this.props.traveler;
+            const { email, name, picture, isActive, providerId } = this.props.traveler;
             if(!email || !name || !picture || !isActive) {
                 this.props._onGetTraveler();
+               
             }
             return(
                 <View style={styles.container}>
@@ -94,16 +95,18 @@ export default class Settings extends Component {
                             </View>
                         </View>
                         <View style={styles.containerBottom}>
-                            <Item title='Edit profile' nameIcon='construct-outline' nameScreen='Profile Screen' navigation={this.props.navigation}/>
-                            <Item title='Booking history ' nameIcon='calendar-outline'/>
+                            <Item title='Chỉnh sửa Thông tin' nameIcon='construct-outline' nameScreen='Profile Screen' navigation={this.props.navigation}/>
+                            <Item title='Lịch sử đặt chuyến đi' nameIcon='calendar-outline'/>
                             {
                                 !isActive ?
-                                <Item title='Become a tour guide' nameIcon='medal-outline' nameScreen='Register Tour Guide Screen' navigation={this.props.navigation}/> :
-                                <Item title='Profile tour guide' nameIcon='person-outline' nameScreen='Profile Detail Screen' navigation={this.props.navigation}/>
+                                <Item title='Trở thành một hướng dẫn viên' nameIcon='medal-outline' nameScreen='Register Tour Guide Screen' navigation={this.props.navigation}/> :
+                                <Item title='Thông tin hướng dẫn viên' nameIcon='person-outline' nameScreen='Profile Detail Screen' navigation={this.props.navigation}/>
                             }
-                            <Item title='Favorites' nameIcon='heart-outline'/>
-                            <Item title='Change password' nameIcon='lock-closed-outline'/>
-                            <ItemSignOut title='Sign out' nameIcon='log-out-outline' _signOut={this._signOut}/>
+                            <Item title='Yêu thích' nameIcon='heart-outline'/>
+                            { providerId === 'firebase.com' &&
+                                <Item title='Thay đổi mật khẩu' nameIcon='lock-closed-outline' nameScreen='Change Password Screen' navigation={this.props.navigation}/>
+                            }
+                            <ItemSignOut title='Đăng xuất' nameIcon='log-out-outline' _signOut={this._signOut}/>
                         </View>
                     </ScrollView>
                 </View>
@@ -118,7 +121,7 @@ export default class Settings extends Component {
                             fontSize: 15,
                             fontWeight: '500'
                         }}>
-                            You are not logged in to your account?
+                            Bạn chưa đăng nhập tài khoản? hãy 
                         </Text>
                         <TouchableOpacity
                             onPress={() => {
@@ -140,7 +143,7 @@ export default class Settings extends Component {
                                     fontWeight: '600',
                                     color: colors.BACKGROUND_CULTURE
                                 }}
-                                    >Sign In
+                                    >Đăng nhập
                                 </Text>
                             </View>
                         </TouchableOpacity>

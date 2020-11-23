@@ -18,14 +18,14 @@ const Item = ({ title, number, onAddPeople, onRemovePeople, getAdults, getChildr
         <View style={styles.containerItem}>
             <View style={{flex: 2}}>
                 <Text style={styles.textItem}>{title}</Text>
-                { title === 'Children' &&
-                    <Text style={styles.exampleText}>0 - 10 years</Text>
+                { title === 'Trẻ em' &&
+                    <Text style={styles.exampleText}>từ 0 đến 10 tuổi</Text>
                 }
             </View>
             <View style={styles.containerIconsItem}>        
                {
-                   (title === 'Adults' && getAdults <= 1) ||
-                   (title === 'Children' && getChildren === 0) ?
+                   (title === 'Người trưởng thành' && getAdults <= 1) ||
+                   (title === 'Trẻ em' && getChildren === 0) ?
                    <Icons 
                         name='remove-circle-outline' 
                         size={40} 
@@ -109,11 +109,11 @@ export default class NumberOfPeople extends Component {
     _removePeople = title => {
         const { adults, children, numberPeople, price } = this.state;
         switch(title) {
-            case 'Adults': return this.setState({ 
+            case 'Người trưởng thành': return this.setState({ 
                 adults: adults - 1,
                 total: ((numberPeople * price) / (adults - 1)).toFixed(2)
             })
-            case 'Children': return this.setState({ 
+            case 'Trẻ em': return this.setState({ 
                 children: children - 1,
             })
             default:
@@ -131,10 +131,10 @@ export default class NumberOfPeople extends Component {
 
                 <View style={{ flex: 1 }}>
                     <View style={styles.containerTop}>
-                        <Text style={styles.titleNumberOfPeople}>Number of people</Text>
+                        <Text style={styles.titleNumberOfPeople}>Số lượng khách tham gia</Text>
                         <View style={styles.containerMid}>
                             <Item 
-                                title='Adults' number={adults}
+                                title='Người trưởng thành' number={adults}
                                 onAddPeople={this._addPeople}
                                 onRemovePeople={this._removePeople}
                                 getAdults={adults}
@@ -142,7 +142,7 @@ export default class NumberOfPeople extends Component {
                                 getPeoples={numberPeople}
                             />
                             <Item 
-                                title='Children' number={children}
+                                title='Trẻ em' number={children}
                                 onAddPeople={this._addPeople}
                                 onRemovePeople={this._removePeople}
                                 getAdults={adults}
@@ -153,13 +153,13 @@ export default class NumberOfPeople extends Component {
                     </View>
                     <View style={styles.containerBottom}>
                         <View style={{ flexDirection: 'row' }}>
-                            <Text style={styles.textBottom}>Price per person </Text>
+                            <Text style={styles.textBottom}>Giá của mỗi người là </Text>
                             <Text style={[styles.textBottom, {
                                 color: colors.BACKGROUND_BLUEYONDER,
                                 fontWeight: 'bold'
                             }]}>{`$${total}`}</Text>
                         </View>
-                        <Text style={styles.textExampleBottom}>Kids join for free</Text>
+                        <Text style={styles.textExampleBottom}>Miễn phí dành cho trẻ em</Text>
                     </View>
                 </View>
                 <View style={styles.containerNext}>
@@ -175,7 +175,7 @@ export default class NumberOfPeople extends Component {
                         }}
                     >
                         <View style={styles.containerButtonNext}>
-                            <Text style={styles.textButtonNext}>Next</Text>
+                            <Text style={styles.textButtonNext}>Tiếp theo</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

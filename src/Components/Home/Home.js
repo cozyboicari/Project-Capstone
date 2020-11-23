@@ -10,8 +10,6 @@ import HeaderComponent from '../Header/Header';
 import styles from './Styles';
 
 //library ngoai
-import Icons from 'react-native-vector-icons/Ionicons';
-import { colors } from '../../ConfigGlobal';
 import * as Animatable from 'react-native-animatable';
 
 // file const
@@ -51,7 +49,6 @@ const ItemCitiesTop = ({ name, description, image, navigation, id }) => {
 
 //list all item city
 const ItemCitiesAll = ({ name, image, visitors, navigation, id }) => {
-    const [ heart, setTapHeart ] = React.useState(false);
     return (
         <TouchableOpacity
             onPress={() => {
@@ -73,19 +70,6 @@ const ItemCitiesAll = ({ name, image, visitors, navigation, id }) => {
                 <View style={styles.containerInfoViewAll}>
                     <Text style={styles.textViewAll}>{name}</Text>
                     <Text style={styles.textVisitors}>{`Visitors: ${visitors}`}</Text>
-                </View>
-                <View style={styles.containerFavouriteIcon}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            setTapHeart(!heart);
-                        }}
-                    >
-                        <Icons 
-                            name={heart ? 'heart' : 'heart-outline'}
-                            size={23}
-                            color={colors.COLOR_HEART}
-                        />
-                    </TouchableOpacity>
                 </View>
             </Animatable.View>
         </TouchableOpacity>
@@ -118,8 +102,8 @@ export default class Home extends Component {
                     <View style={styles.containerTopDestinations}>
                         <Text style={styles.textTitle}>
                             {
-                                !viewAll ? 'Top destinations'
-                                : 'All destinations'
+                                !viewAll ? 'Những địa điểm hấp dẫn nhất'
+                                : 'Tất cả những địa điểm'
                             }
                         </Text>
                         <TouchableOpacity
@@ -127,8 +111,8 @@ export default class Home extends Component {
                         >
                             <Text style={styles.textSeeAll}>
                                 {
-                                    !viewAll ? 'See all'
-                                    : 'Top cities'
+                                    !viewAll ? 'Tất cả'
+                                    : 'Thu gọn'
                                 }
                             </Text>
                         </TouchableOpacity>

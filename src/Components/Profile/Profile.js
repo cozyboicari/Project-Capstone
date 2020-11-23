@@ -22,11 +22,11 @@ export default class Profile extends Component {
         this.state = {
             genders: [
                 {
-                    label: 'Man',
+                    label: 'Nam',
                     value: true
                 },
                 {
-                    label: 'Woman',
+                    label: 'Nữ',
                     value: false
                 }
             ],
@@ -72,9 +72,9 @@ export default class Profile extends Component {
             picture: picture === '' ? this.props.traveler.picture : picture,
         };
 
-        Alert.alert('Notification', 'Would you like update your information?', [
+        Alert.alert('Thông báo', 'Bạn có muốn cập nhật thông tin?', [
             {
-                text: 'OK',
+                text: 'Xác nhận',
                 onPress: () => {
                     this.props._onUpdateProfile(travelerUpdated);
                     const { goBack } = this.props.navigation;
@@ -82,7 +82,7 @@ export default class Profile extends Component {
                 }
             },
             {
-                text: 'Cannel',
+                text: 'Huỷ bỏ',
                 onPress: () => {},
                 style: 'cancel'
             },
@@ -101,7 +101,7 @@ export default class Profile extends Component {
 
                 { birthday ?
                 <ScrollView>
-                    <Text style={styles.textTitle}>Profile information</Text>
+                    <Text style={styles.textTitle}>Thông tin hồ sơ</Text>
                     {/* phan avatar */}
                     <Animatable.View
                         style={{flex: 1}}
@@ -116,7 +116,7 @@ export default class Profile extends Component {
                                 onPress={this.chooseFileImage}
                             >
                                 <View style={styles.containerButtonChangeImage}>
-                                    <Text style={styles.textChangeImage}>Change profile picture</Text>
+                                    <Text style={styles.textChangeImage}>Thay đổi ảnh hồ sơ</Text>
                                 </View>
                             </TouchableOpacity>
                         </View>
@@ -124,7 +124,7 @@ export default class Profile extends Component {
                         <View style={styles.containerInformation}>
                             {/* full name */}
                             <View style={styles.containerItem}>
-                                <Text style={styles.textItem}>Full Name</Text>
+                                <Text style={styles.textItem}>Họ và tên</Text>
                                 <TextInput 
                                     style={styles.textInput}
                                     returnKeyType='done'
@@ -148,7 +148,7 @@ export default class Profile extends Component {
                             </View>
                             {/* phone number */}
                             <View style={styles.containerItem}>
-                                <Text style={styles.textItem}>Phone number</Text>
+                                <Text style={styles.textItem}>Số điện thoại</Text>
                                 <TextInput 
                                     style={styles.textInput}
                                     keyboardType='numeric'
@@ -163,11 +163,11 @@ export default class Profile extends Component {
                             </View>
                             {/* gender */}
                             <View style={styles.containerItem}>
-                                <Text style={styles.textItem}>Gender</Text>
+                                <Text style={styles.textItem}>Giới tính</Text>
                                 <View style={styles.containerTextGender}>
                                     <RNPickerSelect 
                                         placeholder={{
-                                            label: 'Select a gender...',
+                                            label: 'Chọn giới tính...',
                                             value: null
                                         }}
                                         value={this.state.gender === undefined ? gender : this.state.gender}
@@ -189,7 +189,7 @@ export default class Profile extends Component {
                                 borderBottomWidth: 1,
                                 borderColor: '#ddd'
                             }]}>
-                                <Text style={styles.textItem}>Birthday</Text>
+                                <Text style={styles.textItem}>Sinh nhật</Text>
                                 <DatePicker 
                                     style={{ width: 220 }}
                                     date={this.state.date === '' ? birthday : this.state.date}
@@ -214,7 +214,7 @@ export default class Profile extends Component {
                             style={{ alignItems: 'flex-end'}}
                         >
                             <View style={styles.containerButtonSave}>
-                                <Text style={styles.textButton}>Save profile</Text>
+                                <Text style={styles.textButton}>Lưu thông tin</Text>
                             </View>
                         </TouchableOpacity>
                     </Animatable.View>

@@ -26,11 +26,12 @@ import ActiveTourGuideScreen from '../Redux/Containers/ActiveTourGuideContainer'
 import ProfileDetailScreen from '../Redux/Containers/ProfileDetailContainer';
 import EditProfileDetailScreen from '../Redux/Containers/EditProfileDetailContainer';
 import CreateToursScreen from '../Redux/Containers/CreateToursContainer';
-import ChatAllScreen from '../Components/Chat/AllChat';
+import ChatAllScreen, { notificationChat } from '../Components/Chat/AllChat';
 import ChatUserScreen from '../Components/Chat/ChatUser';
 import OrderTourScreen from '../Components/OrderTour/OrderTour';
 import NumberOfPeopleScreen from '../Components/OrderTour/NumberOfPeople';
 import ChatbotScreen from '../Components/Chat/Chatbot';
+import ChangePasswordScreen from '../Components/ChangePassword/ChangePassword';
 
 //redux
 import { createStore, applyMiddleware } from 'redux';
@@ -54,11 +55,6 @@ const ScreenHome = () => {
         <Stack.Navigator headerMode="none">
             <Stack.Screen name="Home Screen" component={HomeScreen} />
             <Stack.Screen name="Tours Screen" component={ToursScreen} 
-                options={{
-                    gestureEnabled: false
-                }}
-            />
-            <Stack.Screen name="Create Tours Screen" component={CreateToursScreen} 
                 options={{
                     gestureEnabled: false
                 }}
@@ -87,32 +83,31 @@ const TabsScreen = () => {
                 activeTintColor: colors.BACKGROUND_BLUEYONDER,
                 inactiveTintColor: '#aaa',
             }}
-            
-
         >
             <Tab.Screen 
-                name="Home" 
+                name="Trang chủ" 
                 component={ScreenHome}
                 options={() => ({
                     tabBarIcon: ({size, color}) => <Icons name="home-outline" size={size} color={color}/>,
                 })}
             />
             <Tab.Screen 
-                name="Notification" 
+                name="Thông báo" 
                 component={View}
                 options={{
                     tabBarIcon: ({size, color}) => <Icons name="notifications-outline" size={size} color={color}/> 
                 }}
             />
             <Tab.Screen 
-                name="Conversation" 
+                name="Trò chuyện" 
                 component={ChatAllScreen}
                 options={{
-                    tabBarIcon: ({size, color}) => <Icons name="chatbubbles-outline" size={size} color={color}/> 
+                    tabBarIcon: ({size, color}) => <Icons name="chatbubbles-outline" size={size} color={color}/>,
+                    tabBarBadge: notificationChat
                 }}
             />
             <Tab.Screen 
-                name="Settings" 
+                name="Cài đặt" 
                 component={ScreenSettings}
                 options={{
                     tabBarIcon: ({size, color}) => <Icons name="settings-outline" size={size} color={color}/> 
@@ -171,12 +166,22 @@ const ManagerScreens = () => {
                             gestureEnabled: false
                         }}
                     />
+                    <Stack.Screen name="Change Password Screen" component={ChangePasswordScreen} 
+                        options={{
+                            gestureEnabled: false
+                        }}
+                    />
                     <Stack.Screen name="Chat User Screen" component={ChatUserScreen} 
                         options={{
                             gestureEnabled: false
                         }}
                     />
                     <Stack.Screen name="Chatbot Screen" component={ChatbotScreen} 
+                        options={{
+                            gestureEnabled: false
+                        }}
+                    />
+                    <Stack.Screen name="Create Tours Screen" component={CreateToursScreen} 
                         options={{
                             gestureEnabled: false
                         }}

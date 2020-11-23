@@ -42,7 +42,7 @@ const ItemEditProfile = ({ text, data, isMultiple, isButton, _setText, _chooseFi
                     onPress={_chooseFileImage}
                 >
                     <View style={styles.containerButtonItemEditProfile}>
-                        <Text style={styles.textButtonItemEditProfile}>Change</Text>
+                        <Text style={styles.textButtonItemEditProfile}>Thay đổi</Text>
                     </View>
                 </TouchableOpacity>
                 }
@@ -77,10 +77,10 @@ export default class EditProfileDetail extends Component {
 
     _setText = (key, value) => {
         switch(key) {
-            case 'Title': return this.setState({ title: value });
-            case 'Languages': return this.setState({ languages: value });
-            case 'Passions': return this.setState({ passions: value });
-            case 'Description': return this.setState({ description: value });
+            case 'Tiêu đề': return this.setState({ title: value });
+            case 'Ngôn ngữ': return this.setState({ languages: value });
+            case 'Sở thích': return this.setState({ passions: value });
+            case 'Nội dung': return this.setState({ description: value });
             default: return;
         }
     }
@@ -111,13 +111,13 @@ export default class EditProfileDetail extends Component {
                     <StatusBar barStyle='light-content'/>
                     <HeaderComponent {...this.props} isHome={false}/>
 
-                    <Text style={styles.titleEditProfile}>Edit profile tour guide</Text>
+                    <Text style={styles.titleEditProfile}>Chỉnh sửa hồ sơ hướng dẫn viên</Text>
                     {/* phan view item edit */}
-                    <ItemEditProfile text='Title' data={title} isMultiple={false} isButton={false} _setText={this._setText} _chooseFileImage={this.chooseFileImage} isImage={false}/>
-                    <ItemEditProfile text='Languages' data={languages} isMultiple={false} isButton={false} _setText={this._setText} _chooseFileImage={this.chooseFileImage} isImage={false}/>
-                    <ItemEditProfile text='Passions' data={passions} isMultiple={false} isButton={false} _setText={this._setText} _chooseFileImage={this.chooseFileImage} isImage={false}/>
-                    <ItemEditProfile text='Description' data={description} isMultiple={true} isButton={false} _setText={this._setText} _chooseFileImage={this.chooseFileImage} isImage={false}/>
-                    <ItemEditProfile text='Image in profile' data={imageProfile} isMultiple={false} isButton={true} _setText={this._setText} _chooseFileImage={this.chooseFileImage} isImage={true}/>
+                    <ItemEditProfile text='Tiêu đề' data={title} isMultiple={false} isButton={false} _setText={this._setText} _chooseFileImage={this.chooseFileImage} isImage={false}/>
+                    <ItemEditProfile text='Ngôn ngữ' data={languages} isMultiple={false} isButton={false} _setText={this._setText} _chooseFileImage={this.chooseFileImage} isImage={false}/>
+                    <ItemEditProfile text='Sở thích' data={passions} isMultiple={false} isButton={false} _setText={this._setText} _chooseFileImage={this.chooseFileImage} isImage={false}/>
+                    <ItemEditProfile text='Nội dung' data={description} isMultiple={true} isButton={false} _setText={this._setText} _chooseFileImage={this.chooseFileImage} isImage={false}/>
+                    <ItemEditProfile text='Chọn ảnh cho hồ sơ' data={imageProfile} isMultiple={false} isButton={true} _setText={this._setText} _chooseFileImage={this.chooseFileImage} isImage={true}/>
 
                     {/* phan button */}
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -130,9 +130,9 @@ export default class EditProfileDetail extends Component {
                                     description: description,
                                     imageProfile: imageProfile
                                 }
-                                Alert.alert('Notification', 'Would you like update your information?', [
+                                Alert.alert('Thông báo', 'Bạn có muốn cập nhật hồ sơ?', [
                                     {
-                                        text: 'OK',
+                                        text: 'Xác nhận',
                                         onPress: () => {
                                             this.props._onUpdateEditProfileDetail(itemsUpdate);
                                             const { goBack } = this.props.navigation;
@@ -140,7 +140,7 @@ export default class EditProfileDetail extends Component {
                                         }
                                     },
                                     {
-                                        text: 'Cannel',
+                                        text: 'Huỷ bỏ',
                                         onPress: () => {},
                                         style: 'cancel'
                                     },
@@ -150,7 +150,7 @@ export default class EditProfileDetail extends Component {
                         >
                             <View style={styles.containerButtonSaveEditProfile}>
                                 <Text style={styles.textButtonSaveEditProfile}>
-                                    Save
+                                    Lưu
                                 </Text>
                             </View>
                         </TouchableOpacity>

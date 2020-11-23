@@ -28,11 +28,11 @@ const ItemCreateTour = ({ title, data, typeInput, isButton, _chooseFileImage, _s
                 <TextInput 
                     style={[styles.textInputItemCreateTour, {
                         width: isButton ? WIDTH_TEXTINPUT : width * 0.89,
-                        height: (title !== 'Introduce city' && title !== 'Introduce city detail') ? HEIGHT_TEXTINPUT : height * 0.2,
+                        height: (title !== 'Giới thiệu về bản thân' && title !== 'Những gì chúng ta sẽ làm') ? HEIGHT_TEXTINPUT : height * 0.2,
                     }]}
                     value={data}
                     editable={isButton ? false : true}
-                    multiline={ (title !== 'Introduce city' && title !== 'Introduce city detail') ? false : true }
+                    multiline={ (title !== 'Giới thiệu về bản thân' && title !== 'Những gì chúng ta sẽ làm')  ? false : true }
                     keyboardType={typeInput}
                     onChangeText={text => {
                         _setText(title, text);
@@ -42,7 +42,7 @@ const ItemCreateTour = ({ title, data, typeInput, isButton, _chooseFileImage, _s
                     onPress={_chooseFileImage}
                     style={styles.containerButtonChangeImage}
                 >
-                    <Text style={styles.textButtonChangeImage}>Change</Text>
+                    <Text style={styles.textButtonChangeImage}>Thay đổi</Text>
                 </TouchableOpacity>}
             </View>
         </View>
@@ -92,15 +92,15 @@ export default class CreateTours extends Component {
 
     _setText = (key, value) => {
         switch(key) {
-            case 'Name tour': return this.setState({ nameTour: value });
-            case 'Introduce city': return this.setState({ introduceCity: value });
-            case 'Introduce city detail': return this.setState({ introduceCityDetail: value});
-            case 'Tour hours': return this.setState({ tourHours: value});
-            case 'Number of tourists': return this.setState({ numberOfTourists: value});
-            case 'Tour category': return this.setState({ tourCategory: value});
-            case 'Languages': return this.setState({ languages: value });
-            case 'Price ( ...$ / hour )': return this.setState({ price: value});
-            case 'Number account bank': return this.setState({ numberAccount: value})
+            case 'Tên chuyến du lịch': return this.setState({ nameTour: value });
+            case 'Giới thiệu về bản thân': return this.setState({ introduceCity: value });
+            case 'Những gì chúng ta sẽ làm': return this.setState({ introduceCityDetail: value});
+            case 'Thời gian chuyến đi': return this.setState({ tourHours: value});
+            case 'Số lượng khách': return this.setState({ numberOfTourists: value});
+            case 'Thể loại du lịch': return this.setState({ tourCategory: value});
+            case 'Ngôn ngữ': return this.setState({ languages: value });
+            case 'Giá ($ / mỗi người)': return this.setState({ price: value});
+            case 'Số tài khoản': return this.setState({ numberAccount: value})
             default: return;
         }
     }
@@ -132,7 +132,7 @@ export default class CreateTours extends Component {
             }]}>
                 <View style={{ marginBottom: 10}}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <Text style={styles.textItemScheduleDetail}>{`${index + 1}. Schedule name`}</Text>
+                        <Text style={styles.textItemScheduleDetail}>{`${index + 1}. Lịch trình`}</Text>
                         <TouchableOpacity
                             onPress={() => {
                                 const { schedule } = this.state;
@@ -144,7 +144,7 @@ export default class CreateTours extends Component {
                             }}
                         >
                             <View style={styles.containerDeleteSchedule}>
-                                <Text style={styles.textDeleteSchedule}>delete schedule</Text>
+                                <Text style={styles.textDeleteSchedule}>Xoá lịch trình</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -163,7 +163,7 @@ export default class CreateTours extends Component {
                     />
                 </View>
                 <View>
-                    <Text style={styles.textItemScheduleDetail}>Schedule summary</Text>
+                    <Text style={styles.textItemScheduleDetail}>Lịch trình cụ thể</Text>
                     <TextInput
                         onChangeText={text => {
                             const updateText = this.state.schedule.slice();
@@ -197,8 +197,53 @@ export default class CreateTours extends Component {
             <View style={styles.container}>
                 <StatusBar barStyle='light-content'/>
                 <HeaderComponent {...this.props} isHome={false}/>
+                {/* item create tour */}
+                <FlatList 
+                    data={schedule}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={this._renderItem}
+                    showsVerticalScrollIndicator={false}
+                    ListHeaderComponent={
+                        <View style={{ flex: 1, marginTop: 20 }}>
+                            <ItemCreateTour _setText={this._setText} data={imageTour} title='Ảnh của chuyến đi' typeInput='default' isButton={true} _chooseFileImage={this._chooseFileImage}/>
+                            <ItemCreateTour _setText={this._setText} data={nameTour} title='Tên chuyến du lịch' typeInput='default' isButton={false}/>
+                            <ItemCreateTour  _setText={this._setText} data={introduceCity} title='Giới thiệu về bản thân' typeInput='default' isButton={false}/>
+                            <ItemCreateTour _setText={this._setText} data={introduceCityDetail} title='Những gì chúng ta sẽ làm' typeInput='default' isButton={false}/>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <ItemCreateTourNumber _setText={this._setText} data={tourHours} title='Thời gian chuyến đi' />
+                                <ItemCreateTourNumber _setText={this._setText} data={numberOfTourists} title='Số lượng khách' />
+                            </View>
+                            <ItemCreateTour _setText={this._setText} data={tourCategory} title='Thể loại du lịch' typeInput='default' isButton={false}/>
+                            <ItemCreateTour _setText={this._setText} data={languages} title='Ngôn ngữ' typeInput='default' isButton={false}/>
+                            <ItemCreateTourNumber _setText={this._setText} data={price} title='Giá ($ / mỗi người)' isButton={false}/>
+                            <ItemCreateTour _setText={this._setText} data={numberAccount} title='Số tài khoản' typeInput='numeric' isButton={false}/>
+                            {/* flatlist schedule */}
+                            <Text style={[styles.textItemCreateTour, {
+                                marginHorizontal: 22,
+                                marginBottom: 10
+                            }]}>Lịch trình cụ thể</Text>
+                        </View>
+                    }
+                    ListFooterComponent={
+                        <TouchableOpacity
+                            onPress={() => {
+                                this.setState({
+                                    schedule: [...schedule, {
+                                        name: '',
+                                        detail: ''
+                                    }]
+                                })
+                            }}
+                        >
+                            <View style={styles.containerButtonAddSchedule}>
+                                <Text style={styles.textButtonAddSchedule}>
+                                    Thêm lịch trình
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                    }
+                />
                 <View style={styles.containerTitleCreateTour}>
-                    <Text style={styles.textTitleCreateTour}>Create your tour</Text>
                     <TouchableOpacity
                         onPress={() => {
                             const newTour = {
@@ -220,9 +265,9 @@ export default class CreateTours extends Component {
                                 scheduleDetail: schedule,
                                 numberAccount
                             };
-                            Alert.alert('Notification', 'Would you like create your tour?', [
+                            Alert.alert('Thông báo', 'Bạn có muốn tạo chuyến đi này?', [
                                 {
-                                    text: 'OK',
+                                    text: 'Xác nhận',
                                     onPress: () => {
                                         this.props._onCreateTour(newTour);
                                         const { goBack } = this.props.navigation;
@@ -230,72 +275,24 @@ export default class CreateTours extends Component {
                                     }
                                 },
                                 {
-                                    text: 'Cannel',
+                                    text: 'Huỷ',
                                     onPress: () => {},
                                     style: 'cancel'
                                 },
                                 { cancelable: false }
                             ])     
                         }}
-                        style={{ padding: 12}}
+                        style={styles.containerSubmit}
                     >
-                        <View style={styles.containerSubmit}>
-                            <Text style={[styles.textTitleCreateTour, {
-                                color: colors.BACKGROUND_CULTURE,
-                                fontWeight: 'bold',
-                                fontSize: 17
-                            }]}>
-                                Submit your tour
-                            </Text>
-                        </View>
+                        <Text style={[styles.textTitleCreateTour, {
+                            color: colors.BACKGROUND_CULTURE,
+                            fontWeight: 'bold',
+                            fontSize: 17
+                        }]}>
+                            Tạo chuyến đi
+                        </Text>
                     </TouchableOpacity>
                 </View>
-                {/* item create tour */}
-                <FlatList 
-                    data={schedule}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={this._renderItem}
-                    showsVerticalScrollIndicator={false}
-                    ListHeaderComponent={
-                        <View style={{ flex: 1}}>
-                            <ItemCreateTour _setText={this._setText} data={imageTour} title='Image tour' typeInput='default' isButton={true} _chooseFileImage={this._chooseFileImage}/>
-                            <ItemCreateTour _setText={this._setText} data={nameTour} title='Name tour' typeInput='default' isButton={false}/>
-                            <ItemCreateTour  _setText={this._setText} data={introduceCity} title='Introduce city' typeInput='default' isButton={false}/>
-                            <ItemCreateTour _setText={this._setText} data={introduceCityDetail} title='Introduce city detail' typeInput='default' isButton={false}/>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <ItemCreateTourNumber _setText={this._setText} data={tourHours} title='Tour hours' />
-                                <ItemCreateTourNumber _setText={this._setText} data={numberOfTourists} title='Number of tourists' />
-                            </View>
-                            <ItemCreateTour _setText={this._setText} data={tourCategory} title='Tour category' typeInput='default' isButton={false}/>
-                            <ItemCreateTour _setText={this._setText} data={languages} title='Languages' typeInput='default' isButton={false}/>
-                            <ItemCreateTourNumber _setText={this._setText} data={price} title='Price ( ...$ / hour )' isButton={false}/>
-                            <ItemCreateTour _setText={this._setText} data={numberAccount} title='Number account bank' typeInput='numeric' isButton={false}/>
-                            {/* flatlist schedule */}
-                            <Text style={[styles.textItemCreateTour, {
-                                marginHorizontal: 22,
-                                marginBottom: 10
-                            }]}>Schedule detail</Text>
-                        </View>
-                    }
-                    ListFooterComponent={
-                        <TouchableOpacity
-                            onPress={() => {
-                                this.setState({
-                                    schedule: [...schedule, {
-                                        name: '',
-                                        detail: ''
-                                    }]
-                                })
-                            }}
-                        >
-                            <View style={styles.containerButtonAddSchedule}>
-                                <Text style={styles.textButtonAddSchedule}>
-                                    Add schedule
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                    }
-                />
             </View>
         );
     }
