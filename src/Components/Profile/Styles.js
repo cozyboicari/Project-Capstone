@@ -268,6 +268,7 @@ const styles = StyleSheet.create({
         color: colors.BACKGROUND_CULTURE
     },
     containerButtonSaveEditProfile: {
+        marginTop: 20,
         backgroundColor: colors.BACKGROUND_BLUEYONDER,
         width: WIDTH_BUTTON_SAVE_EDIT,
         height: HEIGHT_BUTTON_SAVE_EDIT,

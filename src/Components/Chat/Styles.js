@@ -8,11 +8,19 @@ const { width, height } = Dimensions.get('screen');
 
 const AVATAR = width * 0.17
 const HEIGHT_BOTTOM = height * 0.13;
+const HEIGHT_TEXT_INPUT = height * 0.04;
 
 const styles = StyleSheet.create({ 
     container: {
         flex: 1,
         backgroundColor: colors.BACKGROUND_CULTURE
+    },
+    containerTitle: { 
+        borderBottomWidth: 1, 
+        borderColor: '#ddd', 
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
     },
     textTitle: {
         fontSize: 20,
@@ -20,8 +28,19 @@ const styles = StyleSheet.create({
         color: '#444',
         margin: 22
     },
+    containerChatbot: {
+        margin: 22,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    textChatbot: {
+        fontSize: 17,
+        marginRight: 4,
+        fontWeight: 'bold',
+        color: colors.BACKGROUND_BLUEYONDER
+    },
     containerChatAll: {
-        
+        flex: 1
     },
     containerItemChatAll: {
         width: width,
@@ -73,18 +92,20 @@ const styles = StyleSheet.create({
         backgroundColor: colors.BACKGROUND_CULTURE
     },
     textInput: {
-        flex: 1,
+        height: HEIGHT_TEXT_INPUT,
         borderWidth: 1,
         borderColor: '#333',
-        paddingHorizontal: 15,
+        paddingHorizontal: 20,
+        paddingTop: 8,
         borderRadius: 12,
     },
     containerItemMessage: {
+        marginTop: 8,
+    },
+    itemMessage: {
         paddingVertical: 10,
         paddingHorizontal: 20,
-        backgroundColor: colors.BACKGROUND_BLUEYONDER,
         borderRadius: 12,
-        marginTop: 5
     },
     textItemMessage: {
         fontSize: 15,

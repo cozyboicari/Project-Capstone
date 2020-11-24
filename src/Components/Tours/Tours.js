@@ -37,6 +37,19 @@ const ItemTours = ({ navigation, tour }) => {
                             source={{ uri: tour.tourguideImageCover }}
                         />
                     </View>
+                    <View style={styles.containerFavouriteIcon}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                
+                            }}
+                        >
+                            <Icons 
+                                name={'heart-outline'}
+                                size={23}
+                                color={colors.BACKGROUND_CULTURE}
+                            />
+                        </TouchableOpacity>
+                    </View>
                     {/* anh avatar */}
                     <View style={styles.containerImage}>
                         <Image 
@@ -48,7 +61,7 @@ const ItemTours = ({ navigation, tour }) => {
                     <View style={styles.containerNameTour}>
                         <View style={{ flex: .3 }}>
                             <Text style={styles.textIntro}>
-                                {`Enjoy ${tour.cityID} with `}<Text style={styles.subTextIntro}>{tour.tourguideName}</Text>
+                                {`Tận hưởng ${tour.cityID} với `}<Text style={styles.subTextIntro}>{tour.tourguideName}</Text>
                             </Text>
                         </View>
 
@@ -61,7 +74,7 @@ const ItemTours = ({ navigation, tour }) => {
                         <View style={{ flex: 1.5 }}>
                             <View style={styles.containerPrice}>
                                 <Text style={styles.textPrice}>{`${tour.price}$`}</Text>
-                                <Text style={styles.textPrice}>{`/ ${tour.time} hours`}</Text>
+                                <Text style={styles.textPrice}>{`/ ${tour.time} giờ`}</Text>
                             </View>
                             <View style={styles.containerRating}>
                                 <Rating 
@@ -100,10 +113,10 @@ export default class TourGuides extends Component {
                 <View style={styles.containerTourGuides}>
                     <View style={styles.containerTitle}>
                         <Text style={styles.textTitle}>
-                            All tours destinations
+                            Tất cả các điểm du lịch
                         </Text>
                         <View style={styles.containerCreateTour}>
-                            <Text style={styles.textCreateTour}>Are you a tour guide?</Text>
+                            <Text style={styles.textCreateTour}>Bạn là hướng dẫn viên du lịch?</Text>
                             <View style={{ flexDirection: 'row' }}>
                                 <TouchableOpacity
                                     onPress={() => {
@@ -114,9 +127,9 @@ export default class TourGuides extends Component {
                                     <Text style={[styles.textCreateTour, {
                                         fontWeight: 'bold',
                                         color: colors.BACKGROUND_BLUEYONDER
-                                    }]}>Click here!</Text>
+                                    }]}>Bấm vào đây</Text>
                                 </TouchableOpacity>
-                                <Text style={styles.textCreateTour}> to create a tour of your city</Text>
+                                <Text style={styles.textCreateTour}> để tạo chuyến du lịch của bạn</Text>
                             </View>
                             
                         </View>

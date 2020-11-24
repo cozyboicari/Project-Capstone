@@ -15,7 +15,7 @@ import Icons from 'react-native-vector-icons/Ionicons';
 import { colors } from '../../ConfigGlobal';
 
 // firebase
-import { auth } from '../../Database/Firebase/ConfigGlobalFirebase';
+import { auth, firestore } from '../../Database/Firebase/ConfigGlobalFirebase';
 
 const ItemDetail = ({ text, data, nameIcon }) => {
     return(
@@ -52,8 +52,14 @@ export default class ProfileDetail extends Component {
         super(props);
     }
 
+    componentDidMount() {
+        this.props._onGetTraveler();
+    }
+
     render() {
-        const uid = auth().currentUser.uid;
+        //check user va tour guide
+        let uid = !this.props.route.params ? auth().currentUser.uid : this.props.route.params.idTourGuide;
+ 
         const { picture, name, title, 
         passions, languages, imageProfile, idCity, description, uID } = this.props.tourGuide;
         
@@ -84,10 +90,10 @@ export default class ProfileDetail extends Component {
                             <Text style={[styles.name, {
                                 fontSize: 24,
                                 fontWeight: '500'
-                            }]}>{title === '' ? '(No title yet)' : title}</Text>
+                            }]}>{title === '' ? '(Chưa có tiêu đề)' : title}</Text>
                         </View>
                     </View>
-                    {(uid === uID) && <TouchableOpacity
+                    {(uid === auth().currentUser.uid) && <TouchableOpacity
                         onPress={() => {
                             const { navigate } = this.props.navigation;
                             navigate('Edit Profile Detail Screen', {
@@ -107,26 +113,26 @@ export default class ProfileDetail extends Component {
                                 fontWeight: 'bold',
                                 color: colors.BACKGROUND_BLUEYONDER
                             }}>
-                                Edit profile tour guide
+                                Chỉnh sửa hồ sơ hướng dẫn viên
                             </Text>
                         </View>
                     </TouchableOpacity>}
                     {/* phan mid */}
                     <View style={styles.containerInfoDetail}>
                         <ItemDetail 
-                            text='I speak'
-                            data={languages === '' ? '*Please correct the languages you know*' : languages}
+                            text='Tôi có thể nói được'
+                            data={languages === '' ? '*Bạn chưa có ngôn ngữ nào*' : languages}
                             nameIcon='globe-outline'
                         />
                         <ItemDetail 
-                            text='My passions are'
-                            data={passions === '' ? '*Please correct the passions you know*' : passions}
+                            text='Niềm đam mê của tôi là'
+                            data={passions === '' ? '*Hãy nhập sở thích của bạn*' : passions}
                             nameIcon='heart'
                         />
 
                         {/* phan gioi thieu */}
                         <View style={styles.containerIntroduce}>
-                            <Text style={styles.textIntroduce}>Hi there! Nice to meet you</Text>
+                            <Text style={styles.textIntroduce}>Xin chào! rất vui được gặp bạn</Text>
                             {   imageProfile === '' ?
                                 <View style={[styles.avatarIntroduce, {
                                     alignItems: 'center',
@@ -136,7 +142,7 @@ export default class ProfileDetail extends Component {
                                         fontSize: 17,
                                         color: colors.BACKGROUND_CULTURE
                                     }}>
-                                        No picture for profile yet
+                                        Chưa có ảnh cho hồ sơ
                                     </Text>
                                 </View> :
                                 <Image 
@@ -150,13 +156,13 @@ export default class ProfileDetail extends Component {
                                 }</Text>
                             </View>
                             <ItemDetail_2 
-                                text='I live in'
+                                text='Tôi đang sống tại'
                                 data={idCity}
                                 nameIcon='location'
                             />
                             <ItemDetail_2 
-                                text='Verified'
-                                data='tour guide'
+                                text='Xác nhận'
+                                data='Hướng dẫn viên'
                                 nameIcon='ribbon'
                             />
                         </View>
@@ -167,12 +173,67 @@ export default class ProfileDetail extends Component {
                     </View>
                 </ScrollView>
                 {/* phan bottom */}
-                {(uid !== uID) && <View style={styles.containerBottom}>
+                {(uid !== auth().currentUser.uid) && <View style={styles.containerBottom}>
                     <TouchableOpacity
-                        onPress={() => {}}
+                        onPress={() => {
+                            let check = false;
+                            firestore()
+                                .collection('threads')
+                                .get()
+                                .then(querySnapshot => {
+                                    let tempItem = {};
+                                    querySnapshot.docs.forEach(item => {
+                                        const idUser1 = item.data().user_1._id;
+                                        const idUser2 = item.data().user_2._id;
+                                        if(uid === idUser1 && this.props.traveler.uID === idUser2) {
+                                            check = true;
+                                            tempItem = item;
+                                            return;
+                                        }
+                                    });
+
+                                    if(check) {
+                                        const { navigate } = this.props.navigation;
+                                        navigate('Chat User Screen', {
+                                            thread: tempItem
+                                        });
+                                        return;
+                                    }
+
+                                    // kiem tra khong trung thi push vao
+                                    firestore().collection('threads')
+                                    .add({
+                                        latestMessage: {
+                                            text: '',
+                                            createdAt: new Date().getTime()
+                                        },
+                                        // add them id, image, nameUser cua 2 user
+                                        user_1: {
+                                            _id: uID,
+                                            nameUser: name,
+                                            image: picture
+                                        },
+                                        user_2: {
+                                            _id: this.props.traveler.uID,
+                                            nameUser: this.props.traveler.name,
+                                            image: this.props.traveler.picture
+                                        },
+                                    })
+                                    .then(docRef => {
+                                        docRef.collection('messages').add({
+                                            text: `Please enter something...!`,
+                                            createdAt: new Date().getTime(),
+                                            system: true
+                                        })
+
+                                        const { navigate } = this.props.navigation;
+                                        navigate('Conversation');
+                                    })
+                                });
+                        }}
                     >
                         <View style={styles.containerButtonContact}>
-                            <Text style={styles.textButtonContact}>Contact me</Text>
+                            <Text style={styles.textButtonContact}>Liên lạc với tôi</Text>
                         </View>
                     </TouchableOpacity>
                 </View>}

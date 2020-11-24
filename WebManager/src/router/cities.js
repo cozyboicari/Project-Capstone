@@ -17,6 +17,7 @@ const { db, bucket } = require('../models/FirebaseAdmin')
 
 const redirectIfUnauthenticatedMiddleware = require('../middleware/redirectIfUnauthenticatedMiddleware')
 
+<<<<<<< HEAD
 const uploadImageToStorage = (file) =>
   new Promise((resolve, reject) => {
     if (!file) {
@@ -46,6 +47,8 @@ const uploadImageToStorage = (file) =>
 
     blobStream.end(file.buffer)
   })
+=======
+>>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
 router
   .get('/', async (req, res, next) => {
     try {
@@ -68,6 +71,7 @@ router
   .post('/', upload.single('image'), async (req, res, next) => {
     try {
       const { id, name, description } = req.body
+<<<<<<< HEAD
       const { file } = req
       if (file) {
         uploadImageToStorage(file)
@@ -80,6 +84,8 @@ router
             console.error(error)
           })
       }
+=======
+>>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
       const imageBase64 = req.file.buffer.toString('base64')
       const image = `data:image/jpg;base64,${imageBase64}`
       await db

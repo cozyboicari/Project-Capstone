@@ -70,20 +70,20 @@ export default class RegisterTourGuide extends Component {
                                 style={styles.imageTop}
                             />
                             <View style={styles.layoutImageTop}>
-                                <Text style={[styles.textLayoutImageTop, { marginTop: 50 }]}>Make money doing what</Text>
-                                <Text style={[styles.textLayoutImageTop, { marginBottom: 7 }]}>you love</Text>
+                                <Text style={[styles.textLayoutImageTop, { marginTop: 50 }]}>Kiếm tiền bằng những gì</Text>
+                                <Text style={[styles.textLayoutImageTop, { marginBottom: 7 }]}>Bạn yêu thích</Text>
                                 <Text style={styles.textLayoutImageTopBottom}>
-                                    Share your passion and love for your city on a
+                                    Chia sẻ niềm đam mê và tình yêu của bạn đối với 
                                 </Text>
                                 <Text style={styles.textLayoutImageTopBottom}>
-                                    Yourtour experience
+                                    trải nghiệm chuyến đi của bạn
                                 </Text>
                             </View>
                             {/* what is your tour */}
                             <View style={styles.containerWhatIsYourtour}>
-                                <Text style={styles.textWhatIsYourtour}>What is Yourtour</Text>
+                                <Text style={styles.textWhatIsYourtour}>Yourtour là gì</Text>
                                 <Text style={styles.textWhatIsYourtourBottom}>
-                                    It’s a free platform that empowers locals, like you, to earn money by hosting a private tour or experience in their city.
+                                Đó là một nền tảng miễn phí cho phép người dân địa phương, như bạn, kiếm tiền bằng cách tổ chức chuyến tham quan hoặc trải nghiệm riêng tại thành phố của họ.
                                 </Text>
                             </View>
                             {/* image mid */}
@@ -95,58 +95,58 @@ export default class RegisterTourGuide extends Component {
                             </View>
                             {/* benefit cua hdv */}
                             <View style={styles.containerBenefitTourguide}>
-                                <Text style={styles.textBenefitTourguide}>Benefits of being a Withlocals tour guide</Text>
+                                <Text style={styles.textBenefitTourguide}>Lợi ích của việc trở thành hướng dẫn viên du lịch Yourtour</Text>
                                 <ItemBenefit 
                                     nameIcon='cash-outline' 
-                                    title='Earn money doing what you love'
-                                    text='If you love your city why not share it with the rest of the world? Even better, why not make some money while doing so. Here, you set up your own price.'
+                                    title='Kiếm tiền khi làm những gì bạn yêu thích'
+                                    text='Nếu bạn yêu thành phố của mình tại sao không chia sẻ nó với phần còn lại của thế giới? Thậm chí tốt hơn, tại sao không kiếm tiền trong khi làm như vậy. Ở đây, bạn thiết lập giá của riêng bạn.'
                                 />
                                 <ItemBenefit 
                                     nameIcon='globe-outline' 
-                                    title='Worldwide connection with people like you'
-                                    text='Meet people from all over the world that share the same passions and interests as you. Create memories for a lifetime and new connections.'
+                                    title='Kết nối trên toàn thế giới với những người như bạn'
+                                    text='Gặp gỡ những người từ khắp nơi trên thế giới có cùng đam mê và sở thích như bạn. Tạo ra những kỷ niệm cho cuộc đời và những kết nối mới.'
                                 />
                                 <ItemBenefit 
                                     nameIcon='heart' 
-                                    title='Share your passion, in your own way!'
-                                    text='What better way to show a city than through the eyes of a local! Create a one of a kind experience, from a cooking class to an off the beaten path tour or a dance workshop. The choice is yours!'
+                                    title='Chia sẻ đam mê của bạn, theo cách của riêng bạn!'
+                                    text='Còn cách nào tốt hơn để hiển thị một thành phố hơn là qua con mắt của một người dân địa phương! Tạo trải nghiệm có một không hai, từ một lớp học nấu ăn đến một chuyến tham quan trên con đường tuyệt vời hoặc một hội thảo khiêu vũ. Sự lựa chọn là của bạn!'
                                 />
                             </View>
                             {/* thu tu thuc hien */}
                             <View style={styles.containerSteps}>
-                                <Text style={styles.titleSteps}>Steps to become a tour guide</Text>
+                                <Text style={styles.titleSteps}>Các bước để trở thành hướng dẫn viên du lịch</Text>
                                 <ItemStep 
                                     step="1" 
-                                    title="Create your Yourtour account"
-                                    text="Sign up and set up your profile. Already have an account? Then, let’s get started with your host application."
+                                    title="Tạo tài khoản Yourtour của bạn"
+                                    text="Đăng ký và thiết lập hồ sơ của bạn. Bạn đã có tài khoản rồi? Sau đó, hãy bắt đầu với ứng dụng lưu trữ của bạn."
                                 />
                                 <ItemStep 
                                     step="2" 
-                                    title="Answer a simple questionnaire"
-                                    text="We want to know more from you. It will help us get an idea of what you are really passionate about."
+                                    title="Trả lời một bảng câu hỏi đơn giản"
+                                    text="Chúng tôi muốn biết thêm từ bạn. Nó sẽ giúp chúng tôi có được ý tưởng về những gì bạn thực sự đam mê."
                                 />
                                 <ItemStep 
                                     step="3" 
-                                    title="We’ll be in touch"
-                                    text="Submit your questionnaire and that’s it! Once we review your application, our team will reach out to you."
+                                    title="Chúng ta sẽ giữ liên lạc"
+                                    text="Gửi bảng câu hỏi của bạn và thế là xong! Sau khi chúng tôi xem xét đơn đăng ký của bạn, nhóm của chúng tôi sẽ liên hệ với bạn."
                                 />
                             </View>
                             {/* offer for u */}
                             <View style={styles.containerOfferForU}>
                                 <Text style={styles.textTitleOffer}>
-                                    What Yourtour can offer to you
+                                    Yourtour có thể cung cấp những gì cho bạn
                                 </Text>
                                 <ItemOffer 
-                                    title={`Free platform & marketing tools`}
-                                    text='An easy to use platform to show your offers and manage your bookings. Promoting your offer on the platform is free and our marketing experts take care of all the professional promotion.'
+                                    title={`Nền tảng và công cụ tiếp thị miễn phí`}
+                                    text='Một nền tảng dễ sử dụng để hiển thị các ưu đãi và quản lý các lượt đặt trước của bạn. Quảng cáo ưu đãi của bạn trên nền tảng là miễn phí và các chuyên gia tiếp thị của chúng tôi sẽ đảm nhận tất cả các hoạt động quảng bá chuyên nghiệp.'
                                 />
                                 <ItemOffer 
-                                    title={`Excellent host support`}
-                                    text='Our team is here for you anytime during office hours and weekends. We’ve got a team full of customer care, data and travel experts who are all here to help boost your hosting experience.'
+                                    title={`Hỗ trợ máy chủ lưu trữ tuyệt vời`}
+                                    text='Đội ngũ của chúng tôi luôn sẵn sàng hỗ trợ bạn bất cứ lúc nào trong giờ hành chính và cuối tuần. Chúng tôi có một nhóm đầy đủ các chuyên gia chăm sóc khách hàng, dữ liệu và du lịch, tất cả đều ở đây để giúp nâng cao trải nghiệm lưu trữ của bạn.'
                                 />
                                 <ItemOffer 
-                                    title={`Payment guaranteed`}
-                                    text='We make safe and trusted payment possible guaranteeing your payment, even with late cancellations and no shows.'
+                                    title={`Thanh toán được đảm bảo`}
+                                    text='Chúng tôi thực hiện thanh toán an toàn và đáng tin cậy có thể đảm bảo thanh toán của bạn, ngay cả khi hủy trễ và vắng mặt.'
                                 />
                             </View>
                         </View>
@@ -154,7 +154,7 @@ export default class RegisterTourGuide extends Component {
                 </ScrollView>
                 {/* phan get started */}
                 <View style={styles.containerButtonStarted}>
-                    <Text style={styles.textStarted}>Start making money doing what you love!</Text>
+                    <Text style={styles.textStarted}>Bắt đầu kiếm tiền từ những gì bạn yêu thích!</Text>
                     <TouchableOpacity
                         onPress={() => {
                             const { navigate } = this.props.navigation;
@@ -163,7 +163,7 @@ export default class RegisterTourGuide extends Component {
                         style={{ flex: .8 }}
                     >
                         <View style={styles.containerButton}>
-                            <Text style={styles.textButton}>Get started!</Text>
+                            <Text style={styles.textButton}>Bắt đầu!</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

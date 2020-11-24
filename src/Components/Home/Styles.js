@@ -125,9 +125,6 @@ const styles = StyleSheet.create({
         color: '#555',
         marginTop: 5
     },
-    containerFavouriteIcon: {
-        margin: 22
-    }
 })
 
 export default styles;

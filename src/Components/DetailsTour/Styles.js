@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
         
     },
     containerButtonBooking: {
-        width: WIDTH_BUTTON_BOOKING,
+        flex: 1,
         height: HEIGHT_BUTTON_BOOKING,
         backgroundColor: colors.BACKGROUND_BLUEYONDER,
         borderRadius: 22,
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
 
     },
     textButtonBooking: {
-        fontSize: 17,
+        fontSize: 16,
         fontWeight: '700',
         color: colors.BACKGROUND_CULTURE,
         marginTop: 14,
