@@ -26,7 +26,7 @@ import ActiveTourGuideScreen from '../Redux/Containers/ActiveTourGuideContainer'
 import ProfileDetailScreen from '../Redux/Containers/ProfileDetailContainer';
 import EditProfileDetailScreen from '../Redux/Containers/EditProfileDetailContainer';
 import CreateToursScreen from '../Redux/Containers/CreateToursContainer';
-import ChatAllScreen, { notificationChat } from '../Components/Chat/AllChat';
+import ChatAllScreen from '../Components/Chat/AllChat';
 import ChatUserScreen from '../Components/Chat/ChatUser';
 import OrderTourScreen from '../Components/OrderTour/OrderTour';
 import NumberOfPeopleScreen from '../Components/OrderTour/NumberOfPeople';
@@ -102,8 +102,7 @@ const TabsScreen = () => {
                 name="Trò chuyện" 
                 component={ChatAllScreen}
                 options={{
-                    tabBarIcon: ({size, color}) => <Icons name="chatbubbles-outline" size={size} color={color}/>,
-                    tabBarBadge: notificationChat
+                    tabBarIcon: ({size, color}) => <Icons name="chatbubbles-outline" size={size} color={color}/>
                 }}
             />
             <Tab.Screen 

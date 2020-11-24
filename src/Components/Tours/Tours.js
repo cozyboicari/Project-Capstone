@@ -37,19 +37,6 @@ const ItemTours = ({ navigation, tour }) => {
                             source={{ uri: tour.tourguideImageCover }}
                         />
                     </View>
-                    <View style={styles.containerFavouriteIcon}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                
-                            }}
-                        >
-                            <Icons 
-                                name={'heart-outline'}
-                                size={23}
-                                color={colors.BACKGROUND_CULTURE}
-                            />
-                        </TouchableOpacity>
-                    </View>
                     {/* anh avatar */}
                     <View style={styles.containerImage}>
                         <Image 
@@ -100,10 +87,12 @@ export default class TourGuides extends Component {
     }
 
     componentDidMount() {
-        this.props._onGetTours('tours', this.props.route.params.idCity); 
+        this.props._onGetTours('tours', this.props.route.params.idCity);
+        this.props._onGetTraveler();
     }
 
     render() {
+        const { isAvtive } = this.props.traveler;
         return(
             <View style={styles.container}>
                 <HeaderComponent {...this.props}/>
@@ -121,7 +110,11 @@ export default class TourGuides extends Component {
                                 <TouchableOpacity
                                     onPress={() => {
                                         const { navigate } = this.props.navigation;
-                                        navigate('Create Tours Screen');
+                                        if(isAvtive) {
+                                            navigate('Create Tours Screen');
+                                        } else {
+                                            navigate('Register Tour Guide Screen');
+                                        }
                                     }}
                                 >
                                     <Text style={[styles.textCreateTour, {
@@ -141,7 +134,7 @@ export default class TourGuides extends Component {
                         <FlatList 
                             data={this.props.tours}
                             keyExtractor={item => item.id}
-                            style={{ marginBottom: 220 }}
+                            style={{ marginBottom: 247 }}
                             renderItem={({ item, index}) => {
                                 return(
                                     <ItemTours 

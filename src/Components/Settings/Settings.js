@@ -102,7 +102,6 @@ export default class Settings extends Component {
                                 <Item title='Trở thành một hướng dẫn viên' nameIcon='medal-outline' nameScreen='Register Tour Guide Screen' navigation={this.props.navigation}/> :
                                 <Item title='Thông tin hướng dẫn viên' nameIcon='person-outline' nameScreen='Profile Detail Screen' navigation={this.props.navigation}/>
                             }
-                            <Item title='Yêu thích' nameIcon='heart-outline'/>
                             { providerId === 'firebase.com' &&
                                 <Item title='Thay đổi mật khẩu' nameIcon='lock-closed-outline' nameScreen='Change Password Screen' navigation={this.props.navigation}/>
                             }
