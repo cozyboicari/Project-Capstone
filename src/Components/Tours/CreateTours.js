@@ -227,6 +227,7 @@ export default class CreateTours extends Component {
                                         onPress: () => {
                                             this.props._onCreateTour(newTour);
                                             const { goBack } = this.props.navigation;
+                                            Alert.alert('Thông báo!', 'Chuyến đi của bạn đã được gửi lên, chúng tôi sẽ xem xét và duyệt sớm nhất, cảm ơn!');
                                             goBack();
                                         }
                                     },

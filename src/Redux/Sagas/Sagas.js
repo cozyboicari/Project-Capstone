@@ -27,6 +27,7 @@ import {
     createTour,
     getChatAll
  } from '../../Database/Firebase/ConfigGlobalFirebase';
+import { Alert } from 'react-native';
 
  // get cites in country
 function* getCitiesInCountryFromFirestore(action) {
@@ -87,7 +88,9 @@ export function* watchUpdateTravelerProfileFromFirestore() {
 // login user
 function* signInUserFromAuth(action) {
     try {
-        const user = yield signInUserByEmail(action.user);
+        const user = yield signInUserByEmail(action.user)
+            .then(() => {})
+            .catch(() => Alert.alert('Thông báo', 'Email hoặc mât khẩu không đúng!'));
         yield put({ type: LOGIN_ACCOUNT_SUCCESS, user });
     } catch (error) {
         yield put({ type: LOGIN_ACCOUNT_FAIL, error });

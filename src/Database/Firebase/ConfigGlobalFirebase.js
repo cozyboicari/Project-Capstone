@@ -3,6 +3,8 @@ import firebase from '@react-native-firebase/app';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
+import { Alert } from 'react-native';
+
 //global func
 import { colors, uppercaseFirst } from '../../ConfigGlobal';
 
@@ -184,6 +186,7 @@ export const createUserByEmail = async (newUser) => {
       
       addFirestore('travelers', userFirestore)
         .then(() => {
+          Alert.alert('Thông báo', 'Đăng kí tài khoản thành công!');
           console.log('Register success !');
         })
         .catch(error => {
