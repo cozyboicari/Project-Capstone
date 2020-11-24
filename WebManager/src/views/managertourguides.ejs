@@ -35,6 +35,7 @@
                   >
                     <thead>
                       <tr>
+                        <th>ID</th>
                         <th>Họ tên</th>
                         <th>Ảnh</th>
                         <th>Email</th>
@@ -46,6 +47,7 @@
                     <tbody id="tab">
                       <% for(let data of tourguides){ %>
                       <tr style="text-align: center">
+                        <td><%= data.uID %></td>
                         <td><%= data.name %></td>
                         <td>
                           <img

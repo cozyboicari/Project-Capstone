@@ -4,15 +4,6 @@ const app = express()
 
 const router = express.Router()
 
-const multer = require('multer')
-
-const upload = multer({
-  storage: multer.memoryStorage(),
-  limits: {
-    fileSize: 5 * 1024 * 1024, // giới hạn 5mb
-  },
-})
-
 const { db, bucket } = require('../models/FirebaseAdmin')
 
 const redirectIfUnauthenticatedMiddleware = require('../middleware/redirectIfUnauthenticatedMiddleware')
@@ -20,14 +11,14 @@ const redirectIfUnauthenticatedMiddleware = require('../middleware/redirectIfUna
 router
   .get('/', async (req, res, next) => {
     try {
-      const snapshotTour = await db.collection('tours').get()
-      const tours = snapshotTour.docs.map((doc) => {
+      const snapshotTour = await db.collection('nonverifiedTours').get()
+      const nonverifiedTours = snapshotTour.docs.map((doc) => {
         const { id } = doc
         const data = doc.data()
         return { id, ...data }
       })
-      app.set('tours', tours)
-      res.render('tours', { tours })
+      app.set('nonverifiedTours', nonverifiedTours)
+      res.render('nonverifiedtours', { nonverifiedTours })
     } catch (err) {
       next(err)
     }
@@ -70,38 +61,23 @@ router
       next(err)
     }
   })
-  .get(
-    '/edit/:id',
-
-    async (req, res, next) => {
-      try {
-        const tours = app.get('tours')
-        const dataTour = tours.find((doc) => doc.id === req.params.id)
-        res.render('edittour', { dataTour })
-      } catch (err) {
-        next(err)
-      }
-    },
-  )
-  .post('/edit/:id', upload.single('image'), async (req, res, next) => {
+  .get('/view/:id', async (req, res, next) => {
+    try {
+      const nonverifiedTours = app.get('nonverifiedTours')
+      const dataTour = nonverifiedTours.find((doc) => doc.id === req.params.id)
+      app.set('dataTour', dataTour)
+      res.render('verifytour', { dataTour })
+    } catch (err) {
+      next(err)
+    }
+  })
+  .post('/view/:id', async (req, res, next) => {
     try {
       const { id } = req.params
-      const { name, description } = req.body
-      if (req.file) {
-        const imageBase64 = req.file.buffer.toString('base64')
-        const image = `data:image/jpg;base64,${imageBase64}`
-        await db
-          .collection('tours')
-          .doc(id)
-          .update({ image, name, description }, { merge: true })
-        res.redirect('/cities')
-      } else {
-        await db
-          .collection('countries')
-          .doc(id)
-          .update({ name, description }, { merge: true })
-        res.redirect('/cities')
-      }
+      const dataTour = app.get('dataTour')
+      await db.collection('tours').doc(id).set(dataTour, { merge: true })
+      await db.collection('nonverifiedtours').doc(id).delete()
+      res.redirect('/nonverifiedtours')
     } catch (err) {
       next(err)
     }

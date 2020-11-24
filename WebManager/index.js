@@ -32,6 +32,8 @@ const becometourguide = require('./src/router/becometourguide')
 
 const tourRoute = require('./src/router/tours')
 
+const nonverifiedTourRoute = require('./src/router/nonverifiedTours')
+
 const { db, bucket } = require('./src/models/FirebaseAdmin')
 
 app.set('view engine', 'ejs')
@@ -65,7 +67,9 @@ app.use('/managertourguides', tourguideRoute)
 
 app.use('/becometourguide', becometourguide)
 
-app.use('/verifytours', tourRoute)
+app.use('/tours', tourRoute)
+
+app.use('/nonverifiedtours', nonverifiedTourRoute)
 
 // const saltRounds = 10;
 // const myPlaintextPassword = 'asd123zxc';
