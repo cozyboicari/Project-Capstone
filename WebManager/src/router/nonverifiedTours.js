@@ -1,0 +1,85 @@
+const express = require('express')
+
+const app = express()
+
+const router = express.Router()
+
+const { db, bucket } = require('../models/FirebaseAdmin')
+
+const redirectIfUnauthenticatedMiddleware = require('../middleware/redirectIfUnauthenticatedMiddleware')
+
+router
+  .get('/', async (req, res, next) => {
+    try {
+      const snapshotTour = await db.collection('nonverifiedTours').get()
+      const nonverifiedTours = snapshotTour.docs.map((doc) => {
+        const { id } = doc
+        const data = doc.data()
+        return { id, ...data }
+      })
+      app.set('nonverifiedTours', nonverifiedTours)
+      res.render('nonverifiedtours', { nonverifiedTours })
+    } catch (err) {
+      next(err)
+    }
+  })
+  // .post('/', upload.single('image'), async (req, res, next) => {
+  //   try {
+  //     const { id, name, description } = req.body
+  //     const { file } = req
+  //     if (file) {
+  //       uploadImageToStorage(file)
+  //         .then((success) => {
+  //           res.status(200).send({
+  //             status: 'success',
+  //           })
+  //         })
+  //         .catch((error) => {
+  //           console.error(error)
+  //         })
+  //     }
+  //     const imageBase64 = req.file.buffer.toString('base64')
+  //     const image = `data:image/jpg;base64,${imageBase64}`
+  //     await db.collection('countries').doc(id.replace(/\s+/g, '')).set({
+  //       image,
+  //       name,
+  //       description,
+  //       visitors: 0,
+  //       tours: [],
+  //     })
+  //     res.redirect('/tours')
+  //   } catch (err) {
+  //     next(err)
+  //   }
+  // })
+  .delete('/delete/:id', async (req, res, next) => {
+    try {
+      const { id } = req.params
+      await db.collection('tours').doc(id).delete()
+      res.end()
+    } catch (err) {
+      next(err)
+    }
+  })
+  .get('/view/:id', async (req, res, next) => {
+    try {
+      const nonverifiedTours = app.get('nonverifiedTours')
+      const dataTour = nonverifiedTours.find((doc) => doc.id === req.params.id)
+      app.set('dataTour', dataTour)
+      res.render('verifytour', { dataTour })
+    } catch (err) {
+      next(err)
+    }
+  })
+  .post('/view/:id', async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const dataTour = app.get('dataTour')
+      await db.collection('tours').doc(id).set(dataTour, { merge: true })
+      await db.collection('nonverifiedtours').doc(id).delete()
+      res.redirect('/nonverifiedtours')
+    } catch (err) {
+      next(err)
+    }
+  })
+module.exports = router

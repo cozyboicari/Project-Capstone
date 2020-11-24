@@ -3,7 +3,7 @@
   <head>
     <%-include('layouts/header'); %>
 
-    <title>Manager Tour guides</title>
+    <title>Quản lý HDV</title>
   </head>
 
   <body id="page-top">
@@ -23,9 +23,7 @@
           <div class="container-fluid">
             <div class="card shadow mb-4">
               <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">
-                  Quản lý tourguides
-                </h6>
+                <h6 class="m-0 font-weight-bold text-primary">Quản lý HDV</h6>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -37,17 +35,25 @@
                   >
                     <thead>
                       <tr>
+<<<<<<< HEAD
+                        <th>ID</th>
+=======
+>>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
                         <th>Họ tên</th>
                         <th>Ảnh</th>
                         <th>Email</th>
-                        <th>City</th>
-                        <th>Action</th>
+                        <th>Thành phố</th>
+                        <th>Tủy chỉnh</th>
                       </tr>
                     </thead>
 
                     <tbody id="tab">
                       <% for(let data of tourguides){ %>
                       <tr style="text-align: center">
+<<<<<<< HEAD
+                        <td><%= data.uID %></td>
+=======
+>>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
                         <td><%= data.name %></td>
                         <td>
                           <img
@@ -69,13 +75,21 @@
                             "
                           >
                             <button type="submit" class="btn btn-primary">
+<<<<<<< HEAD
+                              Chỉnh sửa
+=======
                               View
+>>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
                             </button>
                             <button type="button" class="btn btn-danger">
                               <span
                                 class="delete"
                                 data-url="/managertourguides/delete/<%= data.id%>"
+<<<<<<< HEAD
+                                >Xóa</span
+=======
                                 >Delete</span
+>>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
                               >
                             </button>
                           </form>

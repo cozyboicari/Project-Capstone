@@ -3,11 +3,7 @@
   <head>
     <%-include('layouts/header'); %>
 
-<<<<<<< HEAD
-    <title>Chỉnh sửa thông tin HDV</title>
-=======
-    <title>Edit information</title>
->>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
+    <title>Duyệt tour</title>
   </head>
 
   <body id="page-top">
@@ -31,11 +27,7 @@
                   <div
                     class="page-title-box d-flex align-items-center justify-content-between"
                   >
-<<<<<<< HEAD
-                    <h4 class="mb-0 font-size-18">Chỉnh sửa thông tin</h4>
-=======
-                    <h4 class="mb-0 font-size-18">Edit information form</h4>
->>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
+                    <h4 class="mb-0 font-size-18">Duyệt tour</h4>
                   </div>
                 </div>
               </div>
@@ -46,26 +38,26 @@
                   <div class="card">
                     <form
                       method="POST"
-                      action="/managertourguides/edit/<%= dataTourguide.id %>"
+                      action="/nonverifiedtours/view/<%= dataTour.id %>"
                       enctype="multipart/form-data"
                     >
                       <div class="card-body">
                         <div class="row">
                           <div class="col-12 col-sm-auto mb-3">
-                            <div class="mx-auto" style="width: 240px">
+                            <div class="mx-auto" style="width: 600px">
                               <div
                                 class="d-flex justify-content-center align-items-center rounded"
                                 style="
-                                  height: 240px;
+                                  height: 335px;
                                   background-color: rgb(233, 236, 239);
                                 "
                               >
                                 <img
                                   id="img"
-                                  src="<%= dataTourguide.picture %>"
+                                  src="<%= dataTour.tourguideImageCover %>"
                                   alt="img"
                                   class="rounded mx-auto d-block"
-                                  style="width: 240px; height: 240px"
+                                  style="width: 600px; height: 335px"
                                 />
                               </div>
                             </div>
@@ -95,13 +87,13 @@
                           <label
                             for="example-text-input"
                             class="col-md-2 col-form-label"
-                            >ID</label
+                            >ID HDV</label
                           >
                           <div class="col-md-10">
                             <input
                               class="form-control"
                               type="text"
-                              value="<%= dataTourguide.uID %>"
+                              value="<%= dataTour.tourguideID %>"
                               id="example-text-input"
                               readonly
                             />
@@ -111,17 +103,29 @@
                           <label
                             for="example-text-input"
                             class="col-md-2 col-form-label"
-<<<<<<< HEAD
-                            >Họ tên</label
-=======
-                            >Name</label
->>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
+                            >ID Thành phố</label
                           >
                           <div class="col-md-10">
                             <input
                               class="form-control"
                               type="text"
-                              value="<%= dataTourguide.name %>"
+                              value="<%= dataTour.cityID %>"
+                              id="example-text-input"
+                              readonly
+                            />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label
+                            for="example-text-input"
+                            class="col-md-2 col-form-label"
+                            >Tên tour</label
+                          >
+                          <div class="col-md-10">
+                            <input
+                              class="form-control"
+                              type="text"
+                              value="<%= dataTour.name %>"
                               id="example-text-input"
                               name="name"
                             />
@@ -129,130 +133,43 @@
                         </div>
                         <div class="form-group row">
                           <label
-                            for="example-email-input"
+                            for="example-text-input"
                             class="col-md-2 col-form-label"
-                            >Email</label
+                            >Loại hình</label
                           >
                           <div class="col-md-10">
                             <input
                               class="form-control"
-                              type="email"
-                              value="<%= dataTourguide.email %>"
-                              id="example-email-input"
-                              name="email"
+                              type="text"
+                              value="<%= dataTour.category %>"
+                              id="example-text-input"
+                              name="category"
                             />
-                          </div>
-                        </div>
-
-                        <div class="form-group row">
-                          <label
-                            for="example-tel-input"
-                            class="col-md-2 col-form-label"
-<<<<<<< HEAD
-                            >SĐT</label
-=======
-                            >Telephone</label
->>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
-                          >
-                          <div class="col-md-10">
-                            <input
-                              class="form-control"
-                              type="tel"
-                              value="<%= dataTourguide.phone %>"
-                              id="example-tel-input"
-                              name="phone"
-                            />
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                          <label
-                            for="example-date-input"
-                            class="col-md-2 col-form-label"
-<<<<<<< HEAD
-                            >Ngày</label
-=======
-                            >Date</label
->>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
-                          >
-                          <div class="col-md-10">
-                            <input
-                              class="form-control"
-                              type="date"
-                              value="2019-08-19"
-                              id="example-date-input"
-                            />
-                          </div>
-                        </div>
-                        <div class="form-group row">
-<<<<<<< HEAD
-                          <label class="col-md-2 col-form-label"
-                            >Giới tính</label
-                          >
-=======
-                          <label class="col-md-2 col-form-label">Gender</label>
->>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
-                          <div class="col-md-10">
-                            <select class="form-control" name="gender">
-                              <% if(dataTourguide.gender){ %>
-                              <option selected>Male</option>
-                              <option>Female</option>
-                              <% }else { %>
-                              <option selected>Female</option>
-                              <option>Male</option>
-                              <% }%>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                          <label class="col-md-2 col-form-label"
-<<<<<<< HEAD
-                            >Là hướng dẫn viên</label
-=======
-                            >Is Tour guide?</label
->>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
-                          >
-                          <div class="col-md-10">
-                            <select class="form-control" name="isActive">
-                              <% if(dataTourguide.isActive){ %>
-                              <option selected>True</option>
-                              <option>False</option>
-                              <% }else { %>
-                              <option selected>False</option>
-                              <option>True</option>
-                              <% }%>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="form-group row">
-<<<<<<< HEAD
-                          <label class="col-md-2 col-form-label"
-                            >Thành phố</label
-                          >
-=======
-                          <label class="col-md-2 col-form-label">City</label>
->>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
-                          <div class="col-md-10">
-                            <select class="form-control" name="idCity">
-                              <option selected>
-                                <%= dataTourguide.idCity %>
-                              </option>
-                              <% for(let data of cities){ %> <% if(data !==
-                              dataTourguide.idCity ){ %>
-                              <option><%= data %></option>
-                              <%} %> <%} %>
-                              <option></option>
-                            </select>
                           </div>
                         </div>
                         <div class="form-group row">
                           <label
                             for="example-text-input"
                             class="col-md-2 col-form-label"
-<<<<<<< HEAD
+                            >Giới thiệu</label
+                          >
+                          <div class="col-md-10">
+                            <textarea
+                              class="form-control"
+                              type="text"
+                              id="example-text-input"
+                              name="introduce"
+                            >
+  <%=dataTour.introduce %></textarea
+                            >
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label
+                            for="example-text-input"
+                            class="col-md-2 col-form-label"
                             >Mô tả</label
-=======
-                            >Description</label
->>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
                           >
                           <div class="col-md-10">
                             <textarea
@@ -261,7 +178,7 @@
                               id="example-text-input"
                               name="description"
                             >
-<%=dataTourguide.description%></textarea
+<%=dataTour.description %></textarea
                             >
                           </div>
                         </div>
@@ -269,19 +186,43 @@
                           <label
                             for="example-text-input"
                             class="col-md-2 col-form-label"
-<<<<<<< HEAD
-                            >Đam mê</label
-=======
-                            >Passion</label
->>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
+                            ><b>Lịch trình</b></label
+                          >
+                        </div>
+                        <% for(let [index, schedule] of
+                        dataTour.scheduleDetail.entries()){ %>
+                        <div class="form-group row">
+                          <label
+                            for="example-text-input"
+                            class="col-md-2 col-form-label"
+                            ><%= schedule.name %></label
                           >
                           <div class="col-md-10">
                             <input
                               class="form-control"
                               type="text"
-                              value="<%= dataTourguide.passions %>"
+                              value="<%= schedule.detail %>"
                               id="example-text-input"
-                              name="passions"
+                              name="category"
+                              readonly
+                            />
+                          </div>
+                        </div>
+                        <% } %>
+                        <div class="form-group row">
+                          <label
+                            for="example-text-input"
+                            class="col-md-2 col-form-label"
+                            >Đánh giá</label
+                          >
+                          <div class="col-md-10">
+                            <input
+                              class="form-control"
+                              type="text"
+                              value="<%= dataTour.avgRating %> sao"
+                              id="example-text-input"
+                              name="avgRating"
+                              readonly
                             />
                           </div>
                         </div>
@@ -289,24 +230,20 @@
                           <label
                             for="example-text-input"
                             class="col-md-2 col-form-label"
-<<<<<<< HEAD
-                            >Ngôn ngữ</label
-=======
-                            >Language</label
->>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
+                            >Lượt đánh giá</label
                           >
                           <div class="col-md-10">
                             <input
                               class="form-control"
                               type="text"
-                              value="<%= dataTourguide.languages %>"
+                              value="<%= dataTour.numRatings %> lượt"
                               id="example-text-input"
-                              name="languages"
+                              name="numRatings"
+                              readonly
                             />
                           </div>
                         </div>
                       </div>
-
                       <br />
                       <button
                         type="button"
@@ -314,25 +251,15 @@
                         data-toggle="modal"
                         data-target="#exampleModalCenter"
                       >
-<<<<<<< HEAD
-                        Xác nhận
-=======
-                        Confirm
->>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
+                        Duyệt
                       </button>
                       <button
                         type="button"
                         class="btn btn-secondary"
                         onclick="history.back(-1)"
                       >
-<<<<<<< HEAD
                         Hủy bỏ
-=======
-                        Cancel
->>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
                       </button>
-                      <!-- end row -->
-
                       <!-- end row -->
 
                       <!-- End Page-content -->
@@ -343,7 +270,7 @@
                         id="exampleModalCenter"
                         tabindex="-1"
                         role="dialog"
-                        aria-labelledby="staticBackdropLabel"
+                        aria-labelledby="exampleModalCenterTitle"
                         aria-hidden="true"
                       >
                         <div
@@ -356,11 +283,7 @@
                                 class="modal-title"
                                 id="exampleModalLongTitle"
                               >
-<<<<<<< HEAD
                                 Xác nhận
-=======
-                                Confirm
->>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
                               </h5>
                               <button
                                 type="button"
@@ -380,17 +303,10 @@
                                 class="btn btn-secondary"
                                 data-dismiss="modal"
                               >
-<<<<<<< HEAD
                                 Hủy bỏ
                               </button>
                               <button type="submit" class="btn btn-primary">
                                 Xác nhận
-=======
-                                Cancel
-                              </button>
-                              <button type="submit" class="btn btn-primary">
-                                Confirm
->>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
                               </button>
                             </div>
                           </div>
@@ -398,13 +314,13 @@
                       </div>
 
                       <!-- End of Content Wrapper -->
+
                       <!-- End of Page Wrapper -->
 
                       <!-- Scroll to Top Button-->
                       <a class="scroll-to-top rounded" href="#page-top">
                         <i class="fas fa-angle-up"></i>
                       </a>
-                      <!-- Bootstrap core JavaScript-->
                     </form>
                   </div>
                 </div>

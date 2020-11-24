@@ -3,7 +3,7 @@
   <head>
     <%-include('layouts/header'); %>
 
-    <title>Detail answer</title>
+    <title>Duyệt chi tiết</title>
   </head>
 
   <body id="page-top">
@@ -23,9 +23,7 @@
           <div class="container-fluid">
             <div class="card shadow mb-4">
               <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">
-                  Bộ câu trả lời
-                </h6>
+                <h6 class="m-0 font-weight-bold text-primary">Đơn đăng ký</h6>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -37,8 +35,8 @@
                   >
                     <thead>
                       <tr>
-                        <th>Question</th>
-                        <th>Answer</th>
+                        <th>Câu hỏi</th>
+                        <th>Câu trả lời</th>
                       </tr>
                     </thead>
 
@@ -61,14 +59,21 @@
               data-toggle="modal"
               data-target="#exampleModalCenter"
             >
-              Confirm
+              Xác nhận
             </button>
             <button
               type="button"
               class="btn btn-secondary"
               onclick="history.back(-1)"
             >
-              Cancel
+              Hủy bỏ
+            </button>
+            <button type="button" class="btn btn-danger">
+              <span
+                class="delete"
+                data-url="/becometourguide/delete/<%= idForm %>"
+                >Xóa</span
+              >
             </button>
             <button type="button" class="btn btn-danger">
               <span
@@ -93,7 +98,7 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLongTitle">
-                    Confirm
+                    Xác nhận
                   </h5>
                   <button
                     type="button"
@@ -111,11 +116,11 @@
                     class="btn btn-secondary"
                     data-dismiss="modal"
                   >
-                    Cancel
+                    Hủy bỏ
                   </button>
                   <form method="POST" action="/becometourguide/view/<%= id %>">
                     <button type="submit" class="btn btn-primary">
-                      Confirm
+                      Xác nhận
                     </button>
                   </form>
                 </div>

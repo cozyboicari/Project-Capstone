@@ -5,7 +5,7 @@ const app = express()
 
 const router = express.Router()
 
-const db = require('../models/FirebaseAdmin')
+const { db, bucket } = require('../models/FirebaseAdmin')
 
 router
   .get('/', async (req, res, next) => {
