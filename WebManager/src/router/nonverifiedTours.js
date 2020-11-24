@@ -55,7 +55,7 @@ router
   .delete('/delete/:id', async (req, res, next) => {
     try {
       const { id } = req.params
-      await db.collection('tours').doc(id).delete()
+      await db.collection('nonverifiedTours').doc(id).delete()
       res.end()
     } catch (err) {
       next(err)
@@ -76,7 +76,8 @@ router
       const { id } = req.params
       const dataTour = app.get('dataTour')
       await db.collection('tours').doc(id).set(dataTour, { merge: true })
-      await db.collection('nonverifiedtours').doc(id).delete()
+      await db.collection('nonverifiedTours').doc(id).delete()
+      console.log(id);
       res.redirect('/nonverifiedtours')
     } catch (err) {
       next(err)

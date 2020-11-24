@@ -1,4 +1,4 @@
-const db = require('../models/FirebaseAdmin')
+const {db,bucket} = require('../models/FirebaseAdmin')
 
 module.exports = async (req, res) => {
   const snapshot = await db.collection('admin').doc('admin1').get()

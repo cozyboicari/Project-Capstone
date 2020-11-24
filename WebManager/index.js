@@ -87,7 +87,7 @@ global.loggedIn = null
 
 app.get('/', async (req, res, next) => {
   try {
-    // if (req.session.loggedIn) {
+     if (req.session.loggedIn) {
     const [snapshot, snapshotTours, snapshotBookings] = await Promise.all([
       db.collection('travelers').get(),
       db.collection('tours').get(),
@@ -105,7 +105,7 @@ app.get('/', async (req, res, next) => {
       numberBookings: bookings.length,
     })
     res.end()
-    // } else res.render('login')
+    } else res.render('login')
   } catch (err) {
     next(err)
   }

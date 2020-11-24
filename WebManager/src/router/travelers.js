@@ -13,19 +13,6 @@ const upload = multer({ storage })
 
 const { db, bucket } = require('../models/FirebaseAdmin')
 
-const redisClient = redis.createClient(6379)
-
-const set = (key, value) => {
-  redisClient.set(key, JSON.stringify(value))
-}
-const get = (req, res, next) => {
-  const key = req.route.path
-  redisClient.get(key, (err, data) => {
-    if (err) res.status(400).send(err)
-    if (data != null) res.status(200).send(JSON.parse(data))
-    else next()
-  })
-}
 router
   .get('/', async (req, res, next) => {
     try {
