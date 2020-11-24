@@ -195,7 +195,8 @@ export default class ProfileDetail extends Component {
                                     if(check) {
                                         const { navigate } = this.props.navigation;
                                         navigate('Chat User Screen', {
-                                            thread: tempItem
+                                            thread: tempItem,
+                                            imageUser: tempItem.data().user_1 === uid ? tempItem.data().user_1.image : tempItem.data().user_2.image
                                         });
                                         return;
                                     }
@@ -227,7 +228,7 @@ export default class ProfileDetail extends Component {
                                         })
 
                                         const { navigate } = this.props.navigation;
-                                        navigate('Conversation');
+                                        navigate('Trò chuyện');
                                     })
                                 });
                         }}

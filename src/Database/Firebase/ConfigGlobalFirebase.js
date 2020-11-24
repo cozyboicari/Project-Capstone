@@ -199,7 +199,7 @@ export const addFirestore = async (nameCollection, data) => {
 
 // create post tour for tour guide
 export const createTour = async (newTour) => {
-  await firestore().collection('tours').add(newTour)
+  await firestore().collection('nonverifiedTours').add(newTour)
     .then(tour => {
       // tour.collection('ratings').add({});
       console.log('created tour !');

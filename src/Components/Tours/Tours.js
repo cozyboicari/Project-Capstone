@@ -65,7 +65,7 @@ const ItemTours = ({ navigation, tour }) => {
                             </Text>
                         </View>
 
-                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                        <View style={{ flex: 1, flexDirection: 'row', paddingRight: 20 }}>
                             <Text numberOfLines={2} style={styles.textNameTour}>
                                 {tour.name}
                             </Text>
