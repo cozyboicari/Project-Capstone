@@ -63,7 +63,7 @@ export default class ProfileTourGuides extends Component {
         const { name, tourguideName, avgRating, introduce, 
             time, numberPeople, category, languages, 
             description, price, tourguideImage, 
-            tourguideImageCover, schedule, tourguideID } = this.props.route.params.tour;
+            tourguideImageCover, schedule, tourguideID, ratings } = this.props.route.params.tour;
 
         return (
             <View style={styles.container}>
@@ -165,11 +165,13 @@ export default class ProfileTourGuides extends Component {
                                         imageSize={18}
                                         startingValue={avgRating}
                                     />
-                                    <Text style={styles.textRating}>{`(${avgRating})`}</Text>
+                                    <Text style={styles.textRating}>{`(${ratings.length})`}</Text>
                                     <TouchableOpacity
                                         onPress={() => {
                                             const { navigate } = this.props.navigation;
-                                            navigate('Reviews Tour Screen');
+                                            navigate('Reviews Tour Screen', {
+                                                ratings
+                                            });
                                         }}
                                     >
                                         <Text style={styles.textReviews}>Xem đánh giá</Text>

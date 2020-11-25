@@ -61,6 +61,14 @@ export const getToursInCity = async (path, idCity) => {
   await firestore().collection(path).where('cityID', '==', idCity).get()
     .then(tours => {
       tours.forEach(tour => {
+        
+        // get rating
+        let arrRatings = [];
+        tour.ref.collection('ratings').get()
+          .then(ratings => {
+            ratings.forEach(rating => arrRatings.push(rating.data()))
+          });
+
         let item = {
           id: tour.id,
           avgRating: tour.data().avgRating,
@@ -68,7 +76,6 @@ export const getToursInCity = async (path, idCity) => {
           description: tour.data().description,
           introduce: tour.data().introduce,
           name: tour.data().name,
-          numRatings: tour.data().numRatings,
           numberPeople: tour.data().numberPeople,
           price: tour.data().price,
           time: tour.data().time,
@@ -78,8 +85,10 @@ export const getToursInCity = async (path, idCity) => {
           tourguideImage: tour.data().tourguideImage,
           category: tour.data().category,
           languages: tour.data().languages,
-          schedule: tour.data().scheduleDetail
+          schedule: tour.data().scheduleDetail,
+          ratings: arrRatings,
         }
+        
         datas.push(item);
       })
     })
