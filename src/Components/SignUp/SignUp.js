@@ -146,7 +146,10 @@ export default class SignUp extends Component {
                             {/* phan forget password */}
                             <TouchableOpacity 
                                 style={styles.containerForgotPassword}
-                                onPress={() => {}}
+                                onPress={() => {
+                                    const { navigate } = this.props.navigation;
+                                    navigate('Forgot Password Screen');
+                                }}
                             >
                                 <Text style={styles.textForgotPassword}>
                                     Quên mật khẩu?

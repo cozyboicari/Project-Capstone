@@ -356,4 +356,11 @@ export const addQuestionActiveTourGuide = async (questions) => {
     .then(() => console.log('push question success !'));
 }
 
+//reset password
+export const resetPassword = async (email) => {
+  auth().sendPasswordResetEmail(email)
+    .then(() => console.log('send email success!'))
+    .catch(error => console.log(error));
+}
+
 export { auth, firebase, firestore };

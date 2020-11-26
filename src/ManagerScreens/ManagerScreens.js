@@ -33,6 +33,7 @@ import NumberOfPeopleScreen from '../Components/OrderTour/NumberOfPeople';
 import ChatbotScreen from '../Components/Chat/Chatbot';
 import ChangePasswordScreen from '../Components/ChangePassword/ChangePassword';
 import NotificationScreen from '../Components/Notification/Notification';
+import ForgotPasswordScreen from '../Components/ForgotPassword/ForgotPassword';
 
 //redux
 import { createStore, applyMiddleware } from 'redux';
@@ -125,6 +126,11 @@ const ManagerScreens = () => {
                     <Stack.Screen name="Intro Screen" component={IntroScreen} />
                     <Stack.Screen name="Sign In Screen" component={SignInScreen}/>
                     <Stack.Screen name="Sign Up Screen" component={SignUpScreen}/>
+                    <Stack.Screen name="Forgot Password Screen" component={ForgotPasswordScreen}
+                        options={{
+                            gestureEnabled: false
+                        }}
+                    />
                     <Stack.Screen name="Tabs" component={TabsScreen}/>
                     <Stack.Screen name="Details Tour Screen" component={DetailsTourScreen} 
                         options={{
