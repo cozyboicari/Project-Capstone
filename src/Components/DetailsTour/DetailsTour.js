@@ -54,8 +54,6 @@ export default class ProfileTourGuides extends Component {
     constructor(props) {
         super(props);
     }
-
-
     
 
     render() {
@@ -222,7 +220,7 @@ export default class ProfileTourGuides extends Component {
                                     navigate('Sign In Screen');
                                 } else {
                                     navigate('Booking Screen', {
-                                        tour: this.props.route.params.tour
+                                        tour: this.props.route.params.tour,
                                     });
                                 }
                             }}
@@ -234,7 +232,10 @@ export default class ProfileTourGuides extends Component {
                     <View style={styles.containerBookingAndPrice}>
                         <TouchableOpacity
                             onPress={() => {
-                                
+                                const { navigate } = this.props.navigation;
+                                navigate('Create Tours Screen', {
+                                    tour: this.props.route.params.tour
+                                });
                             }}
                             style={styles.containerButtonBooking}
                         >

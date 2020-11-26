@@ -32,6 +32,7 @@ import OrderTourScreen from '../Components/OrderTour/OrderTour';
 import NumberOfPeopleScreen from '../Components/OrderTour/NumberOfPeople';
 import ChatbotScreen from '../Components/Chat/Chatbot';
 import ChangePasswordScreen from '../Components/ChangePassword/ChangePassword';
+import NotificationScreen from '../Components/Notification/Notification';
 
 //redux
 import { createStore, applyMiddleware } from 'redux';
@@ -93,7 +94,7 @@ const TabsScreen = () => {
             />
             <Tab.Screen 
                 name="Thông báo" 
-                component={View}
+                component={NotificationScreen}
                 options={{
                     tabBarIcon: ({size, color}) => <Icons name="notifications-outline" size={size} color={color}/> 
                 }}

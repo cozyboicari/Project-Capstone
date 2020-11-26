@@ -87,6 +87,7 @@ export const getToursInCity = async (path, idCity) => {
           languages: tour.data().languages,
           schedule: tour.data().scheduleDetail,
           ratings: arrRatings,
+          numberAccount: tour.data().numberAccount
         }
         
         datas.push(item);
@@ -129,6 +130,25 @@ export const getQuestionActiveTourGuide = async () => {
       })
     });
   return data;
+}
+
+// update data tour
+export const updateTour = async (tourUpdate) => {
+  await firestore().collection('tours').doc(tourUpdate.id)
+    .update({
+      category: tourUpdate.category,
+      description: tourUpdate.description,
+      introduce: tourUpdate.introduce,
+      languages: tourUpdate.languages,
+      name: tourUpdate.name,
+      numberPeople: tourUpdate.numberPeople,
+      price: tourUpdate.price,
+      time: tourUpdate.time,
+      tourguideImageCover: tourUpdate.tourguideImageCover,
+      scheduleDetail: tourUpdate.scheduleDetail,
+      numberAccount: tourUpdate.numberAccount
+    })
+    .then(() => console.log('updated !'));
 }
 
 //update data traveler by uID

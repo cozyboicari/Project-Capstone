@@ -182,7 +182,25 @@ export default class CreateTours extends Component {
     }
 
     componentDidMount() {
-        this.props._onGetTourGuide(auth().currentUser.uid)
+        this.props._onGetTourGuide(auth().currentUser.uid);
+
+        // get date tu params
+        if(this.props.route.params) {
+            const { tour } = this.props.route.params;
+            this.setState({ 
+                schedule: tour.schedule, 
+                imageTour: tour.tourguideImageCover, 
+                nameTour: tour.name, 
+                introduceCity: tour.introduce, 
+                introduceCityDetail: tour.description, 
+                tourHours: tour.time.toString(),
+                numberOfTourists: tour.numberPeople.toString(), 
+                tourCategory: tour.category, 
+                languages: tour.languages, 
+                price: tour.price.toString(),
+                numberAccount: tour.numberAccount
+            })
+        }
     }
 
     render() {
@@ -199,7 +217,10 @@ export default class CreateTours extends Component {
                     <StatusBar barStyle='light-content'/>
                     <HeaderComponent {...this.props} isHome={false}/>
                     <View style={styles.containerTitleCreateTour}>
-                        <Text style={{ fontSize: 16, fontWeight: '300', flex: 1}}>Hãy tạo một chuyến đi cho mình!</Text>
+                        { !this.props.route.params ?
+                            <Text style={{ fontSize: 16, fontWeight: '300', flex: 1}}>Hãy tạo một chuyến đi cho mình!</Text> :
+                            <Text style={{ fontSize: 16, fontWeight: '300', flex: 1}}>Chỉnh sửa bài viết của bạn!</Text>
+                        }
                         <TouchableOpacity
                             onPress={() => {
                                 const newTour = {
@@ -219,15 +240,40 @@ export default class CreateTours extends Component {
                                     tourguideName: name,
                                     cityID: idCity,
                                     scheduleDetail: schedule,
-                                    numberAccount
+                                    numberAccount: numberAccount
                                 };
-                                Alert.alert('Thông báo', 'Bạn có muốn tạo chuyến đi này?', [
+                                const tourUpdate = {
+                                    category: tourCategory,
+                                    description: introduceCityDetail,
+                                    introduce: introduceCity,
+                                    languages: languages,
+                                    name: nameTour,
+                                    numberPeople: parseInt(numberOfTourists),
+                                    price: parseFloat(price),
+                                    time: parseFloat(tourHours),
+                                    tourguideImageCover: imageTour,
+                                    scheduleDetail: schedule,
+                                    numberAccount: numberAccount,
+                                    id: this.props.route.params.tour.id
+                                }
+
+                                Alert.alert(
+                                'Thông báo',
+                                !this.props.route.params ? 'Bạn có muốn tạo chuyến đi này?' : 'Bạn có muốn cập nhật lại tour?',
+                                [
                                     {
                                         text: 'Xác nhận',
                                         onPress: () => {
-                                            this.props._onCreateTour(newTour);
+                                            
+                                            if(this.props.route.params) {
+                                                this.props._onUpdateTour(tourUpdate);
+                                                Alert.alert('Thông báo!', 'Cập nhật thành công!');
+                                            } else {
+                                                this.props._onCreateTour(newTour);
+                                                Alert.alert('Thông báo!', 'Chuyến đi của bạn đã được gửi lên, chúng tôi sẽ xem xét và duyệt sớm nhất, cảm ơn!');
+                                            }
+                                            
                                             const { goBack } = this.props.navigation;
-                                            Alert.alert('Thông báo!', 'Chuyến đi của bạn đã được gửi lên, chúng tôi sẽ xem xét và duyệt sớm nhất, cảm ơn!');
                                             goBack();
                                         }
                                     },
@@ -246,7 +292,7 @@ export default class CreateTours extends Component {
                                 fontWeight: 'bold',
                                 fontSize: 17
                             }]}>
-                                Tạo chuyến đi
+                                { this.props.route.params ? 'Chỉnh sửa' : 'Tạo chuyến đi' }
                             </Text>
                         </TouchableOpacity>
                     </View>

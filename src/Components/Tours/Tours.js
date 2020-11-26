@@ -26,6 +26,7 @@ export default class TourGuides extends Component {
 
     //item tour guide
     _renderItem = ({ item }) => {
+       
         return (
             <TouchableOpacity
                 onPress={() => {
@@ -91,7 +92,6 @@ export default class TourGuides extends Component {
     }
 
     render() {
-        const { isAvtive } = this.props.traveler;
 
         return(
             <View style={styles.container}>
@@ -110,7 +110,7 @@ export default class TourGuides extends Component {
                                 <TouchableOpacity
                                     onPress={() => {
                                         const { navigate } = this.props.navigation;
-                                        if(isAvtive) {
+                                        if(this.props.traveler.isActive) {
                                             navigate('Create Tours Screen');
                                         } else {
                                             navigate('Register Tour Guide Screen');

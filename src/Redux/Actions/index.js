@@ -12,7 +12,7 @@ import {
     GET_TOUR_GUIDE, GET_TOUR_GUIDE_FAIL, GET_TOUR_GUIDE_SUCCESS,
     UPDATE_ITEM_TOUR_GUIDE, UPDATE_ITEM_TOUR_GUIDE_FAIL, UPDATE_ITEM_TOUR_GUIDE_SUCCESS,
     CREATE_TOUR, CREATE_TOUR_FAIL, CREATE_TOUR_SUCCESS,
-    GET_CHAT_ALL, GET_CHAT_ALL_FAIL, GET_CHAT_ALL_SUCCESS
+    UPDATE_TOUR, UPDATE_TOUR_FAIL, UPDATE_TOUR_SUCCESS
 } from './ActionType';
 
 //get cities in country
@@ -294,6 +294,28 @@ export const createTourSuccessAction = tour => {
 export const createTourFailAction = error => {
     return {
         type: CREATE_TOUR_FAIL,
+        error
+    }
+}
+
+// update tour
+export const updateTourAction = tourUpdate => {
+    return {
+        type: UPDATE_TOUR,
+        tourUpdate
+    }
+}
+
+export const updateTourSuccessAction = tourUpdated => {
+    return {
+        type: UPDATE_TOUR_SUCCESS,
+        tourUpdated
+    }
+}
+
+export const updateTourFail = error => {
+    return {
+        type: UPDATE_TOUR_FAIL,
         error
     }
 }

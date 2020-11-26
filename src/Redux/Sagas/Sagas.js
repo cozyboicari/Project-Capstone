@@ -12,6 +12,7 @@ import {
     GET_TOUR_GUIDE_SUCCESS, GET_TOUR_GUIDE_FAIL, GET_TOUR_GUIDE,
     UPDATE_ITEM_TOUR_GUIDE_SUCCESS, UPDATE_ITEM_TOUR_GUIDE_FAIL, 
     UPDATE_ITEM_TOUR_GUIDE, CREATE_TOUR_FAIL, CREATE_TOUR_SUCCESS, CREATE_TOUR,
+    UPDATE_TOUR, UPDATE_TOUR_FAIL, UPDATE_TOUR_SUCCESS
 } from '../Actions/ActionType';
 
 import { takeLatest, put, call, take } from 'redux-saga/effects';
@@ -25,7 +26,7 @@ import {
     getTourGuideByID,
     updateTourGuideByID,
     createTour,
-    getChatAll
+    updateTour
  } from '../../Database/Firebase/ConfigGlobalFirebase';
 import { Alert } from 'react-native';
 
@@ -214,4 +215,18 @@ function* createTourFromTourGuide(action) {
 
 export function* watchCreateTourFromTourGuide() {
     yield takeLatest(CREATE_TOUR, createTourFromTourGuide);
+}
+
+// update tour
+function* updateTourFromFirestore(action) {
+    try {
+        const tourUpdated = yield updateTour(action.tourUpdate);
+        yield put({ type: UPDATE_TOUR_SUCCESS, tourUpdated })
+    } catch(error) {
+        yield put({ type: UPDATE_TOUR_FAIL, error })
+    }
+}
+
+export function* watchUpdateTourFromFirestore() {
+    yield takeLatest(UPDATE_TOUR, updateTourFromFirestore);
 }

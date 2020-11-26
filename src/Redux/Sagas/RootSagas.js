@@ -14,6 +14,7 @@ import {
     watchGetTourGuideFromAuth,
     watchUpdateItemTourGuideFromAuth,
     watchCreateTourFromTourGuide,
+    watchUpdateTourFromFirestore
  } from './Sagas';
 
  export default function* rootSagas() {
@@ -31,5 +32,6 @@ import {
          watchGetTourGuideFromAuth(),
          watchUpdateItemTourGuideFromAuth(),
          watchCreateTourFromTourGuide(),
+         watchUpdateTourFromFirestore()
      ])
  }
