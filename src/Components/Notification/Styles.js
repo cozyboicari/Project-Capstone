@@ -34,9 +34,10 @@ const styles = StyleSheet.create({
     image: {
         width: IMAGE_AVATAR,
         height: IMAGE_AVATAR,
-        backgroundColor: colors.BACKGROUND_BLUEYONDER,
         marginLeft: 10,
         borderRadius: IMAGE_AVATAR / 2,
+        borderWidth: 1,
+        borderColor: colors.BACKGROUND_BLUEYONDER
     },
     containerText: {
         flex: 1,

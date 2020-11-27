@@ -32,7 +32,7 @@ import OrderTourScreen from '../Components/OrderTour/OrderTour';
 import NumberOfPeopleScreen from '../Components/OrderTour/NumberOfPeople';
 import ChatbotScreen from '../Components/Chat/Chatbot';
 import ChangePasswordScreen from '../Components/ChangePassword/ChangePassword';
-import NotificationScreen from '../Components/Notification/Notification';
+import NotificationScreen from '../Redux/Containers/NotificationContainer';
 import ForgotPasswordScreen from '../Components/ForgotPassword/ForgotPassword';
 
 //redux

@@ -14,20 +14,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     itemHeaderLeft: {
-        flex: 1,
+        flex: 1.5,
         marginLeft: 12
     },
     itemHeaderMid: {
-        flex: 1
+        flex: 1,
+        alignItems: 'flex-end',
     },
     itemHeaderRight: {
-        flex: 1
+        flex: 1,
     },
-    textBrand: {
-        fontSize: 30,
-        fontWeight: 'bold',
-        color: colors.BACKGROUND_CULTURE
-    }
 })
 
 export default styles;

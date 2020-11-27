@@ -363,4 +363,22 @@ export const resetPassword = async (email) => {
     .catch(error => console.log(error));
 }
 
+//get notification
+export const getNotification = async () => {
+  // get traveler
+  const traveler = await firestore().collection('travelers').where('uID', '==', auth().currentUser.uid).get();
+
+  //get notification
+  let datas = [];
+
+  await traveler.docs[0].ref.collection('notification').get()
+    .then(notifications => {
+      notifications.forEach(notification => {
+        datas.push({ ...notification.data() });
+      })
+    })
+
+  return datas;
+}
+
 export { auth, firebase, firestore };

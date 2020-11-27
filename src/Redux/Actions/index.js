@@ -12,7 +12,8 @@ import {
     GET_TOUR_GUIDE, GET_TOUR_GUIDE_FAIL, GET_TOUR_GUIDE_SUCCESS,
     UPDATE_ITEM_TOUR_GUIDE, UPDATE_ITEM_TOUR_GUIDE_FAIL, UPDATE_ITEM_TOUR_GUIDE_SUCCESS,
     CREATE_TOUR, CREATE_TOUR_FAIL, CREATE_TOUR_SUCCESS,
-    UPDATE_TOUR, UPDATE_TOUR_FAIL, UPDATE_TOUR_SUCCESS
+    UPDATE_TOUR, UPDATE_TOUR_FAIL, UPDATE_TOUR_SUCCESS,
+    GET_NOTIFICATION, GET_NOTIFICATION_FAIL, GET_NOTIFICATION_SUCCESS
 } from './ActionType';
 
 //get cities in country
@@ -316,6 +317,27 @@ export const updateTourSuccessAction = tourUpdated => {
 export const updateTourFail = error => {
     return {
         type: UPDATE_TOUR_FAIL,
+        error
+    }
+}
+
+// get notification
+export const getNotificationAction = () => {
+    return {
+        type: GET_NOTIFICATION,
+    }
+}
+
+export const getNotificationSuccessAction = notifications => {
+    return {
+        type: GET_NOTIFICATION_SUCCESS,
+        notifications
+    }
+}
+
+export const getNotificationFailAction = error => {
+    return {
+        type: GET_NOTIFICATION_FAIL,
         error
     }
 }

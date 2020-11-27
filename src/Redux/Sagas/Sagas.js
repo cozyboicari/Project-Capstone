@@ -12,7 +12,8 @@ import {
     GET_TOUR_GUIDE_SUCCESS, GET_TOUR_GUIDE_FAIL, GET_TOUR_GUIDE,
     UPDATE_ITEM_TOUR_GUIDE_SUCCESS, UPDATE_ITEM_TOUR_GUIDE_FAIL, 
     UPDATE_ITEM_TOUR_GUIDE, CREATE_TOUR_FAIL, CREATE_TOUR_SUCCESS, CREATE_TOUR,
-    UPDATE_TOUR, UPDATE_TOUR_FAIL, UPDATE_TOUR_SUCCESS
+    UPDATE_TOUR, UPDATE_TOUR_FAIL, UPDATE_TOUR_SUCCESS,
+    GET_NOTIFICATION_FAIL, GET_NOTIFICATION_SUCCESS, GET_NOTIFICATION
 } from '../Actions/ActionType';
 
 import { takeLatest, put, call, take } from 'redux-saga/effects';
@@ -26,7 +27,8 @@ import {
     getTourGuideByID,
     updateTourGuideByID,
     createTour,
-    updateTour
+    updateTour,
+    getNotification
  } from '../../Database/Firebase/ConfigGlobalFirebase';
 import { Alert } from 'react-native';
 
@@ -229,4 +231,19 @@ function* updateTourFromFirestore(action) {
 
 export function* watchUpdateTourFromFirestore() {
     yield takeLatest(UPDATE_TOUR, updateTourFromFirestore);
+}
+
+
+// get notification
+function* getNotificationFromFirestore() {
+    try {
+        const notifications = yield getNotification();
+        yield put({ type: GET_NOTIFICATION_SUCCESS, notifications });
+    } catch(error) {
+        yield put({ type: GET_NOTIFICATION_FAIL, error });
+    }
+}
+
+export function* watchGetNotificationFromFirestore() {
+    yield takeLatest(GET_NOTIFICATION, getNotificationFromFirestore);
 }

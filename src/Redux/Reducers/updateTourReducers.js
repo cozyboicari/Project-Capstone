@@ -9,3 +9,5 @@ const updateTourReducers = (tour = {}, action) => {
         default: return tour;
     }
 }
+
+export default updateTourReducers;
