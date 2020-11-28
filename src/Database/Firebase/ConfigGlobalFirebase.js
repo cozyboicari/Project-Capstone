@@ -358,7 +358,7 @@ export const addQuestionActiveTourGuide = async (questions) => {
 
 //reset password
 export const resetPassword = async (email) => {
-  auth().sendPasswordResetEmail(email)
+  await auth().sendPasswordResetEmail(email)
     .then(() => console.log('send email success!'))
     .catch(error => console.log(error));
 }

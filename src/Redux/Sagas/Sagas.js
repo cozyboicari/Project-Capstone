@@ -13,7 +13,8 @@ import {
     UPDATE_ITEM_TOUR_GUIDE_SUCCESS, UPDATE_ITEM_TOUR_GUIDE_FAIL, 
     UPDATE_ITEM_TOUR_GUIDE, CREATE_TOUR_FAIL, CREATE_TOUR_SUCCESS, CREATE_TOUR,
     UPDATE_TOUR, UPDATE_TOUR_FAIL, UPDATE_TOUR_SUCCESS,
-    GET_NOTIFICATION_FAIL, GET_NOTIFICATION_SUCCESS, GET_NOTIFICATION
+    GET_NOTIFICATION_FAIL, GET_NOTIFICATION_SUCCESS, GET_NOTIFICATION,
+    RESET_PASSWORD_FAIL, RESET_PASSWORD_SUCCESS, RESET_PASSWORD
 } from '../Actions/ActionType';
 
 import { takeLatest, put, call, take } from 'redux-saga/effects';
@@ -28,9 +29,11 @@ import {
     updateTourGuideByID,
     createTour,
     updateTour,
-    getNotification
+    getNotification,
+    resetPassword
  } from '../../Database/Firebase/ConfigGlobalFirebase';
 import { Alert } from 'react-native';
+import { resetPasswordAction } from '../Actions';
 
  // get cites in country
 function* getCitiesInCountryFromFirestore(action) {
@@ -246,4 +249,18 @@ function* getNotificationFromFirestore() {
 
 export function* watchGetNotificationFromFirestore() {
     yield takeLatest(GET_NOTIFICATION, getNotificationFromFirestore);
+}
+
+// reset password
+function* resetPasswordFromAuth(action) {
+    try {
+        const mail = yield resetPassword(action.email);
+        yield put({ type: RESET_PASSWORD_SUCCESS, mail });
+    } catch (error) {
+        yield put({ type: RESET_PASSWORD_FAIL, error });
+    }
+}
+
+export function* watchResetPasswordFromAuth() {
+    yield takeLatest(RESET_PASSWORD, resetPasswordFromAuth);
 }

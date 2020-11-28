@@ -7,9 +7,6 @@ import styles from './Styles';
 // file component
 import HeaderComponent from '../Header/Header';
 
-// firebase
-import { resetPassword } from '../../Database/Firebase/ConfigGlobalFirebase';
-
 export default class ForgotPassword extends Component {
     constructor(props) {
         super(props);
@@ -41,7 +38,7 @@ export default class ForgotPassword extends Component {
                 <TouchableOpacity
                     style={styles.containerButton}
                     onPress={() => {
-                        resetPassword(this.state.email);
+                        this.props._onResetPassword(this.state.email);
                         const { goBack } = this.props.navigation;
 
                         Alert.alert('Thông báo', 'Đặt lại mật khẩu đã thành công! hãy kiểm tra email của bạn, Cảm ơn!');

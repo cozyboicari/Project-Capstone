@@ -10,10 +10,6 @@ import HeaderComponent from '../Header/Header';
 export default class Notification extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            notifications: []
-        }
     }
 
     componentDidMount() {

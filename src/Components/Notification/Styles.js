@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
     containerTitle: {
         borderBottomWidth: .5,
         borderColor: '#aaa',
-        paddingBottom: 20
     },
     textTitle: {
         margin: 22,
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
     },
     date: {
         paddingBottom: 5,
-        fontSize: 14,
+        fontSize: 13,
         fontWeight: '500',
         color: '#888'
     }

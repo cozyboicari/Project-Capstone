@@ -4,7 +4,6 @@ import { getNotificationAction } from '../Actions/index';
 import NotificationComponent from '../../Components/Notification/Notification';
 
 const mapStateToProps = state => {
-    console.log(state.notificationsReducers);
     return {
         notifications: state.notificationsReducers
     }
