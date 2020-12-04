@@ -93,12 +93,13 @@ export default class NumberOfPeople extends Component {
 
     _addPeople = title => {
         const { adults, children, numberPeople, price } = this.state;
+
         switch(title) {
-            case 'Adults': return this.setState({ 
+            case 'Người trưởng thành': return this.setState({ 
                 adults: adults + 1,
                 total: ((numberPeople * price) / (adults + 1)).toFixed(2)
             })
-            case 'Children': return this.setState({ 
+            case 'Trẻ em': return this.setState({ 
                 children: children + 1,
             })
             default:

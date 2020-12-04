@@ -5,7 +5,7 @@ import HomeComponent from '../../Components/Home/Home';
 
 const mapStateToProps = state => {
     return {
-        cities: state.citiesReducers
+        cities: state.citiesReducers,
     }
 }
 
@@ -13,7 +13,7 @@ const mapDispatchToProps = dispatch => {
     return {
         _onGetCities: path => {
             dispatch(getCitiesAction(path));
-        }
+        },
     }
 }
 

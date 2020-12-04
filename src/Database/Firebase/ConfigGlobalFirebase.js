@@ -210,7 +210,8 @@ export const createUserByEmail = async (newUser) => {
         isActive: false,
         passions: '',
         title: '',
-        imageProfile: ''
+        imageProfile: '',
+        dateCreated: new Date().getTime()
       };
       
       addFirestore('travelers', userFirestore)
@@ -286,7 +287,8 @@ export const signInUserByFacebook = async () => {
               isActive: false,
               passions: '',
               title: '',
-              imageProfile: ''
+              imageProfile: '',
+              dateCreated: new Date().getTime()
             };
             
             addFirestore('travelers', userFirestore)
@@ -330,7 +332,8 @@ export const signInUserByGmail = async () => {
           isActive: false,
           passions: '',
           title: '',
-          imageProfile: ''
+          imageProfile: '',
+          dateCreated: new Date().getTime()
         };
         
         addFirestore('travelers', userFirestore)
@@ -377,7 +380,6 @@ export const getNotification = async () => {
         datas.push({ ...notification.data() });
       })
     })
-
   return datas;
 }
 

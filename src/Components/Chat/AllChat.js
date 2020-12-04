@@ -69,7 +69,7 @@ export default class AllChat extends Component {
     componentDidMount() {
         this._isMounted = true;
 
-        // view chat group all
+        // get chat group all
         auth().onAuthStateChanged(() => {
             if(auth().currentUser) {  
                 firestore()
