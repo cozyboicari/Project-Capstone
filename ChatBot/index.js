@@ -16,7 +16,6 @@ app.post('/', express.json(), (req, res) => {
     //add agent
     function muonTuVan(agent) {
         agent.add('Bạn muốn tư vấn !');
-        agent.add('Các tour nổi bật nhất của thành phố');
     }
 
     // set intent
