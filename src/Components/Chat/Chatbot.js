@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Text, View, StatusBar, 
     TextInput, TouchableOpacity, 
-    KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, FlatList, ActivityIndicator } from 'react-native';
+    KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, FlatList, ActivityIndicator, Image 
+} from 'react-native';
 
 //file css
 import styles from './Styles';
@@ -13,17 +14,38 @@ import HeaderComponent from '../Header/Header';
 import Icons from 'react-native-vector-icons/Ionicons';
 import { GiftedChat, Send } from 'react-native-gifted-chat'
 import { Dialogflow_V2 } from 'react-native-dialogflow';
+import { Rating } from 'react-native-ratings';
+import { Card, Title, Paragraph, Button } from 'react-native-paper';
 
 //file config
 import { colors, dialogflowConfig } from '../../ConfigGlobal';
-import { firestore, auth } from '../../Database/Firebase/ConfigGlobalFirebase';
-import { firebase } from '@react-native-firebase/auth';
+
 
 const BOT_USER = {
     _id: 2,
     name: 'Yourtour Bot',
     avatar: 'https://us.123rf.com/450wm/goodzone95/goodzone951803/goodzone95180300026/96725720-stock-vector-chatbot-icon-.jpg?ver=6'
 };
+
+const RenderItem = ({ image, title, subTitle  }) => {
+    return (
+        <Card style={{ flex: 1, padding: 20 }}>
+            <Card.Cover source={{ uri: image }} />
+            <Card.Content>
+                <Title>{title}</Title>
+                <Paragraph>{subTitle}</Paragraph>
+            </Card.Content>
+            <Card.Actions style={{ justifyContent: 'space-between'}}>
+                <Button  mode="outlined" color='black' onPress={() => {}}>
+                    Chi tiết
+                </Button>
+                <Button  mode="outlined" color='black' onPress={() => {}}>
+                    Huỷ
+                </Button>
+            </Card.Actions>
+        </Card>
+    )
+}
 
 export default class ChatUser extends Component {
 
@@ -36,7 +58,7 @@ export default class ChatUser extends Component {
                     _id: 1,
                     text: `Hi! Tôi là yourtour-bot 🤖 đến từ Yourtour.\n\nTôi có thể giúp gì được cho bạn?`,
                     createdAt: new Date().getTime(),
-                    user: BOT_USER
+                    user: BOT_USER,
                 }
             ],
         }
@@ -61,16 +83,12 @@ export default class ChatUser extends Component {
         )
     }
 
-    _handleGoogleRespone = result => {
-        let text = result.queryResult.fulfillmentMessages[0].text.text[0];
-        this._sendBotResponse(text);
-    }
-
     // send message vao gift
     _handleSend = (messages = []) => {
         this.setState({ messages: GiftedChat.append(this.state.messages, messages) });
 
         let message = messages[0].text;
+
         Dialogflow_V2.requestQuery(
             message,
             result => { return this._handleGoogleRespone(result) },
@@ -78,16 +96,23 @@ export default class ChatUser extends Component {
         )
     }
 
+    _handleGoogleRespone = result => {
+        const { imageUri, title, subtitle } = result.queryResult.fulfillmentMessages[0].card;
+        let text = <RenderItem image={imageUri} title={title} subTitle={subtitle}/>;
+        this._sendBotResponse(text);
+    }
+
     _sendBotResponse = text => {
         let msg = {
             _id: this.state.messages.length + 1,
             text,
             createdAt: new Date(),
-            user: BOT_USER
+            user: BOT_USER,
         }
 
         this.setState({ messages: GiftedChat.append(this.state.messages, [msg])});
     }
+
 
     render() {
         const { messages } = this.state;
