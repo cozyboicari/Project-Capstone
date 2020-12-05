@@ -13,17 +13,23 @@ app.post('/', express.json(), (req, res) => {
     });
 
     //add agent
-    function testPlayload(agent) {
+    function tuVanMuon(agent) {
+        agent.add('Các chuyến tham quan du lịch của bot chia sẻ cho bạn nạ!');
         agent.add(new dialogflowFulfillment.Card({
             title: 'Tour du lịch',
             imageUrl: 'https://ae01.alicdn.com/kf/HTB1hw8iKFXXXXbQXpXXq6xXFXXXY/Kpop-bigbang-gd-g-dragon-mv-c-ng-m-t-ch-t-li-u-nhung-cao.jpg_q50.jpg',
             text: 'Tour du lịch cùng với phong le',
         }));
+        agent.add(new dialogflowFulfillment.Card({
+            title: 'Tour du lịch abc',
+            imageUrl: 'https://ae01.alicdn.com/kf/HTB1hw8iKFXXXXbQXpXXq6xXFXXXY/Kpop-bigbang-gd-g-dragon-mv-c-ng-m-t-ch-t-li-u-nhung-cao.jpg_q50.jpg',
+            text: 'Tour du lịch cùng với g-dragon',
+        }));
     }
 
     // set intent
     let intent = new Map();
-    intent.set('testPayload', testPlayload);
+    intent.set('ITuVan - DiaDiemDuLich - Diadiem - Muon', tuVanMuon);
 
     // push len
     agent.handleRequest(intent);
