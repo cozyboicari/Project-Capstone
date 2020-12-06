@@ -77,12 +77,14 @@ export default class ChatUser extends Component {
         )
     }
 
-    _handleGoogleRespone = result => {     
+    _handleGoogleRespone = result => {
         const arr = [...result.queryResult.fulfillmentMessages];
+        
         const cards = arr.splice(1, arr.length - 1);
         const text = arr[0].text.text[0];
-        if(cards.length !== 0) {
-            this._sendBotResponse('', cards);
+
+        if(cards[0] && cards[0].payload.tours.length !== 0) {
+            this._sendBotResponse('', cards[0].payload.tours);
         }
         this._sendBotResponse(text, 0);
     }
@@ -118,34 +120,34 @@ export default class ChatUser extends Component {
                                 <View style={styles.containerImageCover}>
                                     <Image 
                                         style={styles.imageCover}
-                                        source={{ uri: item.card.imageUri }}
+                                        source={{ uri: item.tourguideImageCover }}
                                     />
                                 </View>
                                 {/* anh avatar */}
                                 <View style={styles.containerImage}>
                                     <Image 
                                         style={styles.image}
-                                        source={{ uri: item.card.imageUri }}
+                                        source={{ uri: item.tourguideImage }}
                                     />
                                 </View>
                                 {/* thong tin gia tien cua tour */}
                                 <View style={styles.containerNameTour}>
                                     <View style={{ flex: .3 }}>
                                         <Text style={styles.textIntro}>
-                                            {`Tận hưởng DN với `}<Text style={styles.subTextIntro}>Phong Le</Text>
+                                            {`Tận hưởng ${item.cityID} với `}<Text style={styles.subTextIntro}>{item.tourguideName}</Text>
                                         </Text>
                                     </View>
         
                                     <View style={{ flex: 1, flexDirection: 'row', paddingRight: 20 }}>
                                         <Text numberOfLines={2} style={styles.textNameTour}>
-                                            {item.card.subtitle}
+                                            {item.name}
                                         </Text>
                                     </View>
         
                                     <View style={{ flex: 1.5 }}>
                                         <View style={styles.containerPrice}>
-                                            <Text style={styles.textPrice}>{`10 $`}</Text>
-                                            <Text style={styles.textPrice}>{`/ 2 giờ`}</Text>
+                                            <Text style={styles.textPrice}>{`${item.price}$`}</Text>
+                                            <Text style={styles.textPrice}>{`/ ${item.time} giờ`}</Text>
                                         </View>
                                         <View style={styles.containerRating}>
                                             <Rating 
@@ -153,9 +155,9 @@ export default class ChatUser extends Component {
                                                 ratingCount={5}
                                                 readonly={true}
                                                 imageSize={18}
-                                                startingValue={5}
+                                                startingValue={item.avgRating}
                                             />
-                                            <Text style={styles.textRating}>{`(5.0)`}</Text>
+                                            <Text style={styles.textRating}>{`(${item.avgRating})`}</Text>
                                         </View>
                                     </View>
                                 </View>
