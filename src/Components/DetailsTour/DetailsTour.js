@@ -206,7 +206,7 @@ export default class ProfileTourGuides extends Component {
                 />
                 
                 {/* phan bottom gia tien */}
-                { auth().currentUser.uid !== tourguideID ?
+                { !auth().currentUser || (auth().currentUser.uid !== tourguideID) ?
                     <View style={styles.containerBookingAndPrice}>
                         <View style={styles.containerPrice}>
                             <Text style={styles.textPrice}>{`${price}$ mỗi người`}</Text>

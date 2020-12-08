@@ -7,6 +7,9 @@ import styles from './Styles';
 //component
 import HeaderComponent from '../Header/Header';
 
+// firebase
+import { auth } from '../../Database/Firebase/ConfigGlobalFirebase';
+
 // const TabBarItem = ({ nameIcon, size, color, countBadge }) => {
 //     return (
 //         <View style={{ 
@@ -44,11 +47,19 @@ export default class Notification extends Component {
     }
 
     componentDidMount() {
-        this.props._onGetNotification();
+        auth().onAuthStateChanged(() => {
+            if(auth().currentUser) {
+                this.props._onGetNotification();
+            }
+        })
     }
 
     componentDidUpdate() {
-        this.props._onGetNotification();
+        auth().onAuthStateChanged(() => {
+            if(auth().currentUser) {
+                this.props._onGetNotification();
+            }
+        })
     }
 
     _renderItem = ({ item }) => {
