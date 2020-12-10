@@ -11,6 +11,8 @@ let questions = {
     price: 0
 }
 
+const PORT = process.env.PORT || 3000;
+
 chuanHoaTenThanhPho = nameCity => {
     return nameCity.toLowerCase()
     .split(' ')
@@ -94,7 +96,7 @@ app.post('/', express.json(), (req, res) => {
         if(tours.length === 0) {
             agent.add('Opps... xin lỗi bạn :( chuyến đi phù hợp với bạn hiện tại không có, \nbạn có thể tìm kiếm chuyến đi khác!');
         } else {
-            agent.add('Đây là các chuyến đi du lịch phù hợp với bạn để bạn có thể tham khảo nạ.');
+            agent.add(`Đây là các chuyến đi du lịch phù hợp với bạn để bạn có thể tham khảo nạ.\nNếu muốn tiếp tục vui lòng nhấn 'Tư vấn ạ'`);
             agent.add(new dialogflowFulfillment.Payload(
                 agent.UNSPECIFIED, 
                 payload,
@@ -118,4 +120,4 @@ app.post('/', express.json(), (req, res) => {
     agent.handleRequest(intent);
 });
 
-app.listen(3000, () => console.log('Server is live at port 3000'));
+app.listen(PORT, () => console.log('Server is live at port 3000'));
