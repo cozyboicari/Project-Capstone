@@ -107,6 +107,7 @@ export default class ChatUser extends Component {
 
         if(currentMessage.cards) {
             const { cards } = currentMessage;     
+            
             return <FlatList
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
@@ -114,55 +115,64 @@ export default class ChatUser extends Component {
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item, index }) => {
                     return (
-                        <View style={styles.containerPostTour}>
-                            <View style={styles.containerInfomationTour}>
-                                {/* anh bia */}
-                                <View style={styles.containerImageCover}>
-                                    <Image 
-                                        style={styles.imageCover}
-                                        source={{ uri: item.tourguideImageCover }}
-                                    />
-                                </View>
-                                {/* anh avatar */}
-                                <View style={styles.containerImage}>
-                                    <Image 
-                                        style={styles.image}
-                                        source={{ uri: item.tourguideImage }}
-                                    />
-                                </View>
-                                {/* thong tin gia tien cua tour */}
-                                <View style={styles.containerNameTour}>
-                                    <View style={{ flex: .3 }}>
-                                        <Text style={styles.textIntro}>
-                                            {`Tận hưởng ${item.cityID} với `}<Text style={styles.subTextIntro}>{item.tourguideName}</Text>
-                                        </Text>
+                        <TouchableOpacity
+                            onPress={() => {
+                                const { navigate } = this.props.navigation;
+                                navigate('Details Tour Screen', {
+                                    tour: item
+                                })
+                            }}
+                        >
+                            <View style={styles.containerPostTour}>
+                                <View style={styles.containerInfomationTour}>
+                                    {/* anh bia */}
+                                    <View style={styles.containerImageCover}>
+                                        <Image 
+                                            style={styles.imageCover}
+                                            source={{ uri: item.tourguideImageCover }}
+                                        />
                                     </View>
-        
-                                    <View style={{ flex: 1, flexDirection: 'row', paddingRight: 20 }}>
-                                        <Text numberOfLines={2} style={styles.textNameTour}>
-                                            {item.name}
-                                        </Text>
+                                    {/* anh avatar */}
+                                    <View style={styles.containerImage}>
+                                        <Image 
+                                            style={styles.image}
+                                            source={{ uri: item.tourguideImage }}
+                                        />
                                     </View>
-        
-                                    <View style={{ flex: 1.5 }}>
-                                        <View style={styles.containerPrice}>
-                                            <Text style={styles.textPrice}>{`${item.price}$`}</Text>
-                                            <Text style={styles.textPrice}>{`/ ${item.time} giờ`}</Text>
+                                    {/* thong tin gia tien cua tour */}
+                                    <View style={styles.containerNameTour}>
+                                        <View style={{ flex: .3 }}>
+                                            <Text style={styles.textIntro}>
+                                                {`Tận hưởng ${item.cityID} với `}<Text style={styles.subTextIntro}>{item.tourguideName}</Text>
+                                            </Text>
                                         </View>
-                                        <View style={styles.containerRating}>
-                                            <Rating 
-                                                type="custom"
-                                                ratingCount={5}
-                                                readonly={true}
-                                                imageSize={18}
-                                                startingValue={item.avgRating}
-                                            />
-                                            <Text style={styles.textRating}>{`(${item.avgRating})`}</Text>
+            
+                                        <View style={{ flex: 1, flexDirection: 'row', paddingRight: 20 }}>
+                                            <Text numberOfLines={2} style={styles.textNameTour}>
+                                                {item.name}
+                                            </Text>
+                                        </View>
+            
+                                        <View style={{ flex: 1.5 }}>
+                                            <View style={styles.containerPrice}>
+                                                <Text style={styles.textPrice}>{`${item.price}$`}</Text>
+                                                <Text style={styles.textPrice}>{`/ ${item.time} giờ`}</Text>
+                                            </View>
+                                            <View style={styles.containerRating}>
+                                                <Rating 
+                                                    type="custom"
+                                                    ratingCount={5}
+                                                    readonly={true}
+                                                    imageSize={18}
+                                                    startingValue={item.avgRating}
+                                                />
+                                                <Text style={styles.textRating}>{`(${item.avgRating})`}</Text>
+                                            </View>
                                         </View>
                                     </View>
                                 </View>
                             </View>
-                        </View>
+                        </TouchableOpacity>
                     )
                 }}
             />

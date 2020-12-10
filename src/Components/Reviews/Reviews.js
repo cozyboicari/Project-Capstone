@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Image, Dimensions, FlatList } from 'react-native';
+import { View, Text, StatusBar, Image, Dimensions, FlatList, ActivityIndicator} from 'react-native';
 
 // file css
 import styles from './Styles';
@@ -21,7 +21,7 @@ export default class Reviews extends Component {
 
         this.state = {
             messages: [],
-            ratings: []
+            ratings: [],
         }
     }
 
@@ -40,8 +40,8 @@ export default class Reviews extends Component {
     }
 
     componentDidMount() {
-        const { ratings } = this.props.route.params;
-        this.setState({ ratings });
+        const { idTour } = this.props.route.params;
+        this.props._onGetRatings(idTour);
     }
 
     _renderItem = ({ item }) => {
@@ -78,7 +78,7 @@ export default class Reviews extends Component {
     }
 
     render() {
-        const { messages, ratings } = this.state;
+        const { messages } = this.state;
 
         return(
             <View style={styles.container}>
@@ -87,11 +87,13 @@ export default class Reviews extends Component {
                 <Text style={styles.textTitle}>Đánh giá từ khách hàng</Text>
                 {/* review cua khach */}
                 <View style={styles.containerReviews}>
-                    <FlatList 
-                        data={ratings}
-                        keyExtractor={(item, index) => index.toString()}
-                        renderItem={this._renderItem}
-                    />
+                    { this.props.ratings.length !== 0 ?
+                        <FlatList 
+                            data={this.props.ratings}
+                            keyExtractor={(item, index) => index.toString()}
+                            renderItem={this._renderItem}
+                        /> : <ActivityIndicator size={300}/>
+                    }
                 </View>
                 {/* <GiftedChat 
                     messages={messages}

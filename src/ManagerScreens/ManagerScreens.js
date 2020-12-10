@@ -27,6 +27,7 @@ import ActiveTourGuideScreen from '../Redux/Containers/ActiveTourGuideContainer'
 import ProfileDetailScreen from '../Redux/Containers/ProfileDetailContainer';
 import EditProfileDetailScreen from '../Redux/Containers/EditProfileDetailContainer';
 import CreateToursScreen from '../Redux/Containers/CreateToursContainer';
+import ReviewsScreen from '../Redux/Containers/ReviewContainer';
 
 import ChatAllScreen from '../Components/Chat/AllChat';
 import ChatUserScreen from '../Components/Chat/ChatUser';
@@ -35,7 +36,6 @@ import NumberOfPeopleScreen from '../Components/OrderTour/NumberOfPeople';
 import ChatbotScreen from '../Components/Chat/Chatbot';
 import ChangePasswordScreen from '../Components/ChangePassword/ChangePassword';
 import DetailsTourScreen from '../Components/DetailsTour/DetailsTour';
-import ReviewsScreen from '../Components/Reviews/Reviews';
 import BookingScreen from '../Components/Booking/Booking';
 import RegisterTourGuideScreen from '../Components/RegisterTourGuide/RegisterTourGuide';
 import IntroScreen from '../Components/Intro/Intro';

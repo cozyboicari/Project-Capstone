@@ -61,7 +61,7 @@ export default class ProfileTourGuides extends Component {
         const { name, tourguideName, avgRating, introduce, 
             time, numberPeople, category, languages, 
             description, price, tourguideImage, 
-            tourguideImageCover, schedule, tourguideID, ratings } = this.props.route.params.tour;
+            tourguideImageCover, schedule, tourguideID, id } = this.props.route.params.tour;
 
         return (
             <View style={styles.container}>
@@ -163,12 +163,12 @@ export default class ProfileTourGuides extends Component {
                                         imageSize={18}
                                         startingValue={avgRating}
                                     />
-                                    <Text style={styles.textRating}>{`(${ratings.length})`}</Text>
+                                    <Text style={styles.textRating}>{`(${avgRating})`}</Text>
                                     <TouchableOpacity
                                         onPress={() => {
                                             const { navigate } = this.props.navigation;
                                             navigate('Reviews Tour Screen', {
-                                                ratings
+                                                idTour: id
                                             });
                                         }}
                                     >

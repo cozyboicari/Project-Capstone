@@ -12,6 +12,7 @@ import createToursReducers from './CreateToursReducers';
 import updateTourReducers from './updateTourReducers';
 import notificationsReducers from './NotificationReducers';
 import forgotPasswordReducers from './ForgotPasswordReducers';
+import ratingsReducers from './ReviewReducers';
 
 const allReducers = combineReducers({
     citiesReducers,
@@ -26,7 +27,8 @@ const allReducers = combineReducers({
     createToursReducers,
     updateTourReducers,
     notificationsReducers,
-    forgotPasswordReducers
+    forgotPasswordReducers,
+    ratingsReducers
 })
 
 export default allReducers;

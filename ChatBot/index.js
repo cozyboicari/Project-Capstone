@@ -30,25 +30,26 @@ app.post('/', express.json(), (req, res) => {
 
     //add agent
     async function chonThanhPho(agent) {
-        const nameCity = chuanHoaTenThanhPho(agent.context.get('ituvan-diadiemdulich-diadiem-followup').parameters['ethanhpho.original']);
         try {
+            const nameCity = chuanHoaTenThanhPho(agent.context.get('ituvan-diadiemdulich-diadiem-followup').parameters['ethanhpho.original']);
 
             await db.collection('countries').doc('vietnam')
-            .collection('cities').where('name', '==', nameCity).get()
-            .then(doc => idCity = doc.docs[0].id)
+            .collection('cities').where('name', '==', nameCity)
+            .onSnapshot(doc => idCity = doc.docs[0].id);
+
+            const anwsers = [
+                `Oh! bạn chọn ${nameCity} làm điểm đến? Bạn có muốn bot giúp tìm vài chuyến đi du lịch phù hợp với bạn không? \n\nNếu bạn muốn thì gõ 'Đồng ý' để bot sẽ hỏi bạn 1 vài câu hỏi để đưa ra những tour phù hợp với bạn, bạn có thể gõ 'Không đồng ý' để bỏ qua nạ!`,
+                `${nameCity} là nơi rất thú vị để đi du lịch, vậy bạn muốn bot tìm chuyến đi phù hợp với bạn không? \n\nNếu bạn muốn thì gõ 'Đồng ý' để bot sẽ hỏi bạn 1 vài câu hỏi để đưa ra những tour phù hợp với bạn, bạn có thể gõ 'Không đồng ý' để bỏ qua nạ!`
+            ];
+            
+            const pick = await Math.floor(Math.random() * anwsers.length);
+            const response = await anwsers[pick];
+            
+            agent.add(response); 
 
         } catch(error) {
             console.log('[get id city] ', error);
         }
-
-        const anwsers = [
-            `Oh! bạn chọn ${nameCity} làm điểm đến? Bạn có muốn bot giúp tìm vài chuyến đi du lịch phù hợp với bạn không? \n\nNếu bạn muốn thì gõ 'Đồng ý' để bot sẽ hỏi bạn 1 vài câu hỏi để đưa ra những tour phù hợp với bạn, bạn có thể gõ 'Không đồng ý' để bỏ qua nạ!`,
-            `${nameCity} là nơi rất thú vị để đi du lịch, vậy bạn muốn bot tìm chuyến đi phù hợp với bạn không? \n\nNếu bạn muốn thì gõ 'Đồng ý' để bot sẽ hỏi bạn 1 vài câu hỏi để đưa ra những tour phù hợp với bạn, bạn có thể gõ 'Không đồng ý' để bỏ qua nạ!`
-        ];
-
-        const pick = Math.floor(Math.random() * anwsers.length);
-        const response = anwsers[pick];
-        agent.add(response); 
     }
 
     
@@ -68,28 +69,28 @@ app.post('/', express.json(), (req, res) => {
         agent.add(`Bot đã nhận đủ yêu cầu của bạn, hãy nhấn 'xác nhận' thông tin để bot hiển thị các chuyến đi cho bạn! `);
     }
 
-    async function ListTour(agent) {
+
+    async function ListTour() {
         let tours = [];
-        try {
-            (await db.collection('tours').get()).docs.map(doc => {
-                if(idCity === doc.data().cityID && tours.length <= 5) {
-                    const { id } = doc
+        const { category, time, price } = questions;
+        await db.collection('tours').where('cityID', '==', idCity).get()
+            .then(snapshot => {
+                snapshot.docs.map(doc => {
                     const data = doc.data();
-                    const { category, time, price } = questions;
-                    if(data.category === category && data.time <= time && data.price <= price) {
+                    const { id } = doc;
+                    if(category === data.category && time >= data.time && price >= data.price) {
                         tours.push({
                             id,
-                            ...data
-                        })
+                            ...data             
+                        });
                     }
-                }
+                });
             });
-        } catch (error) {
-            console.log('[get tours] ', error);
-        }
+
         const payload = {
             tours
         }
+
         if(tours.length === 0) {
             agent.add('Opps... xin lỗi bạn :( chuyến đi phù hợp với bạn hiện tại không có, \nbạn có thể tìm kiếm chuyến đi khác!');
         } else {
@@ -102,7 +103,7 @@ app.post('/', express.json(), (req, res) => {
                     rawPayload: true
                 }
             ));
-        }
+        } 
     }
 
     // set intent

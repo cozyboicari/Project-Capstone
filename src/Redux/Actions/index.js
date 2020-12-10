@@ -14,7 +14,8 @@ import {
     CREATE_TOUR, CREATE_TOUR_FAIL, CREATE_TOUR_SUCCESS,
     UPDATE_TOUR, UPDATE_TOUR_FAIL, UPDATE_TOUR_SUCCESS,
     GET_NOTIFICATION, GET_NOTIFICATION_FAIL, GET_NOTIFICATION_SUCCESS,
-    RESET_PASSWORD, RESET_PASSWORD_FAIL, RESET_PASSWORD_SUCCESS
+    RESET_PASSWORD, RESET_PASSWORD_FAIL, RESET_PASSWORD_SUCCESS,
+    GET_RATINGS, GET_RATINGS_FAIL, GET_RATINGS_SUCCESS
 } from './ActionType';
 
 //get cities in country
@@ -361,6 +362,28 @@ export const resetPasswordSuccessAction = mail => {
 export const resetPasswordFailAction = error => {
     return {
         type: RESET_PASSWORD_FAIL,
+        error
+    }
+}
+
+// rating
+export const getRatingsAction = idTour => {
+    return {
+        type: GET_RATINGS,
+        idTour
+    }
+}
+
+export const getRatingsSuccessAction = ratings => {
+    return {
+        type: GET_RATINGS_SUCCESS,
+        ratings
+    }
+}
+
+export const getRatingsFailAction = error => {
+    return {
+        type: GET_RATINGS_FAIL,
         error
     }
 }

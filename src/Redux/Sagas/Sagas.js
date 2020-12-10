@@ -14,7 +14,8 @@ import {
     UPDATE_ITEM_TOUR_GUIDE, CREATE_TOUR_FAIL, CREATE_TOUR_SUCCESS, CREATE_TOUR,
     UPDATE_TOUR, UPDATE_TOUR_FAIL, UPDATE_TOUR_SUCCESS,
     GET_NOTIFICATION_FAIL, GET_NOTIFICATION_SUCCESS, GET_NOTIFICATION,
-    RESET_PASSWORD_FAIL, RESET_PASSWORD_SUCCESS, RESET_PASSWORD
+    RESET_PASSWORD_FAIL, RESET_PASSWORD_SUCCESS, RESET_PASSWORD,
+    GET_RATINGS_FAIL, GET_RATINGS_SUCCESS, GET_RATINGS
 } from '../Actions/ActionType';
 
 import { takeLatest, put, call, take } from 'redux-saga/effects';
@@ -30,10 +31,10 @@ import {
     createTour,
     updateTour,
     getNotification,
-    resetPassword
+    resetPassword,
+    getRatings
  } from '../../Database/Firebase/ConfigGlobalFirebase';
 import { Alert } from 'react-native';
-import { resetPasswordAction } from '../Actions';
 
  // get cites in country
 function* getCitiesInCountryFromFirestore(action) {
@@ -263,4 +264,22 @@ function* resetPasswordFromAuth(action) {
 
 export function* watchResetPasswordFromAuth() {
     yield takeLatest(RESET_PASSWORD, resetPasswordFromAuth);
+}
+
+// ratings
+function* getRatingsFromFirestore(action) {
+    try {
+        let ratings = [];
+        yield getRatings(action.idTour).then(snapshot => {
+            ratings = snapshot.docs.map(doc => doc.data())
+        });
+
+        yield put({ type: GET_RATINGS_SUCCESS, ratings});
+    } catch(error) {
+        yield put({ type: GET_RATINGS, error });
+    }
+}
+
+export function* watchGetRatingsFromFirestore() {
+    yield takeLatest(GET_RATINGS, getRatingsFromFirestore);
 }

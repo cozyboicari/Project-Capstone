@@ -42,6 +42,7 @@ import { auth } from '../../Database/Firebase/ConfigGlobalFirebase';
 // }
 
 export default class Notification extends Component {
+
     constructor(props) {
         super(props);
     }
@@ -87,7 +88,7 @@ export default class Notification extends Component {
 
     
     render() {
-        const { notifications } = this.props;
+        const { notifications, loading } = this.props;
 
         return(
             <View style={styles.container}>

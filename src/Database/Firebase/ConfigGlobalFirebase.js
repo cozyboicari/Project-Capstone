@@ -55,6 +55,11 @@ export const getCitiesInCountry = async (path) => {
     return datas;
 }
 
+// get ratings
+export const getRatings = async (idTour) => {
+  return await firestore().collection('tours').doc(idTour).collection('ratings').get();
+}
+
 // get tours in city
 export const getToursInCity = async (path, idCity) => {
   const datas = [];
@@ -62,13 +67,6 @@ export const getToursInCity = async (path, idCity) => {
     .then(tours => {
       tours.forEach(tour => {
         
-        // get rating
-        let arrRatings = [];
-        tour.ref.collection('ratings').get()
-          .then(ratings => {
-            ratings.forEach(rating => arrRatings.push(rating.data()))
-          });
-
         let item = {
           id: tour.id,
           avgRating: tour.data().avgRating,
@@ -86,7 +84,6 @@ export const getToursInCity = async (path, idCity) => {
           category: tour.data().category,
           languages: tour.data().languages,
           schedule: tour.data().scheduleDetail,
-          ratings: arrRatings,
           numberAccount: tour.data().numberAccount
         }
         
