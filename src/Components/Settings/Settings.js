@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Image, ScrollView } from 'react-native';
+import { View, Text, StatusBar, Image, ScrollView, ActivityIndicator } from 'react-native';
 
 // file css
 import styles from './Styles';
@@ -81,34 +81,35 @@ export default class Settings extends Component {
                 <View style={styles.container}>
                     <StatusBar barStyle="light-content"/>
                     <HeaderComponent {...this.props} isHome={true}/>
-                    <ScrollView bounces={false}>
-                        <View style={styles.containerTop}>
-                            <View style={styles.containerImage}>
-                                <Image 
-                                    style={styles.image}
-                                    source={{ uri:  picture}}
-                                />
+                    { this.props.traveler.length === 0 ? <ActivityIndicator size={300} /> :
+                        <ScrollView bounces={false}>
+                            <View style={styles.containerTop}>
+                                <View style={styles.containerImage}>
+                                    <Image 
+                                        style={styles.image}
+                                        source={{ uri:  picture}}
+                                    />
+                                </View>
+                                <View style={styles.containerNameAndEmail}>
+                                    <Text style={styles.textName}>{name}</Text>
+                                    <Text style={styles.textEmail}>{email}</Text>
+                                </View>
                             </View>
-                            <View style={styles.containerNameAndEmail}>
-                                <Text style={styles.textName}>{name}</Text>
-                                <Text style={styles.textEmail}>{email}</Text>
+                            <View style={styles.containerBottom}>
+                                <Item title='Chỉnh sửa Thông tin' nameIcon='construct-outline' nameScreen='Profile Screen' navigation={this.props.navigation}/>
+                                <Item title='Lịch sử đặt chuyến đi' nameIcon='calendar-outline'/>
+                                {
+                                    !isActive ?
+                                    <Item title='Trở thành một hướng dẫn viên' nameIcon='medal-outline' nameScreen='Register Tour Guide Screen' navigation={this.props.navigation}/> :
+                                    <Item title='Thông tin hướng dẫn viên' nameIcon='person-outline' nameScreen='Profile Detail Screen' navigation={this.props.navigation}/>
+                                }
+                                { providerId === 'firebase.com' &&
+                                    <Item title='Thay đổi mật khẩu' nameIcon='lock-closed-outline' nameScreen='Change Password Screen' navigation={this.props.navigation}/>
+                                }
+                                <ItemSignOut title='Đăng xuất' nameIcon='log-out-outline' _signOut={this._signOut}/>
                             </View>
-                        </View>
-                        <View style={styles.containerBottom}>
-                            <Item title='Chỉnh sửa Thông tin' nameIcon='construct-outline' nameScreen='Profile Screen' navigation={this.props.navigation}/>
-                            <Item title='Lịch sử đặt chuyến đi' nameIcon='calendar-outline'/>
-                            {
-                                !isActive ?
-                                <Item title='Trở thành một hướng dẫn viên' nameIcon='medal-outline' nameScreen='Register Tour Guide Screen' navigation={this.props.navigation}/> :
-                                <Item title='Thông tin hướng dẫn viên' nameIcon='person-outline' nameScreen='Profile Detail Screen' navigation={this.props.navigation}/>
-                            }
-                            <Item title='Yêu thích' nameIcon='heart-outline'/>
-                            { providerId === 'firebase.com' &&
-                                <Item title='Thay đổi mật khẩu' nameIcon='lock-closed-outline' nameScreen='Change Password Screen' navigation={this.props.navigation}/>
-                            }
-                            <ItemSignOut title='Đăng xuất' nameIcon='log-out-outline' _signOut={this._signOut}/>
-                        </View>
-                    </ScrollView>
+                        </ScrollView>
+                    }
                 </View>
             )
         } else {

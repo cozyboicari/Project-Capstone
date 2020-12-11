@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, StatusBar, TouchableOpacity, Platform, Image } from 'react-native';
 
 //file css
 import styles from './Styles';
@@ -40,7 +40,9 @@ export default class Header extends Component {
                     }
                     </TouchableOpacity>
                     <View style={styles.itemHeaderMid}>
-                        <Text style={styles.textBrand}>Yourtour</Text>
+                        <Image 
+                            source={require('../../assets/logo.png')}
+                        />
                     </View>
                     <View style={styles.itemHeaderRight}>
                     </View>

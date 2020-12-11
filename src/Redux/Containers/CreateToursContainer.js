@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import CreateToursComponent from '../../Components/Tours/CreateTours';
-import { getTourGuideAction, createTourAction } from '../Actions/index';
+import { getTourGuideAction, createTourAction, updateTourAction } from '../Actions/index';
 
 const mapStateToProps = state => {
     return {
@@ -12,7 +12,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         _onGetTourGuide: idTourGuide => dispatch(getTourGuideAction(idTourGuide)),
-        _onCreateTour: newTour => dispatch(createTourAction(newTour))
+        _onCreateTour: newTour => dispatch(createTourAction(newTour)),
+        _onUpdateTour: tourUpdate => dispatch(updateTourAction(tourUpdate))
     }
 }
 

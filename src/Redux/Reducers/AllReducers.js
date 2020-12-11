@@ -9,6 +9,10 @@ import pushQuestionsReducers from './PushQuestionsReducers';
 import tourGuideReducers from './ProfileDetailReducers';
 import editProfileDetailReducers from './EditProfileDetailReducers';
 import createToursReducers from './CreateToursReducers';
+import updateTourReducers from './updateTourReducers';
+import notificationsReducers from './NotificationReducers';
+import forgotPasswordReducers from './ForgotPasswordReducers';
+import ratingsReducers from './ReviewReducers';
 
 const allReducers = combineReducers({
     citiesReducers,
@@ -21,6 +25,10 @@ const allReducers = combineReducers({
     tourGuideReducers,
     editProfileDetailReducers,
     createToursReducers,
+    updateTourReducers,
+    notificationsReducers,
+    forgotPasswordReducers,
+    ratingsReducers
 })
 
 export default allReducers;

@@ -54,8 +54,6 @@ export default class ProfileTourGuides extends Component {
     constructor(props) {
         super(props);
     }
-
-
     
 
     render() {
@@ -63,7 +61,7 @@ export default class ProfileTourGuides extends Component {
         const { name, tourguideName, avgRating, introduce, 
             time, numberPeople, category, languages, 
             description, price, tourguideImage, 
-            tourguideImageCover, schedule, tourguideID } = this.props.route.params.tour;
+            tourguideImageCover, schedule, tourguideID, id } = this.props.route.params.tour;
 
         return (
             <View style={styles.container}>
@@ -169,7 +167,9 @@ export default class ProfileTourGuides extends Component {
                                     <TouchableOpacity
                                         onPress={() => {
                                             const { navigate } = this.props.navigation;
-                                            navigate('Reviews Tour Screen');
+                                            navigate('Reviews Tour Screen', {
+                                                idTour: id
+                                            });
                                         }}
                                     >
                                         <Text style={styles.textReviews}>Xem đánh giá</Text>
@@ -206,7 +206,7 @@ export default class ProfileTourGuides extends Component {
                 />
                 
                 {/* phan bottom gia tien */}
-                { auth().currentUser.uid !== tourguideID ?
+                { !auth().currentUser || (auth().currentUser.uid !== tourguideID) ?
                     <View style={styles.containerBookingAndPrice}>
                         <View style={styles.containerPrice}>
                             <Text style={styles.textPrice}>{`${price}$ mỗi người`}</Text>
@@ -220,7 +220,7 @@ export default class ProfileTourGuides extends Component {
                                     navigate('Sign In Screen');
                                 } else {
                                     navigate('Booking Screen', {
-                                        tour: this.props.route.params.tour
+                                        tour: this.props.route.params.tour,
                                     });
                                 }
                             }}
@@ -232,7 +232,10 @@ export default class ProfileTourGuides extends Component {
                     <View style={styles.containerBookingAndPrice}>
                         <TouchableOpacity
                             onPress={() => {
-                                
+                                const { navigate } = this.props.navigation;
+                                navigate('Create Tours Screen', {
+                                    tour: this.props.route.params.tour
+                                });
                             }}
                             style={styles.containerButtonBooking}
                         >

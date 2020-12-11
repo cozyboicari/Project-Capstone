@@ -8,91 +8,11 @@ import styles from './Styles';
 import HeaderComponent from '../Header/Header';
 
 // file config global
-import { colors, getAvgRatings, getNumRatings, newAvgRatings } from '../../ConfigGlobal';
+import { colors } from '../../ConfigGlobal';
  
 //library ben ngoai
 import { Rating } from 'react-native-ratings';
 import * as animatable from 'react-native-animatable';
-import Icons from 'react-native-vector-icons/Ionicons';
-
-//item tour guide
-const ItemTours = ({ navigation, tour }) => {
-    return (
-        <TouchableOpacity
-            onPress={() => {
-                navigation.navigate('Details Tour Screen', {
-                    tour: tour
-                });
-            }}
-        >
-            <animatable.View
-                animation="fadeIn"
-                style={styles.containerPostTour}
-            >
-                <View style={styles.containerInfomationTour}>
-                    {/* anh bia */}
-                    <View style={styles.containerImageCover}>
-                        <Image 
-                            style={styles.imageCover}
-                            source={{ uri: tour.tourguideImageCover }}
-                        />
-                    </View>
-                    <View style={styles.containerFavouriteIcon}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                
-                            }}
-                        >
-                            <Icons 
-                                name={'heart-outline'}
-                                size={23}
-                                color={colors.BACKGROUND_CULTURE}
-                            />
-                        </TouchableOpacity>
-                    </View>
-                    {/* anh avatar */}
-                    <View style={styles.containerImage}>
-                        <Image 
-                            style={styles.image}
-                            source={{ uri: tour.tourguideImage }}
-                        />
-                    </View>
-                    {/* thong tin gia tien cua tour */}
-                    <View style={styles.containerNameTour}>
-                        <View style={{ flex: .3 }}>
-                            <Text style={styles.textIntro}>
-                                {`Tận hưởng ${tour.cityID} với `}<Text style={styles.subTextIntro}>{tour.tourguideName}</Text>
-                            </Text>
-                        </View>
-
-                        <View style={{ flex: 1, flexDirection: 'row' }}>
-                            <Text numberOfLines={2} style={styles.textNameTour}>
-                                {tour.name}
-                            </Text>
-                        </View>
-
-                        <View style={{ flex: 1.5 }}>
-                            <View style={styles.containerPrice}>
-                                <Text style={styles.textPrice}>{`${tour.price}$`}</Text>
-                                <Text style={styles.textPrice}>{`/ ${tour.time} giờ`}</Text>
-                            </View>
-                            <View style={styles.containerRating}>
-                                <Rating 
-                                    type="custom"
-                                    ratingCount={5}
-                                    readonly={true}
-                                    imageSize={18}
-                                    startingValue={tour.avgRating}
-                                />
-                                <Text style={styles.textRating}>{`(${tour.numRatings})`}</Text>
-                            </View>
-                        </View>
-                    </View>
-                </View>
-            </animatable.View>
-        </TouchableOpacity>
-    )
-}
 
 export default class TourGuides extends Component {
     constructor(props) {
@@ -100,10 +20,79 @@ export default class TourGuides extends Component {
     }
 
     componentDidMount() {
-        this.props._onGetTours('tours', this.props.route.params.idCity); 
+        this.props._onGetTours('tours', this.props.route.params.idCity);
+        this.props._onGetTraveler();
+    }
+
+    //item tour guide
+    _renderItem = ({ item }) => {
+       
+        return (
+            <TouchableOpacity
+                onPress={() => {
+                    this.props.navigation.navigate('Details Tour Screen', {
+                        tour: item
+                    });
+                }}
+            >
+                <animatable.View
+                    animation="fadeIn"
+                    style={styles.containerPostTour}
+                >
+                    <View style={styles.containerInfomationTour}>
+                        {/* anh bia */}
+                        <View style={styles.containerImageCover}>
+                            <Image 
+                                style={styles.imageCover}
+                                source={{ uri: item.tourguideImageCover }}
+                            />
+                        </View>
+                        {/* anh avatar */}
+                        <View style={styles.containerImage}>
+                            <Image 
+                                style={styles.image}
+                                source={{ uri: item.tourguideImage }}
+                            />
+                        </View>
+                        {/* thong tin gia tien cua tour */}
+                        <View style={styles.containerNameTour}>
+                            <View style={{ flex: .3 }}>
+                                <Text style={styles.textIntro}>
+                                    {`Tận hưởng ${item.cityID} với `}<Text style={styles.subTextIntro}>{item.tourguideName}</Text>
+                                </Text>
+                            </View>
+
+                            <View style={{ flex: 1, flexDirection: 'row', paddingRight: 20 }}>
+                                <Text numberOfLines={2} style={styles.textNameTour}>
+                                    {item.name}
+                                </Text>
+                            </View>
+
+                            <View style={{ flex: 1.5 }}>
+                                <View style={styles.containerPrice}>
+                                    <Text style={styles.textPrice}>{`${item.price}$`}</Text>
+                                    <Text style={styles.textPrice}>{`/ ${item.time} giờ`}</Text>
+                                </View>
+                                <View style={styles.containerRating}>
+                                    <Rating 
+                                        type="custom"
+                                        ratingCount={5}
+                                        readonly={true}
+                                        imageSize={18}
+                                        startingValue={item.avgRating}
+                                    />
+                                    <Text style={styles.textRating}>{`(${item.avgRating})`}</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </animatable.View>
+            </TouchableOpacity>
+        )
     }
 
     render() {
+
         return(
             <View style={styles.container}>
                 <HeaderComponent {...this.props}/>
@@ -121,7 +110,11 @@ export default class TourGuides extends Component {
                                 <TouchableOpacity
                                     onPress={() => {
                                         const { navigate } = this.props.navigation;
-                                        navigate('Create Tours Screen');
+                                        if(this.props.traveler.isActive) {
+                                            navigate('Create Tours Screen');
+                                        } else {
+                                            navigate('Register Tour Guide Screen');
+                                        }
                                     }}
                                 >
                                     <Text style={[styles.textCreateTour, {
@@ -141,15 +134,8 @@ export default class TourGuides extends Component {
                         <FlatList 
                             data={this.props.tours}
                             keyExtractor={item => item.id}
-                            style={{ marginBottom: 220 }}
-                            renderItem={({ item, index}) => {
-                                return(
-                                    <ItemTours 
-                                        navigation={this.props.navigation}
-                                        tour={item}
-                                    />
-                                );
-                            }}
+                            style={{ marginBottom: 247 }}
+                            renderItem={this._renderItem}
                         />
                     }
                 </View>

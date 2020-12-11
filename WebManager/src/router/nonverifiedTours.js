@@ -55,7 +55,7 @@ router
   .delete('/delete/:id', async (req, res, next) => {
     try {
       const { id } = req.params
-      await db.collection('tours').doc(id).delete()
+      await db.collection('nonverifiedTours').doc(id).delete()
       res.end()
     } catch (err) {
       next(err)

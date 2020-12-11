@@ -15,6 +15,9 @@ import * as Animatable from 'react-native-animatable';
 // file const
 const { height } = Dimensions.get('screen');
 
+//file db
+import { auth, firestore } from '../../Database/Firebase/ConfigGlobalFirebase';
+
 //custom item city top
 const ItemCitiesTop = ({ name, description, image, navigation, id }) => {
     return (
@@ -48,7 +51,7 @@ const ItemCitiesTop = ({ name, description, image, navigation, id }) => {
 }
 
 //list all item city
-const ItemCitiesAll = ({ name, image, visitors, navigation, id }) => {
+const ItemCitiesAll = ({ name, image, navigation, id }) => {
     return (
         <TouchableOpacity
             onPress={() => {

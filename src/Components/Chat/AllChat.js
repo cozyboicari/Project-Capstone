@@ -55,8 +55,6 @@ const ItemChatAll = ({ item, navigation }) => {
     );
 }
 
-let notificationChat = 0;
-
 export default class AllChat extends Component {
     _isMounted = false;
 
@@ -71,7 +69,7 @@ export default class AllChat extends Component {
     componentDidMount() {
         this._isMounted = true;
 
-        // view chat group all
+        // get chat group all
         auth().onAuthStateChanged(() => {
             if(auth().currentUser) {  
                 firestore()
@@ -92,7 +90,6 @@ export default class AllChat extends Component {
                             }
                         });
                         if(this._isMounted) {
-                            notificationChat = threads.length;
                             this.setState({ threads, loading: false });
                         }
                     });
@@ -141,5 +138,3 @@ export default class AllChat extends Component {
         );
     }
 }
-
-export { notificationChat };

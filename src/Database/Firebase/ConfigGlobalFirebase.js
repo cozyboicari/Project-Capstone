@@ -3,6 +3,8 @@ import firebase from '@react-native-firebase/app';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
+import { Alert } from 'react-native';
+
 //global func
 import { colors, uppercaseFirst } from '../../ConfigGlobal';
 
@@ -53,12 +55,18 @@ export const getCitiesInCountry = async (path) => {
     return datas;
 }
 
+// get ratings
+export const getRatings = async (idTour) => {
+  return await firestore().collection('tours').doc(idTour).collection('ratings').get();
+}
+
 // get tours in city
 export const getToursInCity = async (path, idCity) => {
   const datas = [];
   await firestore().collection(path).where('cityID', '==', idCity).get()
     .then(tours => {
       tours.forEach(tour => {
+        
         let item = {
           id: tour.id,
           avgRating: tour.data().avgRating,
@@ -66,7 +74,6 @@ export const getToursInCity = async (path, idCity) => {
           description: tour.data().description,
           introduce: tour.data().introduce,
           name: tour.data().name,
-          numRatings: tour.data().numRatings,
           numberPeople: tour.data().numberPeople,
           price: tour.data().price,
           time: tour.data().time,
@@ -76,8 +83,10 @@ export const getToursInCity = async (path, idCity) => {
           tourguideImage: tour.data().tourguideImage,
           category: tour.data().category,
           languages: tour.data().languages,
-          schedule: tour.data().scheduleDetail
+          schedule: tour.data().scheduleDetail,
+          numberAccount: tour.data().numberAccount
         }
+        
         datas.push(item);
       })
     })
@@ -118,6 +127,25 @@ export const getQuestionActiveTourGuide = async () => {
       })
     });
   return data;
+}
+
+// update data tour
+export const updateTour = async (tourUpdate) => {
+  await firestore().collection('tours').doc(tourUpdate.id)
+    .update({
+      category: tourUpdate.category,
+      description: tourUpdate.description,
+      introduce: tourUpdate.introduce,
+      languages: tourUpdate.languages,
+      name: tourUpdate.name,
+      numberPeople: tourUpdate.numberPeople,
+      price: tourUpdate.price,
+      time: tourUpdate.time,
+      tourguideImageCover: tourUpdate.tourguideImageCover,
+      scheduleDetail: tourUpdate.scheduleDetail,
+      numberAccount: tourUpdate.numberAccount
+    })
+    .then(() => console.log('updated !'));
 }
 
 //update data traveler by uID
@@ -179,11 +207,13 @@ export const createUserByEmail = async (newUser) => {
         isActive: false,
         passions: '',
         title: '',
-        imageProfile: ''
+        imageProfile: '',
+        dateCreated: new Date().getTime()
       };
       
       addFirestore('travelers', userFirestore)
         .then(() => {
+          Alert.alert('Thông báo', 'Đăng kí tài khoản thành công!');
           console.log('Register success !');
         })
         .catch(error => {
@@ -199,7 +229,7 @@ export const addFirestore = async (nameCollection, data) => {
 
 // create post tour for tour guide
 export const createTour = async (newTour) => {
-  await firestore().collection('tours').add(newTour)
+  await firestore().collection('nonverifiedTours').add(newTour)
     .then(tour => {
       // tour.collection('ratings').add({});
       console.log('created tour !');
@@ -254,7 +284,8 @@ export const signInUserByFacebook = async () => {
               isActive: false,
               passions: '',
               title: '',
-              imageProfile: ''
+              imageProfile: '',
+              dateCreated: new Date().getTime()
             };
             
             addFirestore('travelers', userFirestore)
@@ -298,7 +329,8 @@ export const signInUserByGmail = async () => {
           isActive: false,
           passions: '',
           title: '',
-          imageProfile: ''
+          imageProfile: '',
+          dateCreated: new Date().getTime()
         };
         
         addFirestore('travelers', userFirestore)
@@ -322,6 +354,30 @@ export const addQuestionActiveTourGuide = async (questions) => {
   }
   addFirestore('questions', questionsData)
     .then(() => console.log('push question success !'));
+}
+
+//reset password
+export const resetPassword = async (email) => {
+  await auth().sendPasswordResetEmail(email)
+    .then(() => console.log('send email success!'))
+    .catch(error => console.log(error));
+}
+
+//get notification
+export const getNotification = async () => {
+  // get traveler
+  const traveler = await firestore().collection('travelers').where('uID', '==', auth().currentUser.uid).get();
+
+  //get notification
+  let datas = [];
+
+  await traveler.docs[0].ref.collection('notification').get()
+    .then(notifications => {
+      notifications.forEach(notification => {
+        datas.push({ ...notification.data() });
+      })
+    })
+  return datas;
 }
 
 export { auth, firebase, firestore };

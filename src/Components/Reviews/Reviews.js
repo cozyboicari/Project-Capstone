@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Image, Dimensions } from 'react-native';
+import { View, Text, StatusBar, Image, Dimensions, FlatList, ActivityIndicator} from 'react-native';
 
 // file css
 import styles from './Styles';
@@ -7,48 +7,79 @@ import styles from './Styles';
 // file component
 import HeaderComponent from '../Header/Header';
 
+// file global
+import { colors } from '../../ConfigGlobal';
+
 // library
 import { Rating } from 'react-native-ratings';
-
-const ReviewItem = ({ urlImage, name, date, numRatings, mess }) => {
-    return(
-        <View style={styles.containerReviewItem}>
-            <View style={styles.containerTop}>
-                <View style={styles.itemLeft}>
-                    <Image 
-                        style={styles.containerImageUser}
-                        source={{ uri: urlImage }}
-                    />
-                </View>
-                <View style={styles.itemRight}>
-                    <Text style={styles.nameUser}>{name}</Text>
-                    <Rating 
-                        type="custom"
-                        ratingCount={5}
-                        readonly={true}
-                        imageSize={15}
-                        startingValue={numRatings}
-                    />
-                    <Text style={styles.date}>{date}</Text>
-                </View>
-
-            </View>
-            <View style={styles.containerBottom}>
-                <Text style={styles.textReview}>{mess}</Text>
-            </View>
-            <View style={{flex: 1, paddingHorizontal: 20}}>
-                <View style={styles.containerBar}/>
-            </View>
-        </View>
-    );
-}
+import { GiftedChat, Send } from 'react-native-gifted-chat';
+import Icons from 'react-native-vector-icons/Ionicons';
 
 export default class Reviews extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            messages: [],
+            ratings: [],
+        }
+    }
+
+    _renderIconSend = props => {
+        return(
+            <Send {...props}>
+                <View style={{ marginRight: 22 }}>
+                    <Icons name='send' color={colors.BACKGROUND_BLUEYONDER} size={25}/>
+                </View>
+            </Send>
+        )
+    }
+
+    _handleSend = messages => {
+
+    }
+
+    componentDidMount() {
+        const { idTour } = this.props.route.params;
+        this.props._onGetRatings(idTour);
+    }
+
+    _renderItem = ({ item }) => {
+        return(
+            <View style={styles.containerReviewItem}>
+                <View style={styles.containerTop}>
+                    <View style={styles.itemLeft}>
+                        <Image 
+                            style={styles.containerImageUser}
+                            source={{ uri: item.user.image }}
+                        />
+                    </View>
+                    <View style={styles.itemRight}>
+                        <Text style={styles.nameUser}>{item.user.name}</Text>
+                        <Rating 
+                            type="custom"
+                            ratingCount={5}
+                            readonly={true}
+                            imageSize={15}
+                            startingValue={item.rating}
+                        />
+                        <Text style={styles.date}>{`${new Date(item.time._seconds * 1000).toLocaleDateString()}`}</Text>
+                    </View>
+    
+                </View>
+                <View style={styles.containerBottom}>
+                    <Text style={styles.textReview}>{item.text}</Text>
+                </View>
+                <View style={{flex: 1, paddingHorizontal: 20}}>
+                    <View style={styles.containerBar}/>
+                </View>
+            </View>
+        );
     }
 
     render() {
+        const { messages } = this.state;
+
         return(
             <View style={styles.container}>
                 <StatusBar barStyle="light-content"/>
@@ -56,8 +87,21 @@ export default class Reviews extends Component {
                 <Text style={styles.textTitle}>Đánh giá từ khách hàng</Text>
                 {/* review cua khach */}
                 <View style={styles.containerReviews}>
-                    
+                    { this.props.ratings.length !== 0 ?
+                        <FlatList 
+                            data={this.props.ratings}
+                            keyExtractor={(item, index) => index.toString()}
+                            renderItem={this._renderItem}
+                        /> : <ActivityIndicator size={300}/>
+                    }
                 </View>
+                {/* <GiftedChat 
+                    messages={messages}
+    
+                    user={{ _id: 1 }}
+                    renderSend={this._renderIconSend}
+                    alwaysShowSend
+                /> */}
             </View>
         )
     }

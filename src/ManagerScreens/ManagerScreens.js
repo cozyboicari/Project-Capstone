@@ -10,28 +10,36 @@ import Icons from 'react-native-vector-icons/Ionicons';
 //file global config
 import { colors } from '../ConfigGlobal';
 
+// library
+import { Badge } from 'react-native-paper';
+import * as Animatable from 'react-native-animatable';
+
 //man hinh
-import IntroScreen from '../Components/Intro/Intro';
 import SignInScreen from '../Redux/Containers/SignInContainer';
 import SignUpScreen from '../Redux/Containers/SignUpContainer';
 import HomeScreen from '../Redux/Containers/HomeContainer';
 import ToursScreen from '../Redux/Containers/ToursContainer';
-import DetailsTourScreen from '../Components/DetailsTour/DetailsTour';
-import ReviewsScreen from '../Components/Reviews/Reviews';
-import BookingScreen from '../Components/Booking/Booking';
 import SettingsScreen from '../Redux/Containers/SettingsContainer';
 import ProfileScreen from '../Redux/Containers/ProfileContainer';
-import RegisterTourGuideScreen from '../Components/RegisterTourGuide/RegisterTourGuide';
+import NotificationScreen from '../Redux/Containers/NotificationContainer';
+import ForgotPasswordScreen from '../Redux/Containers/ForgotPasswordContainer';
 import ActiveTourGuideScreen from '../Redux/Containers/ActiveTourGuideContainer';
 import ProfileDetailScreen from '../Redux/Containers/ProfileDetailContainer';
 import EditProfileDetailScreen from '../Redux/Containers/EditProfileDetailContainer';
 import CreateToursScreen from '../Redux/Containers/CreateToursContainer';
-import ChatAllScreen, { notificationChat } from '../Components/Chat/AllChat';
+import ReviewsScreen from '../Redux/Containers/ReviewContainer';
+
+import ChatAllScreen from '../Components/Chat/AllChat';
 import ChatUserScreen from '../Components/Chat/ChatUser';
 import OrderTourScreen from '../Components/OrderTour/OrderTour';
 import NumberOfPeopleScreen from '../Components/OrderTour/NumberOfPeople';
 import ChatbotScreen from '../Components/Chat/Chatbot';
 import ChangePasswordScreen from '../Components/ChangePassword/ChangePassword';
+import DetailsTourScreen from '../Components/DetailsTour/DetailsTour';
+import BookingScreen from '../Components/Booking/Booking';
+import RegisterTourGuideScreen from '../Components/RegisterTourGuide/RegisterTourGuide';
+import IntroScreen from '../Components/Intro/Intro';
+
 
 //redux
 import { createStore, applyMiddleware } from 'redux';
@@ -76,6 +84,8 @@ const ScreenSettings = () => {
     );
 }
 
+
+
 const TabsScreen = () => {
     return (
         <Tab.Navigator
@@ -93,9 +103,9 @@ const TabsScreen = () => {
             />
             <Tab.Screen 
                 name="Thông báo" 
-                component={View}
+                component={NotificationScreen}
                 options={{
-                    tabBarIcon: ({size, color}) => <Icons name="notifications-outline" size={size} color={color}/> 
+                    tabBarIcon: ({size, color}) => <Icons name="notifications-outline" size={size} color={color}/>
                 }}
             />
             <Tab.Screen 
@@ -103,7 +113,6 @@ const TabsScreen = () => {
                 component={ChatAllScreen}
                 options={{
                     tabBarIcon: ({size, color}) => <Icons name="chatbubbles-outline" size={size} color={color}/>,
-                    tabBarBadge: notificationChat
                 }}
             />
             <Tab.Screen 
@@ -125,6 +134,11 @@ const ManagerScreens = () => {
                     <Stack.Screen name="Intro Screen" component={IntroScreen} />
                     <Stack.Screen name="Sign In Screen" component={SignInScreen}/>
                     <Stack.Screen name="Sign Up Screen" component={SignUpScreen}/>
+                    <Stack.Screen name="Forgot Password Screen" component={ForgotPasswordScreen}
+                        options={{
+                            gestureEnabled: false
+                        }}
+                    />
                     <Stack.Screen name="Tabs" component={TabsScreen}/>
                     <Stack.Screen name="Details Tour Screen" component={DetailsTourScreen} 
                         options={{

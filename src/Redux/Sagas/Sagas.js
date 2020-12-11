@@ -12,6 +12,10 @@ import {
     GET_TOUR_GUIDE_SUCCESS, GET_TOUR_GUIDE_FAIL, GET_TOUR_GUIDE,
     UPDATE_ITEM_TOUR_GUIDE_SUCCESS, UPDATE_ITEM_TOUR_GUIDE_FAIL, 
     UPDATE_ITEM_TOUR_GUIDE, CREATE_TOUR_FAIL, CREATE_TOUR_SUCCESS, CREATE_TOUR,
+    UPDATE_TOUR, UPDATE_TOUR_FAIL, UPDATE_TOUR_SUCCESS,
+    GET_NOTIFICATION_FAIL, GET_NOTIFICATION_SUCCESS, GET_NOTIFICATION,
+    RESET_PASSWORD_FAIL, RESET_PASSWORD_SUCCESS, RESET_PASSWORD,
+    GET_RATINGS_FAIL, GET_RATINGS_SUCCESS, GET_RATINGS
 } from '../Actions/ActionType';
 
 import { takeLatest, put, call, take } from 'redux-saga/effects';
@@ -25,8 +29,12 @@ import {
     getTourGuideByID,
     updateTourGuideByID,
     createTour,
-    getChatAll
+    updateTour,
+    getNotification,
+    resetPassword,
+    getRatings
  } from '../../Database/Firebase/ConfigGlobalFirebase';
+import { Alert } from 'react-native';
 
  // get cites in country
 function* getCitiesInCountryFromFirestore(action) {
@@ -87,7 +95,9 @@ export function* watchUpdateTravelerProfileFromFirestore() {
 // login user
 function* signInUserFromAuth(action) {
     try {
-        const user = yield signInUserByEmail(action.user);
+        const user = yield signInUserByEmail(action.user)
+            .then(() => {})
+            .catch(() => Alert.alert('Thông báo', 'Email hoặc mât khẩu không đúng!'));
         yield put({ type: LOGIN_ACCOUNT_SUCCESS, user });
     } catch (error) {
         yield put({ type: LOGIN_ACCOUNT_FAIL, error });
@@ -211,4 +221,65 @@ function* createTourFromTourGuide(action) {
 
 export function* watchCreateTourFromTourGuide() {
     yield takeLatest(CREATE_TOUR, createTourFromTourGuide);
+}
+
+// update tour
+function* updateTourFromFirestore(action) {
+    try {
+        const tourUpdated = yield updateTour(action.tourUpdate);
+        yield put({ type: UPDATE_TOUR_SUCCESS, tourUpdated })
+    } catch(error) {
+        yield put({ type: UPDATE_TOUR_FAIL, error })
+    }
+}
+
+export function* watchUpdateTourFromFirestore() {
+    yield takeLatest(UPDATE_TOUR, updateTourFromFirestore);
+}
+
+
+// get notification
+function* getNotificationFromFirestore() {
+    try {
+        const notifications = yield getNotification();
+        yield put({ type: GET_NOTIFICATION_SUCCESS, notifications });
+    } catch(error) {
+        yield put({ type: GET_NOTIFICATION_FAIL, error });
+    }
+}
+
+export function* watchGetNotificationFromFirestore() {
+    yield takeLatest(GET_NOTIFICATION, getNotificationFromFirestore);
+}
+
+// reset password
+function* resetPasswordFromAuth(action) {
+    try {
+        const mail = yield resetPassword(action.email);
+        yield put({ type: RESET_PASSWORD_SUCCESS, mail });
+    } catch (error) {
+        yield put({ type: RESET_PASSWORD_FAIL, error });
+    }
+}
+
+export function* watchResetPasswordFromAuth() {
+    yield takeLatest(RESET_PASSWORD, resetPasswordFromAuth);
+}
+
+// ratings
+function* getRatingsFromFirestore(action) {
+    try {
+        let ratings = [];
+        yield getRatings(action.idTour).then(snapshot => {
+            ratings = snapshot.docs.map(doc => doc.data())
+        });
+
+        yield put({ type: GET_RATINGS_SUCCESS, ratings});
+    } catch(error) {
+        yield put({ type: GET_RATINGS, error });
+    }
+}
+
+export function* watchGetRatingsFromFirestore() {
+    yield takeLatest(GET_RATINGS, getRatingsFromFirestore);
 }

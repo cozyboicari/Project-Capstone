@@ -79,7 +79,7 @@ export default class EditProfileDetail extends Component {
         switch(key) {
             case 'Tiêu đề': return this.setState({ title: value });
             case 'Ngôn ngữ': return this.setState({ languages: value });
-            case 'Sở thích': return this.setState({ passions: value });
+            case 'Đam mê': return this.setState({ passions: value });
             case 'Nội dung': return this.setState({ description: value });
             default: return;
         }

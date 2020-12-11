@@ -12,7 +12,10 @@ import {
     GET_TOUR_GUIDE, GET_TOUR_GUIDE_FAIL, GET_TOUR_GUIDE_SUCCESS,
     UPDATE_ITEM_TOUR_GUIDE, UPDATE_ITEM_TOUR_GUIDE_FAIL, UPDATE_ITEM_TOUR_GUIDE_SUCCESS,
     CREATE_TOUR, CREATE_TOUR_FAIL, CREATE_TOUR_SUCCESS,
-    GET_CHAT_ALL, GET_CHAT_ALL_FAIL, GET_CHAT_ALL_SUCCESS
+    UPDATE_TOUR, UPDATE_TOUR_FAIL, UPDATE_TOUR_SUCCESS,
+    GET_NOTIFICATION, GET_NOTIFICATION_FAIL, GET_NOTIFICATION_SUCCESS,
+    RESET_PASSWORD, RESET_PASSWORD_FAIL, RESET_PASSWORD_SUCCESS,
+    GET_RATINGS, GET_RATINGS_FAIL, GET_RATINGS_SUCCESS
 } from './ActionType';
 
 //get cities in country
@@ -294,6 +297,93 @@ export const createTourSuccessAction = tour => {
 export const createTourFailAction = error => {
     return {
         type: CREATE_TOUR_FAIL,
+        error
+    }
+}
+
+// update tour
+export const updateTourAction = tourUpdate => {
+    return {
+        type: UPDATE_TOUR,
+        tourUpdate
+    }
+}
+
+export const updateTourSuccessAction = tourUpdated => {
+    return {
+        type: UPDATE_TOUR_SUCCESS,
+        tourUpdated
+    }
+}
+
+export const updateTourFail = error => {
+    return {
+        type: UPDATE_TOUR_FAIL,
+        error
+    }
+}
+
+// get notification
+export const getNotificationAction = () => {
+    return {
+        type: GET_NOTIFICATION,
+    }
+}
+
+export const getNotificationSuccessAction = notifications => {
+    return {
+        type: GET_NOTIFICATION_SUCCESS,
+        notifications
+    }
+}
+
+export const getNotificationFailAction = error => {
+    return {
+        type: GET_NOTIFICATION_FAIL,
+        error
+    }
+}
+
+//reset password
+export const resetPasswordAction = email => {
+    return {
+        type: RESET_PASSWORD,
+        email
+    }
+}
+
+export const resetPasswordSuccessAction = mail => {
+    return {
+        type: RESET_PASSWORD_SUCCESS,
+        mail
+    }
+}
+
+export const resetPasswordFailAction = error => {
+    return {
+        type: RESET_PASSWORD_FAIL,
+        error
+    }
+}
+
+// rating
+export const getRatingsAction = idTour => {
+    return {
+        type: GET_RATINGS,
+        idTour
+    }
+}
+
+export const getRatingsSuccessAction = ratings => {
+    return {
+        type: GET_RATINGS_SUCCESS,
+        ratings
+    }
+}
+
+export const getRatingsFailAction = error => {
+    return {
+        type: GET_RATINGS_FAIL,
         error
     }
 }

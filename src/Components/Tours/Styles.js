@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         fontSize: 16,
         borderRadius: 12,
-        fontWeight: '300'
+        fontWeight: '300',
     },
     containerButtonChangeImage: {
         backgroundColor: colors.BACKGROUND_BLUEYONDER,
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     containerFavouriteIcon: {
        position: 'absolute',
        padding: 10
-    }
+    },
 });
 
 export default styles;

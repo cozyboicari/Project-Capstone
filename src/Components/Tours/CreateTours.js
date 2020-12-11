@@ -11,6 +11,8 @@ import HeaderComponent from '../Header/Header';
 //file library
 import ImagePicker from 'react-native-image-picker';
 import { colors } from '../../ConfigGlobal';
+import RNPickerSelect from 'react-native-picker-select';
+import Icons from 'react-native-vector-icons/Ionicons';
 //bien config
 const { width, height } = Dimensions.get('window');
 
@@ -20,24 +22,61 @@ import { auth } from '../../Database/Firebase/ConfigGlobalFirebase';
 const WIDTH_TEXTINPUT = width * 0.6;
 const HEIGHT_TEXTINPUT = height * 0.045;
 
-const ItemCreateTour = ({ title, data, typeInput, isButton, _chooseFileImage, _setText }) => {
+const ItemCreateTour = ({ title, data, typeInput, isButton, _chooseFileImage, _setText, dataArr }) => {
+    
     return(
         <View style={styles.containerItemCreateTour}>
             <Text style={styles.textItemCreateTour}>{title}</Text>
             <View style={{ flexDirection: 'row' }}>
-                <TextInput 
-                    style={[styles.textInputItemCreateTour, {
-                        width: isButton ? WIDTH_TEXTINPUT : width * 0.89,
-                        height: (title !== 'Giới thiệu về bản thân' && title !== 'Những gì chúng ta sẽ làm') ? HEIGHT_TEXTINPUT : height * 0.2,
-                    }]}
-                    value={data}
-                    editable={isButton ? false : true}
-                    multiline={ (title !== 'Giới thiệu về bản thân' && title !== 'Những gì chúng ta sẽ làm')  ? false : true }
-                    keyboardType={typeInput}
-                    onChangeText={text => {
-                        _setText(title, text);
-                    }}
-                />
+                { title !== 'Thể loại du lịch' ?
+                    <TextInput 
+                        style={[styles.textInputItemCreateTour, {
+                            width: isButton ? WIDTH_TEXTINPUT : width * 0.89,
+                            height: (title !== ' Giới thiệu về chuyến tham quan' && title !== 'Những gì chúng ta sẽ làm') ? HEIGHT_TEXTINPUT : height * 0.2,
+                        }]}
+                        value={data}
+                        editable={isButton ? false : true}
+                        multiline={ (title !== ' Giới thiệu về chuyến tham quan' && title !== 'Những gì chúng ta sẽ làm')  ? false : true }
+                        keyboardType={typeInput}
+                        onChangeText={text => {
+                            _setText(title, text);
+                        }}
+                    /> :
+                    <RNPickerSelect 
+                        value={data}
+                        onValueChange={value => _setText(title, value)}
+                        items={dataArr}
+                        placeholder={{
+                            label: 'Hãy chọn thể loại du lịch...',
+                            value: '',
+                        }}
+                        style={{
+                            inputIOS: [styles.textInputItemCreateTour, {
+                                width: isButton ? WIDTH_TEXTINPUT : width * 0.89,
+                                height: (title !== ' Giới thiệu về chuyến tham quan' && title !== 'Những gì chúng ta sẽ làm') ? HEIGHT_TEXTINPUT : height * 0.2,
+                            }],
+                            inputAndroid: [styles.textInputItemCreateTour, {
+                                width: isButton ? WIDTH_TEXTINPUT : width * 0.89,
+                                height: (title !== ' Giới thiệu về chuyến tham quan' && title !== 'Những gì chúng ta sẽ làm') ? HEIGHT_TEXTINPUT : height * 0.2,
+                                justifyContent: 'center'
+                            }],
+                            placeholder: {
+                                color: '#aaa',
+                                fontSize: 16
+                            },
+                        }}
+                        Icon={() => {
+                            return(
+                                <Icons 
+                                    name='chevron-down-outline'
+                                    size={23}
+                                    color='#444'
+                                    style={{ padding: 5, paddingTop: 17 }}
+                                />
+                            )
+                        }}
+                    />
+                }
                 {isButton && <TouchableOpacity
                     onPress={_chooseFileImage}
                     style={styles.containerButtonChangeImage}
@@ -77,13 +116,31 @@ export default class CreateTours extends Component {
             schedule: [
                 { name: '', detail: '' },
             ],
+            category: [
+                {
+                    label: 'Khám phá thành phố',
+                    value: 'Khám phá thành phố'
+                },
+                {
+                    label: 'Khám phá ẩm thực',
+                    value: 'Khám phá ẩm thực'
+                },
+                {
+                    label: 'Khám phá danh lam thắng cảnh',
+                    value: 'Khám phá danh lam thắng cảnh'
+                },
+                {
+                    label: 'Khám phá văn hoá, lịch sử',
+                    value: 'Khám phá văn hoá, lịch sử'
+                }
+            ],
             imageTour: '',
             nameTour: '',
             introduceCity: '',
             introduceCityDetail: '',
             tourHours: '',
             numberOfTourists: '',
-            tourCategory: '',
+            tourCategory: undefined,
             languages: '',
             price: '',
             numberAccount: ''
@@ -93,7 +150,7 @@ export default class CreateTours extends Component {
     _setText = (key, value) => {
         switch(key) {
             case 'Tên chuyến du lịch': return this.setState({ nameTour: value });
-            case 'Giới thiệu về bản thân': return this.setState({ introduceCity: value });
+            case ' Giới thiệu về chuyến tham quan': return this.setState({ introduceCity: value });
             case 'Những gì chúng ta sẽ làm': return this.setState({ introduceCityDetail: value});
             case 'Thời gian chuyến đi': return this.setState({ tourHours: value});
             case 'Số lượng khách': return this.setState({ numberOfTourists: value});
@@ -132,7 +189,7 @@ export default class CreateTours extends Component {
             }]}>
                 <View style={{ marginBottom: 10}}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <Text style={styles.textItemScheduleDetail}>{`${index + 1}. Lịch trình`}</Text>
+                        <Text style={styles.textItemScheduleDetail}>{`${index + 1}. Điểm dừng chân`}</Text>
                         <TouchableOpacity
                             onPress={() => {
                                 const { schedule } = this.state;
@@ -163,7 +220,7 @@ export default class CreateTours extends Component {
                     />
                 </View>
                 <View>
-                    <Text style={styles.textItemScheduleDetail}>Lịch trình chi tiết</Text>
+                    <Text style={styles.textItemScheduleDetail}>Giải thích</Text>
                     <TextInput
                         onChangeText={text => {
                             const updateText = this.state.schedule.slice();
@@ -182,13 +239,31 @@ export default class CreateTours extends Component {
     }
 
     componentDidMount() {
-        this.props._onGetTourGuide(auth().currentUser.uid)
+        this.props._onGetTourGuide(auth().currentUser.uid);
+
+        // get date tu params
+        if(this.props.route.params) {
+            const { tour } = this.props.route.params;
+            this.setState({ 
+                schedule: tour.schedule, 
+                imageTour: tour.tourguideImageCover, 
+                nameTour: tour.name, 
+                introduceCity: tour.introduce, 
+                introduceCityDetail: tour.description, 
+                tourHours: tour.time.toString(),
+                numberOfTourists: tour.numberPeople.toString(), 
+                tourCategory: tour.category, 
+                languages: tour.languages, 
+                price: tour.price.toString(),
+                numberAccount: tour.numberAccount
+            })
+        }
     }
 
     render() {
         const { schedule, imageTour, nameTour, 
             introduceCity, introduceCityDetail, tourHours,
-            numberOfTourists, tourCategory, languages, price, numberAccount
+            numberOfTourists, tourCategory, languages, price, numberAccount, category
         } = this.state;
 
         const { idCity, name, uID, picture } = this.props.tourGuide;
@@ -199,7 +274,10 @@ export default class CreateTours extends Component {
                     <StatusBar barStyle='light-content'/>
                     <HeaderComponent {...this.props} isHome={false}/>
                     <View style={styles.containerTitleCreateTour}>
-                        <Text style={{ fontSize: 16, fontWeight: '300', flex: 1}}>Hãy tạo một chuyến đi cho mình!</Text>
+                        { !this.props.route.params ?
+                            <Text style={{ fontSize: 16, fontWeight: '300', flex: 1}}>Hãy tạo một chuyến đi cho mình!</Text> :
+                            <Text style={{ fontSize: 16, fontWeight: '300', flex: 1}}>Chỉnh sửa bài viết của bạn!</Text>
+                        }
                         <TouchableOpacity
                             onPress={() => {
                                 const newTour = {
@@ -219,13 +297,40 @@ export default class CreateTours extends Component {
                                     tourguideName: name,
                                     cityID: idCity,
                                     scheduleDetail: schedule,
-                                    numberAccount
+                                    numberAccount: numberAccount
                                 };
-                                Alert.alert('Thông báo', 'Bạn có muốn tạo chuyến đi này?', [
+                                
+                                const tourUpdate = {
+                                    category: tourCategory,
+                                    description: introduceCityDetail,
+                                    introduce: introduceCity,
+                                    languages: languages,
+                                    name: nameTour,
+                                    numberPeople: parseInt(numberOfTourists),
+                                    price: parseFloat(price),
+                                    time: parseFloat(tourHours),
+                                    tourguideImageCover: imageTour,
+                                    scheduleDetail: schedule,
+                                    numberAccount: numberAccount,
+                                    id: this.props.route.params.tour.id
+                                }
+
+                                Alert.alert(
+                                'Thông báo',
+                                !this.props.route.params ? 'Bạn có muốn tạo chuyến đi này?' : 'Bạn có muốn cập nhật lại tour?',
+                                [
                                     {
                                         text: 'Xác nhận',
                                         onPress: () => {
-                                            this.props._onCreateTour(newTour);
+                                            
+                                            if(this.props.route.params) {
+                                                this.props._onUpdateTour(tourUpdate);
+                                                Alert.alert('Thông báo!', 'Cập nhật thành công!');
+                                            } else {
+                                                this.props._onCreateTour(newTour);
+                                                Alert.alert('Thông báo!', 'Chuyến đi của bạn đã được gửi lên, chúng tôi sẽ xem xét và duyệt sớm nhất, cảm ơn!');
+                                            }
+                                            
                                             const { goBack } = this.props.navigation;
                                             goBack();
                                         }
@@ -245,7 +350,7 @@ export default class CreateTours extends Component {
                                 fontWeight: 'bold',
                                 fontSize: 17
                             }]}>
-                                Tạo chuyến đi
+                                { this.props.route.params ? 'Chỉnh sửa' : 'Tạo chuyến đi' }
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -259,13 +364,13 @@ export default class CreateTours extends Component {
                             <View style={{ flex: 1, marginTop: 20 }}>
                                 <ItemCreateTour _setText={this._setText} data={imageTour} title='Ảnh của chuyến đi' typeInput='default' isButton={true} _chooseFileImage={this._chooseFileImage}/>
                                 <ItemCreateTour _setText={this._setText} data={nameTour} title='Tên chuyến du lịch' typeInput='default' isButton={false}/>
-                                <ItemCreateTour  _setText={this._setText} data={introduceCity} title='Giới thiệu về bản thân' typeInput='default' isButton={false}/>
+                                <ItemCreateTour  _setText={this._setText} data={introduceCity} title=' Giới thiệu về chuyến tham quan' typeInput='default' isButton={false}/>
                                 <ItemCreateTour _setText={this._setText} data={introduceCityDetail} title='Những gì chúng ta sẽ làm' typeInput='default' isButton={false}/>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <ItemCreateTourNumber _setText={this._setText} data={tourHours} title='Thời gian chuyến đi' />
                                     <ItemCreateTourNumber _setText={this._setText} data={numberOfTourists} title='Số lượng khách' />
                                 </View>
-                                <ItemCreateTour _setText={this._setText} data={tourCategory} title='Thể loại du lịch' typeInput='default' isButton={false}/>
+                                <ItemCreateTour _setText={this._setText} dataArr={category} data={tourCategory} title='Thể loại du lịch' typeInput='default' isButton={false}/>
                                 <ItemCreateTour _setText={this._setText} data={languages} title='Ngôn ngữ' typeInput='default' isButton={false}/>
                                 <ItemCreateTourNumber _setText={this._setText} data={price} title='Giá ($ / mỗi người)' isButton={false}/>
                                 <ItemCreateTour _setText={this._setText} data={numberAccount} title='Số tài khoản' typeInput='numeric' isButton={false}/>
