@@ -13,7 +13,7 @@ const upload = multer({
   },
 })
 
-const { db, bucket } = require('../models/FirebaseAdmin')
+const db = require('../models/FirebaseAdmin')
 
 const redirectIfUnauthenticatedMiddleware = require('../middleware/redirectIfUnauthenticatedMiddleware')
 
@@ -32,35 +32,6 @@ router
       next(err)
     }
   })
-  // .post('/', upload.single('image'), async (req, res, next) => {
-  //   try {
-  //     const { id, name, description } = req.body
-  //     const { file } = req
-  //     if (file) {
-  //       uploadImageToStorage(file)
-  //         .then((success) => {
-  //           res.status(200).send({
-  //             status: 'success',
-  //           })
-  //         })
-  //         .catch((error) => {
-  //           console.error(error)
-  //         })
-  //     }
-  //     const imageBase64 = req.file.buffer.toString('base64')
-  //     const image = `data:image/jpg;base64,${imageBase64}`
-  //     await db.collection('countries').doc(id.replace(/\s+/g, '')).set({
-  //       image,
-  //       name,
-  //       description,
-  //       visitors: 0,
-  //       tours: [],
-  //     })
-  //     res.redirect('/tours')
-  //   } catch (err) {
-  //     next(err)
-  //   }
-  // })
   .delete('/delete/:id', async (req, res, next) => {
     try {
       const { id } = req.params

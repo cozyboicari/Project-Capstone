@@ -5,7 +5,7 @@ const app = express()
 
 const router = express.Router()
 
-const { db, bucket } = require('../models/FirebaseAdmin')
+const db = require('../models/FirebaseAdmin')
 
 router
   .get('/', async (req, res, next) => {
@@ -62,6 +62,7 @@ router
   .post('/view/:id', async (req, res, next) => {
     try {
       const becometourguide = app.get('becometourguide')
+      const avtImg = 'https://firebasestorage.googleapis.com/v0/b/yourtour-c4d0f.appspot.com/o/5e49ec7ad607a_thumb900.jpg?alt=media&token=45ddbffa-2220-4aba-808d-0327bad81578'
       const id = becometourguide
         .map((doc) => {
           if (doc.uID === req.params.id) {
@@ -77,6 +78,16 @@ router
         .collection('travelers')
         .doc(id)
         .update({ isActive: true, idCity, languages }, { merge: true })
+      await db
+        .collection('travelers')
+        .doc(id)
+        .collection('notification')
+        .doc()
+        .set({
+          avtImg,
+          message: 'Bạn đã trở thành hướng dẫn viên!',
+          date: new Date().getTime(),
+        })
       res.redirect('/becometourguide')
     } catch (err) {
       next(err)
