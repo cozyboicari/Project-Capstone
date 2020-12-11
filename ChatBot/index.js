@@ -63,7 +63,7 @@ app.post('/', express.json(), (req, res) => {
 
     function DongY_cau3(agent) {
         questions.time = parseFloat(agent.query);
-        agent.add('3. Giá tiền cao nhất của một chuyến đi bạn có thể chi trả? (mệnh giá $)');
+        agent.add('3. Giá tiền cao nhất của một chuyến đi bạn có thể chi trả? (mệnh giá $, hãy nhập số!)');
     }
 
     function DongY_finish(agent) {
@@ -94,9 +94,9 @@ app.post('/', express.json(), (req, res) => {
         }
 
         if(tours.length === 0) {
-            agent.add('Opps... xin lỗi bạn :( chuyến đi phù hợp với bạn hiện tại không có, \nbạn có thể tìm kiếm chuyến đi khác!');
+            agent.add(`Opps... xin lỗi bạn :( chuyến đi phù hợp với bạn hiện tại không có, \n\nbạn có thể tìm kiếm chuyến đi khác bằng cách nhấn 'tư vấn' ạ!`);
         } else {
-            agent.add(`Đây là các chuyến đi du lịch phù hợp với bạn để bạn có thể tham khảo nạ.\nNếu muốn tiếp tục vui lòng nhấn 'Tư vấn ạ'`);
+            agent.add(`Đây là các chuyến đi du lịch phù hợp với bạn để bạn có thể tham khảo nạ.\n\nNếu muốn tiếp tục vui lòng nhấn 'Tư vấn ạ'!`);
             agent.add(new dialogflowFulfillment.Payload(
                 agent.UNSPECIFIED, 
                 payload,
