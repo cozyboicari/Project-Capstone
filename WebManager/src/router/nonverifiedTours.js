@@ -4,7 +4,7 @@ const app = express()
 
 const router = express.Router()
 
-const { db, bucket } = require('../models/FirebaseAdmin')
+const db = require('../models/FirebaseAdmin')
 
 const redirectIfUnauthenticatedMiddleware = require('../middleware/redirectIfUnauthenticatedMiddleware')
 
@@ -75,7 +75,25 @@ router
     try {
       const { id } = req.params
       const dataTour = app.get('dataTour')
+      const { tourguideID } = dataTour
+      const avtImg =
+        'https://firebasestorage.googleapis.com/v0/b/yourtour-c4d0f.appspot.com/o/5e49ec7ad607a_thumb900.jpg?alt=media&token=45ddbffa-2220-4aba-808d-0327bad81578'
+      const docSnapshot = await db
+        .collection('travelers')
+        .where('uID', '==', tourguideID)
+        .get()
+      const docID = docSnapshot.docs.map((doc) => doc.id).toString()
       await db.collection('tours').doc(id).set(dataTour, { merge: true })
+      await db
+        .collection('travelers')
+        .doc(docID)
+        .collection('notification')
+        .doc()
+        .set({
+          avtImg,
+          message: 'Tour của bạn đã được duyệt!',
+          date: new Date().getTime(),
+        })
       await db.collection('nonverifiedtours').doc(id).delete()
       res.redirect('/nonverifiedtours')
     } catch (err) {

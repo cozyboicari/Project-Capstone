@@ -25,6 +25,9 @@
 
     <!-- Custom styles for this template-->
     <link href="/css/sb-admin-2.min.css" rel="stylesheet" />
+
+    <script src="/vendor/jquery/jquery.min.js" defer></script>
+    <script src="/js/sb-admin-2.min.js" defer></script>
   </head>
 
   <body id="page-top">
@@ -59,17 +62,10 @@
                         <div
                           class="text-xs font-weight-bold text-primary text-uppercase mb-1"
                         >
-<<<<<<< HEAD
                           Số lượng hướng dẫn viên
-=======
-                          Số lượng tourguide
->>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
                         </div>
-                        <div
-                          class="h5 mb-0 font-weight-bold text-gray-800"
-                          id="coutUser"
-                        >
-                          <%= numberTourguides %>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          <p id="countTourguides"></p>
                         </div>
                       </div>
                       <div class="col-auto">
@@ -90,17 +86,10 @@
                         <div
                           class="text-xs font-weight-bold text-primary text-uppercase mb-1"
                         >
-<<<<<<< HEAD
                           Số lượng người dùng
-=======
-                          Số lượng travelers
->>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
                         </div>
-                        <div
-                          class="h5 mb-0 font-weight-bold text-gray-800"
-                          id="coutProduct"
-                        >
-                          <%= numberTravelers %>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          <p id="countUsers"></p>
                         </div>
                       </div>
                       <div class="col-auto">
@@ -123,11 +112,8 @@
                         >
                           Số lượng tour
                         </div>
-                        <div
-                          class="h5 mb-0 font-weight-bold text-gray-800"
-                          id="coutOrder"
-                        >
-                          <%=numberTours%>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          <p id="countTours"></p>
                         </div>
                       </div>
                       <div class="col-auto">
@@ -150,11 +136,8 @@
                         >
                           Số tour đã được đặt
                         </div>
-                        <div
-                          class="h5 mb-0 font-weight-bold text-gray-800"
-                          id="coutOrder"
-                        >
-                          <%=numberBookings%>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          <p id="countBookings"></p>
                         </div>
                       </div>
                       <div class="col-auto">
@@ -166,7 +149,12 @@
                   </div>
                 </div>
               </div>
+              <div style="display: flex; width: 50%">
+                <canvas id="myChart"></canvas>
+                <canvas id="myChart2"></canvas>
+              </div>
             </div>
+
             <!-- /.container-fluid -->
           </div>
           <!-- End of Main Content -->
@@ -179,8 +167,30 @@
       <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
       </a>
-      <script src="/vendor/jquery/jquery.min.js"></script>
-      <script src="/js/sb-admin-2.min.js"></script>
     </div>
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-firestore.js"></script>
+    <script>
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      var firebaseConfig = {
+        apiKey: 'AIzaSyBSdrT-Y3xE7YvJJYq1edWrCqif-NAqhMc',
+        authDomain: 'yourtour-c4d0f.firebaseapp.com',
+        databaseURL: 'https://yourtour-c4d0f.firebaseio.com',
+        projectId: 'yourtour-c4d0f',
+        storageBucket: 'yourtour-c4d0f.appspot.com',
+        messagingSenderId: '855060710487',
+        appId: '1:855060710487:web:7f907ef264c514d6298f12',
+        measurementId: 'G-QMSPR75J9F',
+      }
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig)
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="/js/dashboard.js" type="text/javascript"></script>
   </body>
 </html>

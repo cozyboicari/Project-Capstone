@@ -13,42 +13,39 @@ const upload = multer({
   },
 })
 
-const { db, bucket } = require('../models/FirebaseAdmin')
+const db = require('../models/FirebaseAdmin')
 
 const redirectIfUnauthenticatedMiddleware = require('../middleware/redirectIfUnauthenticatedMiddleware')
 
-<<<<<<< HEAD
-const uploadImageToStorage = (file) =>
-  new Promise((resolve, reject) => {
-    if (!file) {
-      reject(new Error('No image file'))
-    }
-    const newFileName = `${file.originalname}_${Date.now()}`
+// const uploadImageToStorage = (file) =>
+//   new Promise((resolve, reject) => {
+//     if (!file) {
+//       reject(new Error('No image file'))
+//     }
+//     const newFileName = `${file.originalname}_${Date.now()}`
 
-    const fileUpload = bucket.file(newFileName)
+//     const fileUpload = bucket.file(newFileName)
 
-    const blobStream = fileUpload.createWriteStream({
-      metadata: {
-        contentType: file.mimetype,
-      },
-    })
+//     const blobStream = fileUpload.createWriteStream({
+//       metadata: {
+//         contentType: file.mimetype,
+//       },
+//     })
 
-    blobStream.on('error', (error) => {
-      reject(new Error('Something is wrong! Unable to upload at the moment.'))
-    })
+//     blobStream.on('error', (error) => {
+//       reject(new Error('Something is wrong! Unable to upload at the moment.'))
+//     })
 
-    blobStream.on('finish', () => {
-      // The public URL can be used to directly access the file via HTTP.
-      const url = format(
-        `https://storage.googleapis.com/${bucket.name}/${fileUpload.name}`,
-      )
-      resolve(url)
-    })
+//     blobStream.on('finish', () => {
+//       // The public URL can be used to directly access the file via HTTP.
+//       const url = format(
+//         `https://storage.googleapis.com/${bucket.name}/${fileUpload.name}`,
+//       )
+//       resolve(url)
+//     })
 
-    blobStream.end(file.buffer)
-  })
-=======
->>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
+//     blobStream.end(file.buffer)
+//   })
 router
   .get('/', async (req, res, next) => {
     try {
@@ -71,21 +68,17 @@ router
   .post('/', upload.single('image'), async (req, res, next) => {
     try {
       const { id, name, description } = req.body
-<<<<<<< HEAD
-      const { file } = req
-      if (file) {
-        uploadImageToStorage(file)
-          .then((success) => {
-            res.status(200).send({
-              status: 'success',
-            })
-          })
-          .catch((error) => {
-            console.error(error)
-          })
-      }
-=======
->>>>>>> fb0cc0421877ff449f75d9dc1d1578e6560b8f46
+      // if (file) {
+      //   uploadImageToStorage(file)
+      //     .then((success) => {
+      //       res.status(200).send({
+      //         status: 'success',
+      //       })
+      //     })
+      //     .catch((error) => {
+      //       console.error(error)
+      //     })
+      // }
       const imageBase64 = req.file.buffer.toString('base64')
       const image = `data:image/jpg;base64,${imageBase64}`
       await db
