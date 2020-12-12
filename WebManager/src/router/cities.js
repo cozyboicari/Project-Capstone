@@ -47,7 +47,7 @@ const redirectIfUnauthenticatedMiddleware = require('../middleware/redirectIfUna
 //     blobStream.end(file.buffer)
 //   })
 router
-  .get('/', async (req, res, next) => {
+  .get('/', redirectIfUnauthenticatedMiddleware, async (req, res, next) => {
     try {
       const snapshotCities = await db
         .collection('countries')
@@ -65,55 +65,65 @@ router
       next(err)
     }
   })
-  .post('/', upload.single('image'), async (req, res, next) => {
-    try {
-      const { id, name, description } = req.body
-      // if (file) {
-      //   uploadImageToStorage(file)
-      //     .then((success) => {
-      //       res.status(200).send({
-      //         status: 'success',
-      //       })
-      //     })
-      //     .catch((error) => {
-      //       console.error(error)
-      //     })
-      // }
-      const imageBase64 = req.file.buffer.toString('base64')
-      const image = `data:image/jpg;base64,${imageBase64}`
-      await db
-        .collection('countries')
-        .doc('vietnam')
-        .collection('cities')
-        .doc(id.replace(/\s+/g, ''))
-        .set({
-          image,
-          name,
-          description,
-          visitors: 0,
-          tours: [],
-        })
-      res.redirect('/cities')
-    } catch (err) {
-      next(err)
-    }
-  })
-  .delete('/delete/:id', async (req, res, next) => {
-    try {
-      const { id } = req.params
-      await db
-        .collection('countries')
-        .doc('vietnam')
-        .collection('cities')
-        .doc(id)
-        .delete()
-      res.end()
-    } catch (err) {
-      next(err)
-    }
-  })
+  .post(
+    '/',
+    redirectIfUnauthenticatedMiddleware,
+    upload.single('image'),
+    async (req, res, next) => {
+      try {
+        const { id, name, description } = req.body
+        // if (file) {
+        //   uploadImageToStorage(file)
+        //     .then((success) => {
+        //       res.status(200).send({
+        //         status: 'success',
+        //       })
+        //     })
+        //     .catch((error) => {
+        //       console.error(error)
+        //     })
+        // }
+        const imageBase64 = req.file.buffer.toString('base64')
+        const image = `data:image/jpg;base64,${imageBase64}`
+        await db
+          .collection('countries')
+          .doc('vietnam')
+          .collection('cities')
+          .doc(id.replace(/\s+/g, ''))
+          .set({
+            image,
+            name,
+            description,
+            visitors: 0,
+            tours: [],
+          })
+        res.redirect('/cities')
+      } catch (err) {
+        next(err)
+      }
+    },
+  )
+  .delete(
+    '/delete/:id',
+    redirectIfUnauthenticatedMiddleware,
+    async (req, res, next) => {
+      try {
+        const { id } = req.params
+        await db
+          .collection('countries')
+          .doc('vietnam')
+          .collection('cities')
+          .doc(id)
+          .delete()
+        res.end()
+      } catch (err) {
+        next(err)
+      }
+    },
+  )
   .get(
     '/edit/:id',
+    redirectIfUnauthenticatedMiddleware,
 
     async (req, res, next) => {
       try {
@@ -127,6 +137,7 @@ router
   )
   .post(
     '/edit/:id',
+    redirectIfUnauthenticatedMiddleware,
 
     upload.single('image'),
     async (req, res, next) => {

@@ -18,7 +18,7 @@ const db = require('../models/FirebaseAdmin')
 const redirectIfUnauthenticatedMiddleware = require('../middleware/redirectIfUnauthenticatedMiddleware')
 
 router
-  .get('/', async (req, res, next) => {
+  .get('/', redirectIfUnauthenticatedMiddleware, async (req, res, next) => {
     try {
       const snapshotTour = await db.collection('tours').get()
       const tours = snapshotTour.docs.map((doc) => {
@@ -32,17 +32,22 @@ router
       next(err)
     }
   })
-  .delete('/delete/:id', async (req, res, next) => {
-    try {
-      const { id } = req.params
-      await db.collection('tours').doc(id).delete()
-      res.end()
-    } catch (err) {
-      next(err)
-    }
-  })
+  .delete(
+    '/delete/:id',
+    redirectIfUnauthenticatedMiddleware,
+    async (req, res, next) => {
+      try {
+        const { id } = req.params
+        await db.collection('tours').doc(id).delete()
+        res.end()
+      } catch (err) {
+        next(err)
+      }
+    },
+  )
   .get(
     '/edit/:id',
+    redirectIfUnauthenticatedMiddleware,
 
     async (req, res, next) => {
       try {
@@ -54,27 +59,32 @@ router
       }
     },
   )
-  .post('/edit/:id', upload.single('image'), async (req, res, next) => {
-    try {
-      const { id } = req.params
-      const { name, description } = req.body
-      if (req.file) {
-        const imageBase64 = req.file.buffer.toString('base64')
-        const image = `data:image/jpg;base64,${imageBase64}`
-        await db
-          .collection('tours')
-          .doc(id)
-          .update({ image, name, description }, { merge: true })
-        res.redirect('/cities')
-      } else {
-        await db
-          .collection('countries')
-          .doc(id)
-          .update({ name, description }, { merge: true })
-        res.redirect('/cities')
+  .post(
+    '/edit/:id',
+    redirectIfUnauthenticatedMiddleware,
+    upload.single('image'),
+    async (req, res, next) => {
+      try {
+        const { id } = req.params
+        const { name, description } = req.body
+        if (req.file) {
+          const imageBase64 = req.file.buffer.toString('base64')
+          const image = `data:image/jpg;base64,${imageBase64}`
+          await db
+            .collection('tours')
+            .doc(id)
+            .update({ image, name, description }, { merge: true })
+          res.redirect('/cities')
+        } else {
+          await db
+            .collection('countries')
+            .doc(id)
+            .update({ name, description }, { merge: true })
+          res.redirect('/cities')
+        }
+      } catch (err) {
+        next(err)
       }
-    } catch (err) {
-      next(err)
-    }
-  })
+    },
+  )
 module.exports = router
