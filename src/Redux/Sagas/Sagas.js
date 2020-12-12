@@ -241,7 +241,8 @@ export function* watchUpdateTourFromFirestore() {
 // get notification
 function* getNotificationFromFirestore() {
     try {
-        const notifications = yield getNotification();
+
+        let notifications = yield getNotification();
         yield put({ type: GET_NOTIFICATION_SUCCESS, notifications });
     } catch(error) {
         yield put({ type: GET_NOTIFICATION_FAIL, error });

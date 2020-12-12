@@ -21,7 +21,6 @@ import HomeScreen from '../Redux/Containers/HomeContainer';
 import ToursScreen from '../Redux/Containers/ToursContainer';
 import SettingsScreen from '../Redux/Containers/SettingsContainer';
 import ProfileScreen from '../Redux/Containers/ProfileContainer';
-import NotificationScreen from '../Redux/Containers/NotificationContainer';
 import ForgotPasswordScreen from '../Redux/Containers/ForgotPasswordContainer';
 import ActiveTourGuideScreen from '../Redux/Containers/ActiveTourGuideContainer';
 import ProfileDetailScreen from '../Redux/Containers/ProfileDetailContainer';
@@ -39,6 +38,7 @@ import DetailsTourScreen from '../Components/DetailsTour/DetailsTour';
 import BookingScreen from '../Components/Booking/Booking';
 import RegisterTourGuideScreen from '../Components/RegisterTourGuide/RegisterTourGuide';
 import IntroScreen from '../Components/Intro/Intro';
+import NotificationScreen from '../Components/Notification/Notification';
 
 
 //redux

@@ -299,20 +299,23 @@ export default class CreateTours extends Component {
                                     scheduleDetail: schedule,
                                     numberAccount: numberAccount
                                 };
+                                let tourUpdate = {};
                                 
-                                const tourUpdate = {
-                                    category: tourCategory,
-                                    description: introduceCityDetail,
-                                    introduce: introduceCity,
-                                    languages: languages,
-                                    name: nameTour,
-                                    numberPeople: parseInt(numberOfTourists),
-                                    price: parseFloat(price),
-                                    time: parseFloat(tourHours),
-                                    tourguideImageCover: imageTour,
-                                    scheduleDetail: schedule,
-                                    numberAccount: numberAccount,
-                                    id: this.props.route.params.tour.id
+                                if(this.props.route.params) {
+                                    tourUpdate = {
+                                        category: tourCategory,
+                                        description: introduceCityDetail,
+                                        introduce: introduceCity,
+                                        languages: languages,
+                                        name: nameTour,
+                                        numberPeople: parseInt(numberOfTourists),
+                                        price: parseFloat(price),
+                                        time: parseFloat(tourHours),
+                                        tourguideImageCover: imageTour,
+                                        scheduleDetail: schedule,
+                                        numberAccount: numberAccount,
+                                        id: this.props.route.params.tour.id
+                                    }
                                 }
 
                                 Alert.alert(

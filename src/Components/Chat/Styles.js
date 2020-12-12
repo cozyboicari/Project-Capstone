@@ -6,7 +6,7 @@ import { colors } from '../../ConfigGlobal';
 // const
 const { width, height } = Dimensions.get('screen');
 
-const AVATAR = width * 0.17
+const AVATAR = width * 0.19
 const HEIGHT_BOTTOM = height * 0.13;
 const HEIGHT_TEXT_INPUT = height * 0.04;
 
@@ -55,11 +55,12 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         padding: 20,
     },
-    image: {
+    image1: {
         width: AVATAR,
         height: AVATAR,
-        backgroundColor: colors.BACKGROUND_BLUEYONDER,
-        borderRadius: AVATAR / 2
+        borderRadius: AVATAR / 2,
+        borderWidth: .5,
+        borderColor: colors.BACKGROUND_BLUEYONDER
     },
     containerInformationChat: {
         flex: 1,

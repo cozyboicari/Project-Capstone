@@ -58,6 +58,7 @@ export default class ProfileDetail extends Component {
 
     render() {
         //check user va tour guide
+
         let uid = !this.props.route.params ? auth().currentUser.uid : this.props.route.params.idTourGuide;
  
         const { picture, name, title, 

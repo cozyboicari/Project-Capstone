@@ -147,7 +147,10 @@ export default class ProfileTourGuides extends Component {
                                     <TouchableOpacity 
                                         onPress={() => {
                                             const { navigate } = this.props.navigation;
-                                            navigate('Profile Detail Screen', {
+
+                                            let nameScreen = auth().currentUser ? 'Profile Detail Screen' : 'Sign In Screen';
+
+                                            navigate(nameScreen, {
                                                 idTourGuide: tourguideID
                                             });
                                         }}

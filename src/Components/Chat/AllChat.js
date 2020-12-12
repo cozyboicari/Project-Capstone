@@ -34,7 +34,7 @@ const ItemChatAll = ({ item, navigation }) => {
         >
             <View style={styles.containerItemChatAll}>
                 <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                    <Image style={styles.image} source={{ uri: user.image }}/>
+                    <Image style={styles.image1} source={{ uri: user.image }}/>
                     <View style={styles.containerInformationChat}>
                         <View style={styles.containerNameAndTime}>
                             <Text style={styles.name}>{user.nameUser}</Text>

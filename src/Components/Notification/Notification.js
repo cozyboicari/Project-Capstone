@@ -8,7 +8,7 @@ import styles from './Styles';
 import HeaderComponent from '../Header/Header';
 
 // firebase
-import { auth } from '../../Database/Firebase/ConfigGlobalFirebase';
+import { auth, firestore } from '../../Database/Firebase/ConfigGlobalFirebase';
 
 // const TabBarItem = ({ nameIcon, size, color, countBadge }) => {
 //     return (
@@ -43,24 +43,47 @@ import { auth } from '../../Database/Firebase/ConfigGlobalFirebase';
 
 export default class Notification extends Component {
 
+    _isMounted = false;
+
     constructor(props) {
         super(props);
+        this.state = {
+            notifications: [],
+            loading: false,
+        }
     }
-
+    
     componentDidMount() {
+        this._isMounted = true;
+
+        // get chat group all
         auth().onAuthStateChanged(() => {
             if(auth().currentUser) {
-                this.props._onGetNotification();
+                // get traveler
+                firestore().collection('travelers').where('uID', '==', auth().currentUser.uid).get()
+                    .then(query => {
+                        query.docs[0].ref.collection('notification')
+                        .onSnapshot(querySnapshot => {
+                            let notifications = [];
+                            querySnapshot.docs.forEach(doc => {
+                                notifications.push({
+                                    ...doc.data()
+                                })
+                            })
+        
+                            if(this._isMounted) {
+                                this.setState({ notifications, loading: false });
+                            }
+                        })
+                    })
+            } else {
+                this.setState({ loading: true })
             }
         })
     }
 
-    componentDidUpdate() {
-        auth().onAuthStateChanged(() => {
-            if(auth().currentUser) {
-                this.props._onGetNotification();
-            }
-        })
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     _renderItem = ({ item }) => {
@@ -88,7 +111,7 @@ export default class Notification extends Component {
 
     
     render() {
-        const { notifications, loading } = this.props;
+        const { loading, notifications } = this.state;
 
         return(
             <View style={styles.container}>
@@ -99,12 +122,14 @@ export default class Notification extends Component {
                     <Text style={styles.textTitle}>Thông báo</Text>
                 </View>
                 <View style={styles.containerNotifications}>
-                    { notifications.length === 0 ? <ActivityIndicator size={300}/> :
+                    {  !loading ? 
+                        (auth().currentUser && 
                         <FlatList 
                             data={notifications}
                             keyExtractor={(item, index) => index.toString()}
                             renderItem={this._renderItem}
-                        />
+                        />):  
+                        <ActivityIndicator size={300}/>
                     }  
                 </View>
             </View>
