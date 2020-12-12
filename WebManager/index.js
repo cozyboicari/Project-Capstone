@@ -2,21 +2,14 @@ require('dotenv').config()
 
 const express = require('express')
 const helmet = require('helmet')
-const morgan = require('morgan')
 const cors = require('cors')
 const ejs = require('ejs')
 const expressSession = require('express-session')
 const bcrypt = require('bcrypt')
 
-const saltRounds = 10
-const myPlaintextPassword = 'hoang123'
-const someOtherPlaintextPassword = 'not_bacon'
-
 const port = process.env.PORT || 8080
 
 const app = express()
-
-// app.use(morgan('tiny'))
 
 app.use(
   helmet({
@@ -39,6 +32,8 @@ const tourRoute = require('./src/router/tours')
 const nonverifiedTourRoute = require('./src/router/nonverifiedTours')
 
 const db = require('./src/models/FirebaseAdmin')
+
+const redirectIfUnauthenticatedMiddleware = require('./src/middleware/redirectIfAuthenticatedMiddleware')
 
 app.set('view engine', 'ejs')
 app.set('views', './src/views')
@@ -75,28 +70,7 @@ app.use('/tours', tourRoute)
 
 app.use('/nonverifiedtours', nonverifiedTourRoute)
 
-// const saltRounds = 10;
-// const myPlaintextPassword = 'asd123zxc';
-// const someOtherPlaintextPassword = 'not_bacon';
-// var hashPass = '$2b$10$7dsGQXUFwnV9X7jHi5wisu5sC1vQPJR54f.DNhotf5Q/t0iUUXfKq';
-// bcrypt.genSalt(saltRounds, function (err, salt) {
-//     bcrypt.hash(myPlaintextPassword, salt, function (err, hash) {
-//         bcrypt.compare(hashPass,hashPass,function(err, same){
-//             if(same) console.log('yes')
-//             else console.log('no');
-//         })
-//     });
-// });
 global.loggedIn = null
-// bcrypt.genSalt(saltRounds, function (err, salt) {
-//   bcrypt.hash(myPlaintextPassword, salt, function (err, hash) {
-//     if (err) console.log(err)
-//     db.collection('admin').doc().set({
-//       username: 'hoang',
-//       password: hash,
-//     })
-//   })
-// })
 app.get('/', async (req, res, next) => {
   try {
     if (req.session.loggedIn) {
