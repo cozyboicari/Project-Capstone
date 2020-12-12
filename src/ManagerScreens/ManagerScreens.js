@@ -39,6 +39,7 @@ import BookingScreen from '../Components/Booking/Booking';
 import RegisterTourGuideScreen from '../Components/RegisterTourGuide/RegisterTourGuide';
 import IntroScreen from '../Components/Intro/Intro';
 import NotificationScreen from '../Components/Notification/Notification';
+import HistoryBookingScreen from '../Components/HistoryBooking/HistoryBooking';
 
 
 //redux
@@ -80,6 +81,7 @@ const ScreenSettings = () => {
                     gestureEnabled: false
                 }}
             />
+            <Stack.Screen name="History Booking Screen" component={HistoryBookingScreen}/>
         </Stack.Navigator>
     );
 }

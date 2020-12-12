@@ -69,14 +69,19 @@ export default class Settings extends Component {
         });
     }
 
+    componentDidUpdate() {
+        auth().onAuthStateChanged(user => {
+            if(user) {
+                this.props._onGetTraveler();
+            }
+        });
+    }
+
     render() {
         const { user } = this.state;
         if(user) {
             const { email, name, picture, isActive, providerId } = this.props.traveler;
-            if(!email || !name || !picture || !isActive) {
-                this.props._onGetTraveler();
-               
-            }
+  
             return(
                 <View style={styles.container}>
                     <StatusBar barStyle="light-content"/>
@@ -97,7 +102,7 @@ export default class Settings extends Component {
                             </View>
                             <View style={styles.containerBottom}>
                                 <Item title='Chỉnh sửa Thông tin' nameIcon='construct-outline' nameScreen='Profile Screen' navigation={this.props.navigation}/>
-                                <Item title='Lịch sử đặt chuyến đi' nameIcon='calendar-outline'/>
+                                <Item title='Lịch sử đặt chuyến đi' nameIcon='calendar-outline' nameScreen='History Booking Screen' navigation={this.props.navigation}/>
                                 {
                                     !isActive ?
                                     <Item title='Trở thành một hướng dẫn viên' nameIcon='medal-outline' nameScreen='Register Tour Guide Screen' navigation={this.props.navigation}/> :
