@@ -91,7 +91,7 @@ export default class ProfileDetail extends Component {
                             <Text style={[styles.name, {
                                 fontSize: 24,
                                 fontWeight: '500'
-                            }]}>{title === '' ? '(Chưa có tiêu đề)' : title}</Text>
+                            }]}>{title === '' ? '(Chưa có tiêu đề)' : `(${title})`}</Text>
                         </View>
                     </View>
                     {(uid === auth().currentUser.uid) && <TouchableOpacity
@@ -114,7 +114,7 @@ export default class ProfileDetail extends Component {
                                 fontWeight: 'bold',
                                 color: colors.BACKGROUND_BLUEYONDER
                             }}>
-                                Chỉnh sửa hồ sơ hướng dẫn viên
+                                Chỉnh sửa hồ sơ
                             </Text>
                         </View>
                     </TouchableOpacity>}

@@ -24,6 +24,11 @@ export default class TourGuides extends Component {
         this.props._onGetTraveler();
     }
 
+    componentDidUpdate() {
+        this.props._onGetTours('tours', this.props.route.params.idCity);
+        this.props._onGetTraveler();
+    }
+
     //item tour guide
     _renderItem = ({ item }) => {
        
