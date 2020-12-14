@@ -237,13 +237,13 @@ export const createTour = async (newTour) => {
 }
 
 //login auth by email
-export const signInUserByEmail = async (user) => {
-  await auth().signInWithEmailAndPassword(user.email, user.password);
+export const signInUserByEmail = (user) => {
+  return auth().signInWithEmailAndPassword(user.email, user.password);
 }
 
 //logout auth
-export const logOut = async () => {
-  return await auth().signOut();
+export const logOut = () => {
+  return auth().signOut();
 }
 
 // login facebook

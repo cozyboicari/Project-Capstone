@@ -17,17 +17,24 @@ import * as animatable from 'react-native-animatable';
 export default class TourGuides extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            loading: true
+        }
     }
 
     componentDidMount() {
-        this.props._onGetTours('tours', this.props.route.params.idCity);
-        this.props._onGetTraveler();
+        setTimeout(() => {
+            this.setState({ loading: false });
+            this.props._onGetTours('tours', this.props.route.params.idCity);
+            this.props._onGetTraveler();
+        }, 1000);
     }
 
-    componentDidUpdate() {
-        this.props._onGetTours('tours', this.props.route.params.idCity);
-        this.props._onGetTraveler();
-    }
+    // componentDidUpdate() {
+    //     this.props._onGetTours('tours', this.props.route.params.idCity);
+    //     this.props._onGetTraveler();
+    // }
 
     //item tour guide
     _renderItem = ({ item }) => {
@@ -134,7 +141,7 @@ export default class TourGuides extends Component {
                     </View>
 
                     {
-                        this.props.tours.length === 0 ? <ActivityIndicator size={300}/>
+                        (this.props.tours.length === 0 || this.state.loading) ? <ActivityIndicator size={300}/>
                         :
                         <FlatList 
                             data={this.props.tours}
