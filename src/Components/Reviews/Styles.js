@@ -16,9 +16,10 @@ const styles = StyleSheet.create({
         margin: 12,
         fontSize: 23,
         fontWeight: '600',
-        color: '#aaa'
+        color: '#aaa',
     },
     containerReviews: {
+        flex: 7,
         marginTop: 15
     },
     containerReviewItem: {
@@ -68,6 +69,14 @@ const styles = StyleSheet.create({
         height: 1,
         borderTopWidth: 1,
         borderColor: '#ddd',
+    },
+    bottomRatings: {
+        alignItems: 'center'
+    },
+    titleRate: {
+        fontSize: 18,
+        fontWeight: '500',
+        color: '#444'
     }
 });
 

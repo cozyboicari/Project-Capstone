@@ -15,7 +15,7 @@ export const colors = {
 
 // rate
 export const newAvgRatings = (numRatings, oldAvgRatings, rating) => {
-    return (numRatings * oldAvgRatings + rating) / (numRatings + 1);
+    return ((numRatings - 1) * oldAvgRatings + rating) / numRatings;
 }
 
 export const getAvgRatings = (avgRatings) => {

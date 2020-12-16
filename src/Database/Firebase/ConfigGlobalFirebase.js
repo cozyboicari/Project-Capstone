@@ -57,7 +57,7 @@ export const getCitiesInCountry = async (path) => {
 
 // get ratings
 export const getRatings = async (idTour) => {
-  return await firestore().collection('tours').doc(idTour).collection('ratings').get();
+  return await firestore().collection('tours').doc(idTour).collection('ratings').orderBy('time', 'desc').get();
 }
 
 // get tours in city

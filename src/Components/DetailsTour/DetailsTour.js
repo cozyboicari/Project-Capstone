@@ -171,7 +171,11 @@ export default class ProfileTourGuides extends Component {
                                         onPress={() => {
                                             const { navigate } = this.props.navigation;
                                             navigate('Reviews Tour Screen', {
-                                                idTour: id
+                                                idTour: id,
+                                                _id: tourguideID,
+                                                image: tourguideImage,
+                                                name: tourguideName,
+                                                oldAvgRatings: avgRating
                                             });
                                         }}
                                     >
