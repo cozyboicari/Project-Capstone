@@ -166,20 +166,25 @@ export default class ProfileTourGuides extends Component {
                                         imageSize={18}
                                         startingValue={avgRating}
                                     />
-                                    <Text style={styles.textRating}>{`(${avgRating})`}</Text>
+                                    <Text style={styles.textRating}>{`(${parseFloat(avgRating).toFixed(1)})`}</Text>
                                     <TouchableOpacity
                                         onPress={() => {
                                             const { navigate } = this.props.navigation;
-                                            navigate('Reviews Tour Screen', {
-                                                idTour: id,
-                                                _id: tourguideID,
-                                                image: tourguideImage,
-                                                name: tourguideName,
-                                                oldAvgRatings: avgRating
-                                            });
+
+                                            if(!auth().currentUser) {
+                                                navigate('Sign In Screen');
+                                            } else {
+                                                navigate('Reviews Tour Screen', {
+                                                    idTour: id,
+                                                    _id: tourguideID,
+                                                    image: tourguideImage,
+                                                    name: tourguideName,
+                                                    oldAvgRatings: avgRating
+                                                });
+                                            }  
                                         }}
                                     >
-                                        <Text style={styles.textReviews}>Xem đánh giá</Text>
+                                        <Text style={styles.textReviews}>Đánh giá chuyến đi</Text>
                                     </TouchableOpacity>
                                 </View>
                                 {/* gioi thieu ve tourguide */}

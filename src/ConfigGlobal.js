@@ -15,7 +15,8 @@ export const colors = {
 
 // rate
 export const newAvgRatings = (numRatings, oldAvgRatings, rating) => {
-    return ((numRatings - 1) * oldAvgRatings + rating) / numRatings;
+    console.log(numRatings, oldAvgRatings, rating);
+    return (numRatings * oldAvgRatings + rating) / (numRatings + 1);
 }
 
 export const getAvgRatings = (avgRatings) => {
@@ -56,6 +57,19 @@ export const convertMonth = month => {
             return 'December';
         default:
             return monthString;
+    }
+}
+
+// convert id to name city
+export const convertIdCity = idCity => {
+    switch(idCity) {
+        case 'Dalat': return 'Đà Lạt';
+        case 'Danang': return 'Đà Nẵng';
+        case 'Hanoi': return 'Hà Nội';
+        case 'Hochiminh': return 'Hồ Chí Minh';
+        case 'Sapa': return 'Sa Pa';
+        case 'Vungtau': return 'Vũng Tàu';
+        default: return '';
     }
 }
 

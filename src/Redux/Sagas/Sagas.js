@@ -96,7 +96,7 @@ export function* watchUpdateTravelerProfileFromFirestore() {
 function* signInUserFromAuth(action) {
     try {
         const user = yield signInUserByEmail(action.user)
-            .then(() => {})
+            .then(() => console.log('login account!'))
             .catch(() => Alert.alert('Thông báo', 'Email hoặc mât khẩu không đúng!'));
         yield put({ type: LOGIN_ACCOUNT_SUCCESS, user });
     } catch (error) {

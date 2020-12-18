@@ -189,8 +189,8 @@ export const updateTourGuideByID = async (profile) => {
 }
 
 //sign up auth by email
-export const createUserByEmail = async (newUser) => {
-  await auth().createUserWithEmailAndPassword(newUser.email, newUser.password)
+export const createUserByEmail = (newUser) => {
+  auth().createUserWithEmailAndPassword(newUser.email, newUser.password)
     .then(user => {
       const userFirestore = {
         uID: user.user._user.uid,
@@ -237,8 +237,8 @@ export const createTour = async (newTour) => {
 }
 
 //login auth by email
-export const signInUserByEmail = (user) => {
-  return auth().signInWithEmailAndPassword(user.email, user.password);
+export const signInUserByEmail = async (user) => {
+  return await auth().signInWithEmailAndPassword(user.email, user.password);
 }
 
 //logout auth

@@ -17,6 +17,8 @@ import Icons from 'react-native-vector-icons/Ionicons';
 //file global
 import { colors } from '../../ConfigGlobal';
 
+let countChat = 0;
+
 const ItemChatAll = ({ item, navigation }) => {
     const user = auth().currentUser.uid === item.user_1._id ? item.user_2 : item.user_1;
     const amToPm = new Date(item.latestMessage.createdAt).toLocaleTimeString().slice(8);
@@ -90,6 +92,7 @@ export default class AllChat extends Component {
                             }
                         });
                         if(this._isMounted) {
+                            countChat = threads.length;
                             this.setState({ threads, loading: false });
                         }
                     });
@@ -138,3 +141,5 @@ export default class AllChat extends Component {
         );
     }
 }
+
+export { countChat };

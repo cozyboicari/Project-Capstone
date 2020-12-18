@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StatusBar, Image, 
-    Dimensions, FlatList, ActivityIndicator, KeyboardAvoidingView } from 'react-native';
+    TouchableOpacity, FlatList, ActivityIndicator, KeyboardAvoidingView } from 'react-native';
 
 // file css
 import styles from './Styles';
@@ -18,30 +18,21 @@ import Icons from 'react-native-vector-icons/Ionicons';
 
 // firebase
 import { firestore, auth } from '../../Database/Firebase/ConfigGlobalFirebase';
+import { TextInput } from 'react-native-gesture-handler';
 
 export default class Reviews extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            messages: [],
-            rating: 0
+            rating: 0,
+            comment: ''
         }
     }
 
-    _renderIconSend = props => {
-        return(
-            <Send {...props}>
-                <View style={{ marginRight: 22 }}>
-                    <Icons name='send' color={colors.BACKGROUND_BLUEYONDER} size={25}/>
-                </View>
-            </Send>
-        )
-    }
+    _handleSend = async () => {
 
-    _handleSend = async (messages) => {
-        const text = messages[0].text;
-
+        const text = this.state.comment;
         const { idTour, oldAvgRatings } = this.props.route.params;
         const { rating } = this.state;
         const { uID, name, picture } = this.props.traveler;
@@ -67,7 +58,7 @@ export default class Reviews extends Component {
                 avgRating: newAvgRatings(this.props.ratings.length, oldAvgRatings, rating)
             }, { merge: true });
 
-        this.setState({ rating: 0 });
+        this.setState({ rating: 0, comment: '' });
     }
 
     componentDidMount() {
@@ -116,13 +107,10 @@ export default class Reviews extends Component {
     }
 
     render() {
-        const { messages, rating } = this.state;
+        const { rating, comment } = this.state;
 
         return(
-            <KeyboardAvoidingView
-                style={styles.container}
-                behavior='padding'
-            >
+            <KeyboardAvoidingView behavior='padding' style={styles.container}>
                 <View style={styles.container}>
                     <StatusBar barStyle="light-content"/>
                     <HeaderComponent {...this.props}/>
@@ -147,17 +135,27 @@ export default class Reviews extends Component {
                             defaultRating={rating}      
                             onFinishRating={rating => this.setState({ rating })}               
                         />
-                    </View> 
-                    <GiftedChat 
-                        messages={messages}
-                        user={{ _id: 1 }}
-                        renderSend={this._renderIconSend}
-                        alwaysShowSend
-                        onSend={this._handleSend}
-                        textInputProps={{
-                            autoCorrect: false
-                        }}
-                    />
+                    </View>
+                    <View style={styles.containerComment}>
+                        <TextInput 
+                            style={styles.comment}
+                            placeholder='Type a message...'
+                            autoCorrect={false}
+                            multiline={true}
+                            value={comment}
+                            onChangeText={comment => this.setState({ comment })}
+                        />
+                        <TouchableOpacity
+                            onPress={this._handleSend}
+                        >
+                            <Icons 
+                                name='send'
+                                size={25}
+                                color={colors.BACKGROUND_BLUEYONDER}
+                                style={styles.iconSend}
+                            />
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </KeyboardAvoidingView>
         )

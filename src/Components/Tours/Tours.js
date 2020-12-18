@@ -8,7 +8,7 @@ import styles from './Styles';
 import HeaderComponent from '../Header/Header';
 
 // file config global
-import { colors } from '../../ConfigGlobal';
+import { colors, convertIdCity } from '../../ConfigGlobal';
  
 //library ben ngoai
 import { Rating } from 'react-native-ratings';
@@ -30,12 +30,7 @@ export default class TourGuides extends Component {
             this.props._onGetTraveler();
         }, 1000);
     }
-
-    // componentDidUpdate() {
-    //     this.props._onGetTours('tours', this.props.route.params.idCity);
-    //     this.props._onGetTraveler();
-    // }
-
+    
     //item tour guide
     _renderItem = ({ item }) => {
        
@@ -70,7 +65,7 @@ export default class TourGuides extends Component {
                         <View style={styles.containerNameTour}>
                             <View style={{ flex: .3 }}>
                                 <Text style={styles.textIntro}>
-                                    {`Tận hưởng ${item.cityID} với `}<Text style={styles.subTextIntro}>{item.tourguideName}</Text>
+                                    {`Tận hưởng ${convertIdCity(item.cityID)} với `}<Text style={styles.subTextIntro}>{item.tourguideName}</Text>
                                 </Text>
                             </View>
 
@@ -93,7 +88,7 @@ export default class TourGuides extends Component {
                                         imageSize={18}
                                         startingValue={item.avgRating}
                                     />
-                                    <Text style={styles.textRating}>{`(${item.avgRating})`}</Text>
+                                    <Text style={styles.textRating}>{`(${parseFloat(item.avgRating).toFixed(1)})`}</Text>
                                 </View>
                             </View>
                         </View>

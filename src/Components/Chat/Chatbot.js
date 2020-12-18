@@ -18,7 +18,7 @@ import { Rating } from 'react-native-ratings';
 import { Card, Title, Paragraph, Button } from 'react-native-paper';
 
 //file config
-import { colors, dialogflowConfig } from '../../ConfigGlobal';
+import { colors, dialogflowConfig, convertIdCity } from '../../ConfigGlobal';
 
 
 const BOT_USER = {
@@ -143,7 +143,7 @@ export default class ChatUser extends Component {
                                     <View style={styles.containerNameTour}>
                                         <View style={{ flex: .3 }}>
                                             <Text style={styles.textIntro}>
-                                                {`Tận hưởng ${item.cityID} với `}<Text style={styles.subTextIntro}>{item.tourguideName}</Text>
+                                                {`Tận hưởng ${convertIdCity(item.cityID)} với `}<Text style={styles.subTextIntro}>{item.tourguideName}</Text>
                                             </Text>
                                         </View>
             

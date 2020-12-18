@@ -45,6 +45,8 @@ const ItemSignOut = ({ title, nameIcon, _signOut }) => {
 }
 
 export default class Settings extends Component {
+    _isMounted = false;
+
     constructor(props) {
         super(props);
 
@@ -61,9 +63,12 @@ export default class Settings extends Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
         auth().onAuthStateChanged(user => {
             if(user) {
-                this.setState({ user });
+                if(this._isMounted) {
+                    this.setState({ user });
+                }
                 this.props._onGetTraveler();
             }
         });
@@ -75,6 +80,10 @@ export default class Settings extends Component {
                 this.props._onGetTraveler();
             }
         });
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     render() {

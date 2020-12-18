@@ -28,7 +28,7 @@ import EditProfileDetailScreen from '../Redux/Containers/EditProfileDetailContai
 import CreateToursScreen from '../Redux/Containers/CreateToursContainer';
 import ReviewsScreen from '../Redux/Containers/ReviewContainer';
 
-import ChatAllScreen from '../Components/Chat/AllChat';
+import ChatAllScreen, { countChat } from '../Components/Chat/AllChat';
 import ChatUserScreen from '../Components/Chat/ChatUser';
 import OrderTourScreen from '../Components/OrderTour/OrderTour';
 import NumberOfPeopleScreen from '../Components/OrderTour/NumberOfPeople';
@@ -38,7 +38,7 @@ import DetailsTourScreen from '../Components/DetailsTour/DetailsTour';
 import BookingScreen from '../Components/Booking/Booking';
 import RegisterTourGuideScreen from '../Components/RegisterTourGuide/RegisterTourGuide';
 import IntroScreen from '../Components/Intro/Intro';
-import NotificationScreen from '../Components/Notification/Notification';
+import NotificationScreen, { countNotification } from '../Components/Notification/Notification';
 import HistoryBookingScreen from '../Components/HistoryBooking/HistoryBooking';
 
 
@@ -86,8 +86,6 @@ const ScreenSettings = () => {
     );
 }
 
-
-
 const TabsScreen = () => {
     return (
         <Tab.Navigator
@@ -107,7 +105,8 @@ const TabsScreen = () => {
                 name="Thông báo" 
                 component={NotificationScreen}
                 options={{
-                    tabBarIcon: ({size, color}) => <Icons name="notifications-outline" size={size} color={color}/>
+                    tabBarIcon: ({size, color}) => <Icons name="notifications-outline" size={size} color={color}/>,
+                    tabBarBadge: countNotification === 0 ? null : countNotification
                 }}
             />
             <Tab.Screen 
@@ -115,6 +114,7 @@ const TabsScreen = () => {
                 component={ChatAllScreen}
                 options={{
                     tabBarIcon: ({size, color}) => <Icons name="chatbubbles-outline" size={size} color={color}/>,
+                    tabBarBadge: countChat === 0 ? null : countChat
                 }}
             />
             <Tab.Screen 

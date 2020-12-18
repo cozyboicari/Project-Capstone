@@ -4,13 +4,13 @@ import { StyleSheet, Dimensions } from 'react-native';
 import { colors } from '../../ConfigGlobal';
 
 // bien toan cuc
-const { width } = Dimensions.get('screen');
+const { width, height } = Dimensions.get('screen');
 const AVATAR_REVIEW = 60;
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.BACKGROUND_CULTURE
+        backgroundColor: colors.BACKGROUND_CULTURE,
     },
     textTitle: {
         margin: 12,
@@ -19,12 +19,11 @@ const styles = StyleSheet.create({
         color: '#aaa',
     },
     containerReviews: {
-        flex: 7,
-        marginTop: 15
+        flex: 2,
+        marginTop: 15,
     },
     containerReviewItem: {
         paddingVertical: 10,
-        paddingBottom: 20,
     },
     containerTop: {
         flexDirection: 'row',
@@ -71,12 +70,28 @@ const styles = StyleSheet.create({
         borderColor: '#ddd',
     },
     bottomRatings: {
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: 20
     },
     titleRate: {
         fontSize: 18,
         fontWeight: '500',
         color: '#444'
+    },
+    containerComment: {
+        height: height * 0.1,
+        flexDirection: 'row',
+        borderTopWidth: 1,
+        borderColor: '#999',
+        paddingHorizontal: 10,
+        paddingTop: 20
+    },
+    comment: {
+        flex: 1,
+        fontSize: 17,
+    },
+    iconSend: {
+        paddingHorizontal: 10
     }
 });
 

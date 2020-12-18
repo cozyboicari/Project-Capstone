@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { View, Text, StatusBar, Image, FlatList, ActivityIndicator, Alert } from 'react-native';
 
 //css
@@ -10,37 +10,8 @@ import HeaderComponent from '../Header/Header';
 // firebase
 import { auth, firestore } from '../../Database/Firebase/ConfigGlobalFirebase';
 
-// const TabBarItem = ({ nameIcon, size, color, countBadge }) => {
-//     return (
-//         <View style={{ 
-//             flex: 1,
-//             flexDirection: 'row',
-//             alignItems: 'center'
-//         }}>
-//             <Icons name={nameIcon} size={size} color={color}/>
-//             <Animatable.View
-//                 animation='bounceIn'
-//                 style={{ 
-//                     position: 'absolute', 
-//                     paddingLeft: 14, 
-//                     paddingBottom: 10 
-//                 }}
-//             >
-//                 <Badge
-//                     size={22}
-//                     style={{
-//                         fontSize: 14.5,
-//                         fontWeight: '500',
-//                         backgroundColor: '#f44',
-//                     }}
-//                 >
-//                     {countBadge}
-//                 </Badge>
-//             </Animatable.View>
-//         </View>
-//     );
-// }
 
+let countNotification = 0;
 export default class Notification extends Component {
 
     _isMounted = false;
@@ -72,6 +43,7 @@ export default class Notification extends Component {
                             })
         
                             if(this._isMounted) {
+                                countNotification = notifications.length;
                                 this.setState({ notifications, loading: false });
                             }
                         })
@@ -136,3 +108,5 @@ export default class Notification extends Component {
         )
     }
 }
+
+export { countNotification };
