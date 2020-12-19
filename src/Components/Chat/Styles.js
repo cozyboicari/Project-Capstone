@@ -199,6 +199,20 @@ const styles = StyleSheet.create({
         color: '#999',
         marginLeft: 5
     },
+
+    //city
+    containerItemSuggestion: {
+        padding: 12,
+        borderWidth: 1,
+        borderRadius: 22,
+        borderColor: colors.BACKGROUND_BLUEYONDER,
+        marginLeft: 7,
+        marginBottom: 5
+    },
+    textItemSuggestion: {
+        fontSize: 15,
+        fontWeight: '400'
+    }
 });
 
 export default styles;

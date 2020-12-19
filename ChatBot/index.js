@@ -31,7 +31,17 @@ app.post('/', express.json(), (req, res) => {
     });
 
     //add agent
-    async function chonThanhPho(agent) {
+    function DiaDiemDL(agent) {
+        agent.add("Đây là những thành phố mà ứng dụng của bot đang có, hãy click vào thành phố mình muốn chọn nhé !");
+        agent.add(new dialogflowFulfillment.Suggestion("Đà Nẵng"));
+        agent.add(new dialogflowFulfillment.Suggestion("Hà Nội"));
+        agent.add(new dialogflowFulfillment.Suggestion("Đà Lạt"));
+        agent.add(new dialogflowFulfillment.Suggestion("Vũng Tàu"));
+        agent.add(new dialogflowFulfillment.Suggestion("Hồ Chí Minh"));
+        agent.add(new dialogflowFulfillment.Suggestion("Vũng Tàu"));
+    }
+
+    async function ChonThanhPho(agent) {
         try {
             const nameCity = chuanHoaTenThanhPho(agent.context.get('ituvan-diadiemdulich-diadiem-followup').parameters['ethanhpho.original']);
 
@@ -53,11 +63,27 @@ app.post('/', express.json(), (req, res) => {
             console.log('[get id city] ', error);
         }
     }
-
     
 
     function DongY_cau2(agent) {
-        questions.category = agent.query;
+        switch(agent.query) {
+            case '1':  
+                questions.category = 'Khám phá thành phố'
+                break;
+            case '2':  
+                questions.category = 'Khám phá ẩm thực'
+                break;
+            case '3':  
+                questions.category = 'Khám phá danh làm thắng cảnh'
+                break;
+            case '4':  
+                questions.category = 'Khám phá văn hoá, lịch sử'
+                break;
+            default:  
+                questions.category = agent.query
+                break;
+        }
+
         agent.add('2. Bạn muốn chuyến đi thời gian là bao nhiêu? (từ 1 đến 8 giờ, hãy nhập số!)?');
     }
 
@@ -94,9 +120,9 @@ app.post('/', express.json(), (req, res) => {
         }
 
         if(tours.length === 0) {
-            agent.add(`Opps... xin lỗi bạn :( chuyến đi phù hợp với bạn hiện tại không có, \n\nbạn có thể tìm kiếm chuyến đi khác bằng cách nhấn 'tư vấn' ạ!`);
+            agent.add(`Opps... xin lỗi bạn :( chuyến đi phù hợp với bạn hiện tại không có, \n\nbạn có thể tìm kiếm chuyến đi khác bằng cách nhắn 'tư vấn' ạ!`);
         } else {
-            agent.add(`Đây là các chuyến đi du lịch phù hợp với bạn để bạn có thể tham khảo nạ.\n\nNếu muốn tiếp tục vui lòng nhấn 'Tư vấn ạ'!`);
+            agent.add(`Đây là các chuyến đi du lịch phù hợp với bạn để bạn có thể tham khảo nạ.\n\nNếu muốn tiếp tục vui lòng nhắn 'tư vấn' hoặc nhắn 'kết thúc' đề dừng lại ạ!`);
             agent.add(new dialogflowFulfillment.Payload(
                 agent.UNSPECIFIED, 
                 payload,
@@ -110,7 +136,8 @@ app.post('/', express.json(), (req, res) => {
 
     // set intent
     let intent = new Map();
-    intent.set('IThanhPho', chonThanhPho);
+    intent.set('IDiaDiemDuLich', DiaDiemDL);
+    intent.set('IThanhPho', ChonThanhPho);
     intent.set('ICau2', DongY_cau2);
     intent.set('ICau3', DongY_cau3);
     intent.set('ICauCuoi', DongY_finish);

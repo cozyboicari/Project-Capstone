@@ -56,27 +56,30 @@ export default class Settings extends Component {
     }
 
     _signOut = () => {
-        logOut().then(() => {
-            console.log('log out !');
-            this.setState({ user: null });
-        });
+        if(this._isMounted) {
+            setTimeout(() => {
+                logOut().then(() => {
+                    console.log('log out !');
+                    this.setState({ user: null });
+                });
+            }, 1000);
+        }
     }
 
     componentDidMount() {
         this._isMounted = true;
         auth().onAuthStateChanged(user => {
-            if(user) {
-                if(this._isMounted) {
-                    this.setState({ user });
-                }
+            if(user && this._isMounted) {
+                this.setState({ user });
                 this.props._onGetTraveler();
             }
         });
     }
 
     componentDidUpdate() {
+        this._isMounted = true;
         auth().onAuthStateChanged(user => {
-            if(user) {
+            if(user && this._isMounted) {
                 this.props._onGetTraveler();
             }
         });

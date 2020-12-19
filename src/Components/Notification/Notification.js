@@ -49,7 +49,8 @@ export default class Notification extends Component {
                         })
                     })
             } else {
-                this.setState({ loading: true })
+                countNotification = 0;
+                this.setState({ loading: true });
             }
         })
     }

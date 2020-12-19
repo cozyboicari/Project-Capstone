@@ -97,6 +97,7 @@ export default class AllChat extends Component {
                         }
                     });
             } else {
+                countChat = 0;
                 this.setState({ loading: true })
             }
         })

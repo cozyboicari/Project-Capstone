@@ -67,7 +67,7 @@ export default class ChatUser extends Component {
     // send message vao gift
     _handleSend = (messages = []) => {
         this.setState({ messages: GiftedChat.append(this.state.messages, messages) });
-
+    
         let message = messages[0].text;
 
         Dialogflow_V2.requestQuery(
@@ -79,13 +79,17 @@ export default class ChatUser extends Component {
 
     _handleGoogleRespone = result => {
         const arr = [...result.queryResult.fulfillmentMessages];
-        
+
         const cards = arr.splice(1, arr.length - 1);
         const text = arr[0].text.text[0];
 
-        if(cards[0] && cards[0].payload.tours.length !== 0) {
+        if(cards[0] && cards[0].payload && cards[0].payload.tours.length !== 0) {
             this._sendBotResponse('', cards[0].payload.tours);
-        }
+        } 
+        else if(cards[0] && cards[0].quickReplies && cards[0].quickReplies.quickReplies.length !== 0) {
+            this._sendBotResponse('', cards[0].quickReplies.quickReplies);
+        } 
+
         this._sendBotResponse(text, 0);
     }
 
@@ -101,80 +105,110 @@ export default class ChatUser extends Component {
         this.setState({ messages: GiftedChat.append(this.state.messages, [msg])});
     }
 
+    _renderItemCard = ({ item }) => {
+        return (
+            <TouchableOpacity
+                onPress={() => {
+                    const { navigate } = this.props.navigation;
+                    navigate('Details Tour Screen', {
+                        tour: item
+                    })
+                }}
+            >
+                <View style={styles.containerPostTour}>
+                    <View style={styles.containerInfomationTour}>
+                        {/* anh bia */}
+                        <View style={styles.containerImageCover}>
+                            <Image 
+                                style={styles.imageCover}
+                                source={{ uri: item.tourguideImageCover }}
+                            />
+                        </View>
+                        {/* anh avatar */}
+                        <View style={styles.containerImage}>
+                            <Image 
+                                style={styles.image}
+                                source={{ uri: item.tourguideImage }}
+                            />
+                        </View>
+                        {/* thong tin gia tien cua tour */}
+                        <View style={styles.containerNameTour}>
+                            <View style={{ flex: .3 }}>
+                                <Text style={styles.textIntro}>
+                                    {`Tận hưởng ${convertIdCity(item.cityID)} với `}<Text style={styles.subTextIntro}>{item.tourguideName}</Text>
+                                </Text>
+                            </View>
+
+                            <View style={{ flex: 1, flexDirection: 'row', paddingRight: 20 }}>
+                                <Text numberOfLines={2} style={styles.textNameTour}>
+                                    {item.name}
+                                </Text>
+                            </View>
+
+                            <View style={{ flex: 1.5 }}>
+                                <View style={styles.containerPrice}>
+                                    <Text style={styles.textPrice}>{`${item.price}$`}</Text>
+                                    <Text style={styles.textPrice}>{`/ ${item.time} giờ`}</Text>
+                                </View>
+                                <View style={styles.containerRating}>
+                                    <Rating 
+                                        type="custom"
+                                        ratingCount={5}
+                                        readonly={true}
+                                        imageSize={18}
+                                        startingValue={item.avgRating}
+                                    />
+                                    <Text style={styles.textRating}>{`(${item.avgRating})`}</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        )
+    }
+
+    _renderItemSuggestion = ({ item }) => {
+        return (
+            <TouchableOpacity
+                onPress={() => {
+                    const message = item;
+                    const messages = [{
+                        createdAt: new Date().getTime(),
+                        text: message,
+                        user: {
+                            _id: 1
+                        },
+                        _id: Math.random().toString(36).substr(2, 5)
+                    }]
+
+                    this.setState({ messages: GiftedChat.append(this.state.messages, messages) });
+                    Dialogflow_V2.requestQuery(
+                        message,
+                        result => { return this._handleGoogleRespone(result) },
+                        error => console.log(error)
+                    )
+                }}
+            >
+                <View style={styles.containerItemSuggestion}>
+                    <Text style={styles.textItemSuggestion}>{item}</Text>
+                </View>
+            </TouchableOpacity>
+        );
+    }
     
     _renderItem = props => {
         const { currentMessage } = props;
 
         if(currentMessage.cards) {
             const { cards } = currentMessage;     
-            
             return <FlatList
-                horizontal={true}
                 showsHorizontalScrollIndicator={false}
+                horizontal={cards[0] === 'Đà Nẵng' ? false : true}
                 data={cards}
                 keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item, index }) => {
-                    return (
-                        <TouchableOpacity
-                            onPress={() => {
-                                const { navigate } = this.props.navigation;
-                                navigate('Details Tour Screen', {
-                                    tour: item
-                                })
-                            }}
-                        >
-                            <View style={styles.containerPostTour}>
-                                <View style={styles.containerInfomationTour}>
-                                    {/* anh bia */}
-                                    <View style={styles.containerImageCover}>
-                                        <Image 
-                                            style={styles.imageCover}
-                                            source={{ uri: item.tourguideImageCover }}
-                                        />
-                                    </View>
-                                    {/* anh avatar */}
-                                    <View style={styles.containerImage}>
-                                        <Image 
-                                            style={styles.image}
-                                            source={{ uri: item.tourguideImage }}
-                                        />
-                                    </View>
-                                    {/* thong tin gia tien cua tour */}
-                                    <View style={styles.containerNameTour}>
-                                        <View style={{ flex: .3 }}>
-                                            <Text style={styles.textIntro}>
-                                                {`Tận hưởng ${convertIdCity(item.cityID)} với `}<Text style={styles.subTextIntro}>{item.tourguideName}</Text>
-                                            </Text>
-                                        </View>
-            
-                                        <View style={{ flex: 1, flexDirection: 'row', paddingRight: 20 }}>
-                                            <Text numberOfLines={2} style={styles.textNameTour}>
-                                                {item.name}
-                                            </Text>
-                                        </View>
-            
-                                        <View style={{ flex: 1.5 }}>
-                                            <View style={styles.containerPrice}>
-                                                <Text style={styles.textPrice}>{`${item.price}$`}</Text>
-                                                <Text style={styles.textPrice}>{`/ ${item.time} giờ`}</Text>
-                                            </View>
-                                            <View style={styles.containerRating}>
-                                                <Rating 
-                                                    type="custom"
-                                                    ratingCount={5}
-                                                    readonly={true}
-                                                    imageSize={18}
-                                                    startingValue={item.avgRating}
-                                                />
-                                                <Text style={styles.textRating}>{`(${item.avgRating})`}</Text>
-                                            </View>
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                    )
-                }}
+                renderItem={cards[0] === 'Đà Nẵng' ? this._renderItemSuggestion : this._renderItemCard}
+                numColumns={cards[0] === 'Đà Nẵng' ? 3 : 0}
             />
         }
         return <Bubble {...props} />
@@ -188,14 +222,15 @@ export default class ChatUser extends Component {
                 <HeaderComponent {...this.props} isHome={false}/>
                 
                 { messages.length === 0 ? <ActivityIndicator size={300} /> : 
-                <GiftedChat
-                    renderBubble={this._renderItem}
-                    messages={messages}
-                    onSend={newMessage => this._handleSend(newMessage)}
-                    user={{ _id: 1 }}
-                    renderSend={this._renderIconSend}
-                    alwaysShowSend
-                />}
+                    <GiftedChat
+                        renderBubble={this._renderItem}
+                        messages={messages}
+                        onSend={newMessage => this._handleSend(newMessage)}
+                        user={{ _id: 1 }}
+                        renderSend={this._renderIconSend}
+                        alwaysShowSend
+                    />
+                }
             </View>
         );
     }

@@ -161,12 +161,14 @@ export default class SignUp extends Component {
                                 block 
                                 style={styles.buttonSignUp}
                                 onPress={() => {
-                                    this.props._onCreateUser({
-                                        email: email,
-                                        password: password,
-                                        fullname: fullname, 
-                                        phoneNumber: phoneNumber,
-                                    });
+                                    setTimeout(() => {
+                                        this.props._onCreateUser({
+                                            email: email,
+                                            password: password,
+                                            fullname: fullname, 
+                                            phoneNumber: phoneNumber,
+                                        });
+                                    }, 1000);
                                 }}
                             >
                                 <Text style={styles.textSignUp}>Đăng kí và đăng nhập</Text>

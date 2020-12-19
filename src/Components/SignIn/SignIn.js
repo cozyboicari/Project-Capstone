@@ -101,10 +101,12 @@ export default class SignIn extends Component {
                                 block 
                                 style={styles.buttonSignIn}
                                 onPress={() => {
-                                    this.props._onLogin({ 
-                                        email: email, 
-                                        password: password
-                                    });
+                                    setTimeout(() => {
+                                        this.props._onLogin({ 
+                                            email: email, 
+                                            password: password
+                                        });
+                                    }, 1000);
                                 }}
                             >
                                 <Text style={styles.textSignIn}>Đăng nhập</Text>
