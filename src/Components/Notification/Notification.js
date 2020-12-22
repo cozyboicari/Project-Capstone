@@ -10,7 +10,6 @@ import HeaderComponent from '../Header/Header';
 // firebase
 import { auth, firestore } from '../../Database/Firebase/ConfigGlobalFirebase';
 
-
 let countNotification = 0;
 export default class Notification extends Component {
 

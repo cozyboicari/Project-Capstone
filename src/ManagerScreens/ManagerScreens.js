@@ -41,7 +41,6 @@ import IntroScreen from '../Components/Intro/Intro';
 import NotificationScreen, { countNotification } from '../Components/Notification/Notification';
 import HistoryBookingScreen from '../Components/HistoryBooking/HistoryBooking';
 
-
 //redux
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -98,16 +97,16 @@ const TabsScreen = () => {
                 name="Trang chủ" 
                 component={ScreenHome}
                 options={() => ({
-                    tabBarIcon: ({size, color}) => <Icons name="home-outline" size={size} color={color}/>,
+                    tabBarIcon: ({size, color}) => <Icons name="home-outline" size={size} color={color}/>
                 })}
             />
             <Tab.Screen 
                 name="Thông báo" 
                 component={NotificationScreen}
-                options={{
+                options={() => ({
                     tabBarIcon: ({size, color}) => <Icons name="notifications-outline" size={size} color={color}/>,
                     tabBarBadge: countNotification === 0 ? null : countNotification
-                }}
+                })}
             />
             <Tab.Screen 
                 name="Trò chuyện" 

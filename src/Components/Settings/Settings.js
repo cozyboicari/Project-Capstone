@@ -69,8 +69,11 @@ export default class Settings extends Component {
     componentDidMount() {
         this._isMounted = true;
         auth().onAuthStateChanged(user => {
-            if(user && this._isMounted) {
-                this.setState({ user });
+            if(user) {
+                if(this._isMounted) {
+                    this.setState({ user });
+                }
+
                 this.props._onGetTraveler();
             }
         });
@@ -79,7 +82,7 @@ export default class Settings extends Component {
     componentDidUpdate() {
         this._isMounted = true;
         auth().onAuthStateChanged(user => {
-            if(user && this._isMounted) {
+            if(user) {
                 this.props._onGetTraveler();
             }
         });
