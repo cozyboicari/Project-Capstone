@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, Dimensions, Alert } from 'react-native';
 
 const version = '0.0.5';
 
@@ -12,6 +12,47 @@ export const colors = {
     TEXT_DARK_JUNGLE_GREEN: '#171D1C',
     COLOR_HEART: '#A62C2b'
 }
+
+//kiem tra email co hop le khong
+export const _isEmail = email => {
+    let filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if(!filter.test(email)) {
+        Alert.alert('Thông báo', 'Email không hợp lệ, xin nhập lại!');
+        return false;
+    }
+    return true;
+}
+
+//kiem tra username 
+export const _isPhoneNumber = phoneNumber => {
+let filter = /^0(1\d{9}|9\d{8})$/;
+    if(!filter.test(phoneNumber)) {
+        Alert.alert('Thông báo', 'Số điện thoại không hợp lệ, xin nhập lại!');
+        return false;
+    }
+    return true;
+}
+
+//kiem tra password
+export const _isPassword = password => {
+let filter = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    if(!filter.test(password)) {
+        Alert.alert('Thông báo', 'Mật khẩu không hợp lệ, xin nhập lại!');
+        return false;
+    }
+    return true;
+}
+
+//kiem tra fullname
+export const _isFullname = fullname => {
+    let filter = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
+    if(!filter.test(fullname)) {
+        Alert.alert('Thông báo', 'Họ và tên không hợp lệ, xin nhập lại!');
+        return false;
+    }
+    return true;
+}
+
 
 // rate
 export const newAvgRatings = (numRatings, oldAvgRatings, rating) => {

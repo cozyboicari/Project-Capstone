@@ -6,6 +6,9 @@ import { View, Text, StatusBar, Image,
 // file css
 import styles, { pickerSelectStylesGender } from './Styles';
 
+// file global
+import { _isFullname, _isPhoneNumber } from '../../ConfigGlobal';
+
 // file component
 import HeaderComponent from '../Header/Header';
 
@@ -76,9 +79,23 @@ export default class Profile extends Component {
             {
                 text: 'Xác nhận',
                 onPress: () => {
-                    this.props._onUpdateProfile(travelerUpdated);
-                    const { goBack } = this.props.navigation;
-                    goBack();
+        
+                    let isCheckUpdate = true;
+
+                    if(!_isFullname(travelerUpdated.name)) {
+                        isCheckUpdate = false;
+                        this.setState({ name: '' });
+                    }
+                    if(!_isPhoneNumber(travelerUpdated.phone)) {
+                        isCheckUpdate = false;
+                        this.setState({ phone: '' });
+                    }
+
+                    if(isCheckUpdate) {
+                        this.props._onUpdateProfile(travelerUpdated);
+                        const { goBack } = this.props.navigation;
+                        goBack();
+                    }
                 }
             },
             {

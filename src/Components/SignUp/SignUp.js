@@ -4,7 +4,7 @@ import { View, StatusBar, SafeAreaView,
     Keyboard, TouchableOpacity, Alert } from 'react-native';
 
 //file config global
-import { ComponentVersion } from '../../ConfigGlobal';
+import { ComponentVersion, _isEmail, _isFullname, _isPassword, _isPhoneNumber } from '../../ConfigGlobal';
 
 //file css
 import styles from './Style';
@@ -23,51 +23,6 @@ export default class SignUp extends Component {
             password: '',
         }
     }
-
-     //kiem tra email co hop le khong
-     _isEmail = email => {
-        let filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        if(!filter.test(email)) {
-            Alert.alert('Thông báo', 'Email không hợp lệ, xin nhập lại!');
-            this.setState({ email: ''});
-            return false;
-        }
-        return true;
-    }
-
-    //kiem tra username 
-    _isPhoneNumber = phoneNumber => {
-        let filter = /^0(1\d{9}|9\d{8})$/;
-        if(!filter.test(phoneNumber)) {
-            Alert.alert('Thông báo', 'Số điện thoại không hợp lệ, xin nhập lại!');
-            this.setState({ phoneNumber: ''});
-            return false;
-        }
-        return true;
-    }
-
-    //kiem tra password
-    _isPassword = password => {
-        let filter = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-        if(!filter.test(password)) {
-            Alert.alert('Thông báo', 'Mật khẩu không hợp lệ, xin nhập lại!');
-            this.setState({ password: ''});
-            return false;
-        }
-        return true;
-    }
-
-    //kiem tra fullname
-    _isFullname = fullname => {
-        let filter = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
-        if(!filter.test(fullname)) {
-            Alert.alert('Thông báo', 'Họ và tên không hợp lệ, xin nhập lại!');
-            this.setState({ fullname: ''});
-            return false;
-        }
-        return true;
-    }
-
 
     render() {
         const { fullname, phoneNumber, email, password } = this.state;
@@ -161,12 +116,33 @@ export default class SignUp extends Component {
                                 block 
                                 style={styles.buttonSignUp}
                                 onPress={() => {
-                                    this.props._onCreateUser({
-                                        email: email,
-                                        password: password,
-                                        fullname: fullname, 
-                                        phoneNumber: phoneNumber,
-                                    });
+                                    let isCheckSignUp = true;
+
+                                    if(!_isFullname(fullname)) {
+                                        isCheckSignUp = false;
+                                        this.setState({ fullname: '' });
+                                    }
+                                    if(!_isPhoneNumber(phoneNumber)) {
+                                        isCheckSignUp = false;
+                                        this.setState({ phoneNumber: '' });
+                                    }
+                                    if(!_isEmail(email)) {
+                                        isCheckSignUp = false;
+                                        this.setState({ email: '' });
+                                    }
+                                    if(!_isPassword(email)) {
+                                        isCheckSignUp = false;
+                                        this.setState({ password: '' });
+                                    }
+                                    
+                                    if(isCheckSignUp) {
+                                        this.props._onCreateUser({
+                                            email: email,
+                                            password: password,
+                                            fullname: fullname, 
+                                            phoneNumber: phoneNumber,
+                                        });
+                                    }
                                 }}
                             >
                                 <Text style={styles.textSignUp}>Đăng kí và đăng nhập</Text>

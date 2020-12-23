@@ -81,6 +81,19 @@ export default class ActiveTourGuide extends Component {
         })
     }
 
+    _checkAnswerEmpty = () => {
+        const { answerd } = this.state;
+
+        for(let i = 0; i < answerd.length; i++) {
+            if(answerd[i].answer === '') {
+                Alert.alert('Thông báo', 'Bạn còn câu hỏi bỏ trống, xin vui lòng điền vào!');
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     _updateAnswer = (answerUpdate, position) => {
         let arrTemp = [...this.state.answerd];
         arrTemp[position] = { ...arrTemp[position], answer: answerUpdate };
@@ -100,7 +113,6 @@ export default class ActiveTourGuide extends Component {
                 result.push(getText);
             }
         });
-        console.log(result);
         return result;
     }
 
@@ -146,6 +158,10 @@ export default class ActiveTourGuide extends Component {
                                         {
                                             text: 'Xác nhận',
                                             onPress: () => {
+                                                if(!this._checkAnswerEmpty()) {
+                                                    return;
+                                                }
+                                                
                                                 _onPushQuestions(answerd);
                                                 Alert.alert('Thông báo', 'Câu trả lời của bạn đã được gửi đến chúng tôi, và chúng tôi sẽ xem xét và trả lời bạn qua email!');
                                                 const { goBack } = this.props.navigation;

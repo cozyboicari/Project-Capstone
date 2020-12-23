@@ -57,12 +57,10 @@ export default class Settings extends Component {
 
     _signOut = () => {
         if(this._isMounted) {
-            setTimeout(() => {
-                logOut().then(() => {
-                    console.log('log out !');
-                    this.setState({ user: null });
-                });
-            }, 1000);
+            logOut().then(() => {
+                console.log('log out !');
+                this.setState({ user: null });
+            });
         }
     }
 
