@@ -98,43 +98,6 @@ function userChart(data, data2) {
     },
   })
 }
-const ctx = document.getElementById('myChart2').getContext('2d')
-const chart = new Chart(ctx, {
-  // The type of chart we want to create
-  type: 'polarArea',
-
-  // The data for our datasets
-  data: {
-    datasets: [
-      {
-        data: [5, 10, 15],
-        backgroundColor: [
-          'rgb(255,177,193)',
-          'rgb(166,223,223)',
-          'rgb(154,208,245)',
-        ],
-        label: 'My dataset', // for legend
-      },
-    ],
-    labels: ['Số lượng HDV', 'Số người dùng', 'Số tour'],
-  },
-  options: {
-    responsive: true,
-    legend: {
-      position: 'right',
-    },
-    scale: {
-      ticks: {
-        beginAtZero: true,
-      },
-      reverse: false,
-    },
-    animation: {
-      animateRotate: false,
-      animateScale: true,
-    },
-  },
-})
 const db = firebase.firestore()
 db.collection('travelers').onSnapshot((snapshot) => {
   const data = snapshot.docs.map((doc) => doc.data())

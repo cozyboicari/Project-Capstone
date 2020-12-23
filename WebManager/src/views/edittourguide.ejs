@@ -145,6 +145,7 @@
                               value="<%= dataTourguide.phone %>"
                               id="example-tel-input"
                               name="phone"
+                              pattern="^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$"
                             />
                           </div>
                         </div>
@@ -152,14 +153,15 @@
                           <label
                             for="example-date-input"
                             class="col-md-2 col-form-label"
-                            >Ngày</label
+                            >Ngày sinh</label
                           >
                           <div class="col-md-10">
                             <input
                               class="form-control"
                               type="date"
-                              value="2019-08-19"
+                              value="<%= dataTourguide.birthday %>"
                               id="example-date-input"
+                              name="birthday"
                             />
                           </div>
                         </div>

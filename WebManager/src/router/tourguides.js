@@ -79,6 +79,7 @@ router
           passions,
           email,
           languages,
+          birthday,
         } = req.body
         const convertGender = req.body.gender
         const convertIsActive = req.body.isActive
@@ -100,6 +101,7 @@ router
               languages,
               isActive,
               gender,
+              birthday,
             },
             { merge: true },
           )
@@ -116,6 +118,7 @@ router
               languages,
               isActive,
               gender,
+              birthday,
             },
             { merge: true },
           )
