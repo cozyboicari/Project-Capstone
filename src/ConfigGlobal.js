@@ -15,7 +15,7 @@ export const colors = {
 
 //kiem tra email co hop le khong
 export const _isEmail = email => {
-    let filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    let filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/g;
     if(!filter.test(email)) {
         Alert.alert('Thông báo', 'Email không hợp lệ, xin nhập lại!');
         return false;
@@ -25,7 +25,7 @@ export const _isEmail = email => {
 
 //kiem tra username 
 export const _isPhoneNumber = phoneNumber => {
-let filter = /^0(1\d{9}|9\d{8})$/;
+let filter = /^0(1\d{9}|9\d{8})$/g;
     if(!filter.test(phoneNumber)) {
         Alert.alert('Thông báo', 'Số điện thoại không hợp lệ, xin nhập lại!');
         return false;
@@ -35,7 +35,7 @@ let filter = /^0(1\d{9}|9\d{8})$/;
 
 //kiem tra password
 export const _isPassword = password => {
-let filter = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+let filter = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/g;
     if(!filter.test(password)) {
         Alert.alert('Thông báo', 'Mật khẩu không hợp lệ, xin nhập lại!');
         return false;
@@ -44,9 +44,22 @@ let filter = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 }
 
 //kiem tra fullname
+function removeAscent (str) {
+    if (str === null || str === undefined) return str;
+    str = str.toLowerCase();
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+    str = str.replace(/đ/g, "d");
+    return str;
+  }
+
 export const _isFullname = fullname => {
-    let filter = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
-    if(!filter.test(fullname)) {
+    let filter = /^[a-zA-Z ]{2,}$/g;
+    if(!filter.test(removeAscent(fullname))) {
         Alert.alert('Thông báo', 'Họ và tên không hợp lệ, xin nhập lại!');
         return false;
     }

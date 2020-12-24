@@ -120,7 +120,11 @@ export default class AllChat extends Component {
                     <TouchableOpacity
                         onPress={() => {
                             const { navigate } = this.props.navigation;
-                            navigate('Chatbot Screen');
+                            if(auth().currentUser) {
+                                navigate('Chatbot Screen');
+                            } else {
+                                navigate('Sign In Screen');
+                            }
                         }}
                         style={styles.containerChatbot}
                     >

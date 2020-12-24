@@ -104,8 +104,8 @@ export default class Home extends Component {
                     <View style={styles.containerTopDestinations}>
                         <Text style={styles.textTitle}>
                             {
-                                !viewAll ? 'Những địa điểm hấp dẫn nhất'
-                                : 'Tất cả những địa điểm'
+                                !viewAll ? 'Những thành phố hấp dẫn nhất'
+                                : 'Tất cả những thành phố'
                             }
                         </Text>
                         <TouchableOpacity
