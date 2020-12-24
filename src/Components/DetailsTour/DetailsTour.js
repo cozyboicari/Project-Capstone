@@ -61,7 +61,7 @@ export default class ProfileTourGuides extends Component {
         const { name, tourguideName, avgRating, introduce, 
             time, numberPeople, category, languages, 
             description, price, tourguideImage, 
-            tourguideImageCover, schedule, tourguideID, id } = this.props.route.params.tour;
+            tourguideImageCover, scheduleDetail, tourguideID, id } = this.props.route.params.tour;
 
         return (
             <View style={styles.container}>
@@ -72,7 +72,7 @@ export default class ProfileTourGuides extends Component {
 
                 {/* thong tin ve tour va tour guide*/}
                 <FlatList
-                    data={schedule}
+                    data={scheduleDetail}
                     keyExtractor={(item, index) => index.toString()}
                     showsVerticalScrollIndicator={false}
                     renderItem={({ index, item}) => {

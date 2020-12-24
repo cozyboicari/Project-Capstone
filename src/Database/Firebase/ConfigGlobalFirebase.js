@@ -83,7 +83,7 @@ export const getToursInCity = async (path, idCity) => {
           tourguideImage: tour.data().tourguideImage,
           category: tour.data().category,
           languages: tour.data().languages,
-          schedule: tour.data().scheduleDetail,
+          scheduleDetail: tour.data().scheduleDetail,
           numberAccount: tour.data().numberAccount
         }
         

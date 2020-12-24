@@ -130,7 +130,7 @@ export default class SignUp extends Component {
                                         isCheckSignUp = false;
                                         this.setState({ email: '' });
                                     }
-                                    if(!_isPassword(email)) {
+                                    if(!_isPassword(password)) {
                                         isCheckSignUp = false;
                                         this.setState({ password: '' });
                                     }

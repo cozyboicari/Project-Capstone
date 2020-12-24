@@ -79,11 +79,9 @@ app.post('/', express.json(), (req, res) => {
             case '4':  
                 questions.category = 'Khám phá văn hoá, lịch sử'
                 break;
-            default:  
-                questions.category = agent.query
+            default:
                 break;
         }
-
         agent.add('2. Bạn muốn chuyến đi thời gian là bao nhiêu? (từ 1 đến 8 giờ, hãy nhập số!)?');
     }
 
