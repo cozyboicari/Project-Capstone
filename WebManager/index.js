@@ -46,13 +46,12 @@ app.use(express.urlencoded())
 
 app.set('trust proxy', 1)
 
-const expiryDate = new Date(Date.now() + 60 * 60 * 1000)
+// const expiryDate = new Date(Date.now() + 60 * 60 * 1000)
 app.use(
   expressSession({
     secret: 'keyboard cat',
     cookie: {
       httpOnly: true,
-      expires: expiryDate,
     },
   }),
 )

@@ -158,7 +158,7 @@ export default class ChatUser extends Component {
                                         imageSize={18}
                                         startingValue={item.avgRating}
                                     />
-                                    <Text style={styles.textRating}>{`(${item.avgRating})`}</Text>
+                                    <Text style={styles.textRating}>{`(${parseFloat(item.avgRating).toFixed(1)})`}</Text>
                                 </View>
                             </View>
                         </View>

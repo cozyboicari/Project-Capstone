@@ -165,6 +165,7 @@ export default class ProfileTourGuides extends Component {
                                         readonly={true}
                                         imageSize={18}
                                         startingValue={avgRating}
+                                        tintColor={colors.BACKGROUND_CULTURE}
                                     />
                                     <Text style={styles.textRating}>{`(${parseFloat(avgRating).toFixed(1)})`}</Text>
                                     <TouchableOpacity

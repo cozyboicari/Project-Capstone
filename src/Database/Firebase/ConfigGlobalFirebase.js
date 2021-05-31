@@ -219,6 +219,10 @@ export const createUserByEmail = (newUser) => {
         .catch(error => {
           console.log(error);
         })
+    })
+    .catch(() => {
+      Alert.alert('Thông báo', 'Email đã tồn tại, xin nhập lại!');
+      console.log('Register fail !');
     });
 }
 
