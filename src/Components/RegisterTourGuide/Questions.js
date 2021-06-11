@@ -12,9 +12,28 @@ import { colors } from '../../ConfigGlobal';
 import * as Animatable from 'react-native-animatable';
 import Icons from 'react-native-vector-icons/Ionicons';
 import RNPickerSelect from 'react-native-picker-select';
+import ImagePicker from 'react-native-image-picker';
 
 // question item
 export const QuestionItem = ({ itemQuestion, step, root }) => {
+
+    chooseFileImage = () => {
+        let options = {
+            title: 'Select image avatar',
+        };
+
+        ImagePicker.showImagePicker(options, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                root._setAnswer('data:image/jpeg;base64,' + response.data)
+            }
+        })
+    }
 
     //render item few
     const _renderItem = ({ item }) => {
@@ -189,7 +208,22 @@ export const QuestionItem = ({ itemQuestion, step, root }) => {
                                 />
                             )
                         }}
-                    />)
+                    />) ||
+                    itemQuestion.type === "choose-image" && 
+                    (
+                        <TouchableOpacity
+                        onPress={this.chooseFileImage}>
+                            <TextInput
+                                style={styles.textInputQuestion}
+                                keyboardType={itemQuestion.keyboard}
+                                placeholder='Hãy cập nhật CMND của bạn...'
+                                autoCapitalize={(itemQuestion.keyboard === 'email-address') ? 'none' : 'sentences'}
+                                placeholderTextColor={colors.BACKGROUND_BLUEYONDER}
+                                value={root._getAnswer()}
+                                pointerEvents="none"
+                            />
+                        </TouchableOpacity>
+                    )
                 }
             </View>
         </Animatable.View>

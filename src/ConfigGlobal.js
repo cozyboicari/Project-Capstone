@@ -7,10 +7,10 @@ const { height } = Dimensions.get('window');
 
 //color global
 export const colors = {
-    BACKGROUND_BLUEYONDER: '#558C8C',
-    BACKGROUND_CULTURE: '#EFF7FF',
-    TEXT_DARK_JUNGLE_GREEN: '#231123',
-    COLOR_HEART: '#82204A'
+    BACKGROUND_BLUEYONDER: '#576CA8',
+    BACKGROUND_CULTURE: '#FFF',
+    TEXT_DARK_JUNGLE_GREEN: '#171D1C',
+    COLOR_HEART: '#A62C2b'
 }
 
 //kiem tra email co hop le khong
