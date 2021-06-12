@@ -23,7 +23,7 @@ const ItemChatAll = ({ item, navigation }) => {
     const user = auth().currentUser.uid === item.user_1._id ? item.user_2 : item.user_1;
     const amToPm = new Date(item.latestMessage.createdAt).toLocaleTimeString().slice(8);
     const time = new Date(item.latestMessage.createdAt).toLocaleTimeString().slice(0, 5) + amToPm;
-    
+
     return(
         <TouchableOpacity 
             onPress={() => {

@@ -33,7 +33,6 @@ export default class TourGuides extends Component {
     
     //item tour guide
     _renderItem = ({ item }) => {
-       
         return (
             <TouchableOpacity
                 onPress={() => {
