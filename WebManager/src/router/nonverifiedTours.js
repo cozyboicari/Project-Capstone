@@ -97,6 +97,7 @@ router
           .get()
         const docID = docSnapshot.docs.map((doc) => doc.id).toString()
         await db.collection('tours').doc(id).set(dataTour, { merge: true })
+        await db.collection('nonverifiedTours').doc(id).delete()
         await db
           .collection('travelers')
           .doc(docID)
@@ -107,7 +108,7 @@ router
             message: 'Tour của bạn đã được duyệt!',
             date: new Date().getTime(),
           })
-        await db.collection('nonverifiedtours').doc(id).delete()
+
         res.redirect('/nonverifiedtours')
       } catch (err) {
         next(err)
