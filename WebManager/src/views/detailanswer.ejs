@@ -41,12 +41,25 @@
                     </thead>
 
                     <tbody id="tab">
-                      <% for(let data of answerDetailData){ %>
+                      <% for(let [i,data] of answerDetailData.entries()) {%>
+                      <%if(i===8){%>
+                      <tr>
+                        <td><%= data.question %></td>
+                        <td>
+                          <img
+                            src="<%= data.answer %>"
+                            class="rounded mx-auto d-block"
+                            style="width: 100px; height: 100px"
+                            data-action="zoom"
+                          />
+                        </td>
+                      </tr>
+                      <%}else{%>
                       <tr>
                         <td><%= data.question %></td>
                         <td><%= data.answer %></td>
                       </tr>
-                      <% } %>
+                      <% } %> <% } %>
                     </tbody>
                   </table>
                 </div>
@@ -75,7 +88,6 @@
                 >Xóa</span
               >
             </button>
-            
           </div>
           <!-- /.container-fluid -->
 
@@ -134,5 +146,6 @@
       <i class="fas fa-angle-up"></i>
     </a>
     <script src="/js/deleteButton.js" defer></script>
+    <script src="/js/zoom.js" defer></script>
   </body>
 </html>
