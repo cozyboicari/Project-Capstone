@@ -13,6 +13,7 @@ import Icons from 'react-native-vector-icons/Ionicons';
 import { LiteCreditCardInput } from 'react-native-credit-card-input';
 import * as Animatable from 'react-native-animatable'; 
 
+
 // file global
 import { colors } from '../../ConfigGlobal';
 
@@ -94,7 +95,8 @@ export default class OrderTour extends Component {
             dayBooking: {},
             total: 0,
             tour: {},
-            selectPayment: null
+            selectPayment: null,
+            getCard: {}
         }
     }
 
@@ -109,9 +111,25 @@ export default class OrderTour extends Component {
         this.setState({ selectPayment });
     }
 
+    _getCardDetail = () => {
+        const { getCard } = this.state
+
+        const getMothYear = getCard.expiry.split('/')
+
+        const cardDetails = {
+            number: getCard.number,
+            expMonth: parseInt(getMothYear[0]),
+            expYear: parseInt(getMothYear[1]),
+            cvc: getCard.cvc
+        }
+    }
 
     //credit card
-    _onChange = (formData) => console.log(JSON.stringify(formData, null, ' '));
+    _onChange = (formData) => {
+        console.log(JSON.stringify(formData, null, ' '))
+        this.setState({ getCard: formData.values })
+    };
+
     _onFocus = (field) => console.log('focusing', field);
 
     render() {
@@ -176,19 +194,27 @@ export default class OrderTour extends Component {
                                 selectPayment={selectPayment}
                                 urlImage='https://e7.pngegg.com/pngimages/739/826/png-clipart-logo-credit-card-payment-card-american-express-credit-card-text-display-advertising.png'
                             /> :
-                            <Animatable.View 
-                                animation='fadeIn'
-                                style={[styles.containerItemPayment, {
-                                    borderBottomWidth: 1,
-                                    paddingVertical: 17
-                                }]}
-                            >
-                                <LiteCreditCardInput
-                                    autoFocus
-                                    onFocus={this._onFocus}
-                                    onChange={this._onChange}
-                                />
-                            </Animatable.View>
+                            <View>
+                                <Animatable.View 
+                                    animation='fadeIn'
+                                    style={[styles.containerItemPayment, {
+                                        borderBottomWidth: 1,
+                                        paddingVertical: 17
+                                    }]}
+                                >
+                                    <LiteCreditCardInput
+                                        autoFocus
+                                        onFocus={this._onFocus}
+                                        onChange={this._onChange}
+                                    />
+                                </Animatable.View>
+                                <TouchableOpacity 
+                                    style={{ padding: 20 }}
+                                    onPress={() => { this._getCardDetail() }}
+                                >
+                                    <Text style={{ fontSize: 18, fontWeight: '500', color: colors.BACKGROUND_BLUEYONDER }}>Xác nhận thanh toán</Text>
+                                </TouchableOpacity>
+                            </View>
                         }
                     </View>
                 </ScrollView>
